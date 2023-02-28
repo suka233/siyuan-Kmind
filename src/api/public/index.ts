@@ -1,4 +1,5 @@
 import { 向思源请求数据 } from '/@/utils';
+import { http } from '/@/utils/http';
 import { ISetBlockAttrsParam } from './types';
 export * from './types';
 
@@ -18,6 +19,8 @@ enum Api {
     GetNotebookConf = '/api/notebook/getNotebookConf',
     GetBlockAttrs = '/api/attr/getBlockAttrs',
     SetBlockAttrs = '/api/attr/setBlockAttrs',
+    UploadAsset = '/api/asset/upload',
+    PutFile = '/api/file/putFile',
 }
 
 /**
@@ -93,4 +96,40 @@ export const getBlockAttrs = (id) => {
  */
 export const setBlockAttrs = (params: ISetBlockAttrsParam) => {
     return 向思源请求数据(Api.SetBlockAttrs, params);
+};
+
+/**
+ * 上传资源
+ * @link https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md?utm_source=ld246.com#%E4%B8%8A%E4%BC%A0%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6
+ */
+export const uploadAsset = ({ path = '/assets/', file }) => {
+    const formData = new FormData();
+    formData.append('assetsDirPath', path);
+    formData.append('file[]', file);
+    return 向思源请求数据(Api.UploadAsset, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    // return http.post(Api.UploadAsset, formData, {
+    //     headers: { 'Content-Type': 'multipart/form-data' },
+    // });
+};
+
+/**
+ * 写入文件
+ */
+export const putFile = ({
+    file,
+    path = '/assets/',
+    isDir = false,
+    modeTime = Date.now(),
+}) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('path', path);
+    formData.append('isDir', isDir);
+    formData.append('modeTime', modeTime);
+
+    return http.post(Api.PutFile, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+    });
 };

@@ -15,40 +15,29 @@
                 class="w-15 truncate mr-2 inline-block align-middle text-gray-300"
                 >未选择节点</span
             >
-            <a-select
-                v-model:value="tagOptions"
-                placeholder="请输入标签,回车添加"
-                mode="tags"
-                class="w-80 mr-2"
-                :disabled="!node"
-                :max-tag-count="2"
-                :max-tag-text-length="5"
-                @blur="kmind.renderer.endTextEdit()"
-                @focus="kmind.renderer.startTextEdit()"
-            />
-            <a-button class="mr-2" @click="showLinkEditor = !showLinkEditor">
-                超链接
-                <link-outlined />
-            </a-button>
-            <a-button class="mr-2" @click="showVditor = !showVditor">
-                备注
-                <file-text-outlined></file-text-outlined>
-            </a-button>
-            <a-button @click="showVditor = !showVditor">
-                图片
-                <picture-outlined></picture-outlined>
-            </a-button>
+            <tags-editor :node="node" :kmind="kmind"></tags-editor>
+            <hyper-link-btn
+                class="mr-2"
+                @click="showLinkEditor = !showLinkEditor"
+            ></hyper-link-btn>
+            <remark-note-btn class="mr-2" @click="showVditor = !showVditor">
+            </remark-note-btn>
+            <pic-upload-btn @click="showPic = !showPic"> </pic-upload-btn>
+            <a-button @click="testFn">获取html</a-button>
         </div>
         <div>
-            <div v-show="showVditor" id="vditor" class="mt-2"></div>
-            <div v-show="showLinkEditor" class="mt-2">
-                <a-input addon-before="链接:" allow-clear></a-input>
-                <a-input
-                    addon-before="名称:"
-                    class="mt-2"
-                    allow-clear
-                ></a-input>
-            </div>
+            <!--            <remark-note-editor-->
+            <!--                v-show="showVditor"-->
+            <!--                :kmind="props.kmind"-->
+            <!--            ></remark-note-editor>-->
+            <rich-editor
+                v-show="showVditor"
+                :kmind="kmind"
+                :node="node"
+            ></rich-editor>
+
+            <hyper-link-editor v-show="showLinkEditor"> </hyper-link-editor>
+            <pic-uploader v-show="showPic"> </pic-uploader>
         </div>
     </a-card>
 </template>
@@ -62,45 +51,32 @@ export default {
 };
 </script>
 <script setup lang="tsx">
-import { computed, onMounted, ref } from 'vue';
-import {
-    FileTextOutlined,
-    LinkOutlined,
-    PictureOutlined,
-} from '@ant-design/icons-vue';
+import { ref } from 'vue';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
+import HyperLinkBtn from './components/HyperLink/HyperLinkBtn.vue';
+import HyperLinkEditor from './components/HyperLink/HyperLinkEditor.vue';
+import RemarkNoteBtn from './components/RemarkNote/RemarkNoteBtn.vue';
+import PicUploadBtn from './components/PicUpload/PicUploadBtn.vue';
+import PicUploader from './components/PicUpload/PicUploader.vue';
+import TagsEditor from './components/TagsEditor/index.vue';
+import RichEditor from './components/RichEditor/RichEditor.vue';
 
-const vditor = ref<Vditor | null>(null);
+const vditor = ref<Vditor>();
+// 编辑器是否显示
 const showVditor = ref(false);
+// 超链接编辑器是否显示
 const showLinkEditor = ref(false);
-const cardHeight = ref(16);
+const showPic = ref(false);
 const props = defineProps<{
     node: any;
     kmind: any;
 }>();
 
-onMounted(() => {
-    vditor.value = new Vditor('vditor', {
-        minHeight: 280,
-        focus(value: string) {
-            props.kmind.renderer.startTextEdit();
-        },
-        blur(value: string) {
-            props.kmind.renderer.endTextEdit();
-        },
-    });
-});
-
-// 计算tag的选项
-const tagOptions = computed({
-    get() {
-        return props.node?.nodeData?.data.tag || [];
-    },
-    set(value) {
-        props.node.setTag(value);
-    },
-});
+const testFn = () => {
+    console.log('node', props.node);
+    console.log('kmind', props.kmind);
+};
 </script>
 
 <style>

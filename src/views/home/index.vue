@@ -3,9 +3,11 @@
         <div id="mindMapContainer" class="w-full h-full"></div>
     </div>
     <a-button @click="getData">获取数据</a-button>
+    <br />
+    node?.nodeData?.data：
+    <br />
     {{ node?.nodeData?.data }}
     <br />
-    工具栏
     <node-editor
         :node="node"
         :kmind="kmind"
@@ -26,14 +28,18 @@ import KeyboardNavigation from 'simple-mind-map/src/KeyboardNavigation.js';
 import Drag from 'simple-mind-map/src/Drag.js';
 import Select from 'simple-mind-map/src/Select.js';
 import NodeEditor from '/@/components/NodeEditor/index.vue';
-MindMap.usePlugin(KeyboardNavigation).usePlugin(Drag).usePlugin(Select);
+import RichText from 'simple-mind-map/src/RichText.js';
+MindMap.usePlugin(KeyboardNavigation)
+    .usePlugin(Drag)
+    .usePlugin(Select)
+    .usePlugin(RichText);
 const kmind = ref();
 onMounted(() => {
     kmind.value = new MindMap({
         el: document.getElementById('mindMapContainer'),
         data: {
             data: {
-                text: '根节点',
+                text: `suka`,
             },
             children: [],
         },
