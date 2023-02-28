@@ -19,10 +19,10 @@
             @on-blur="handleBlur"
             @on-focus="handleFocus"
         />
-        <a-button @click="setNode1">设置node文本(方式:api)</a-button>
         <a-button @click="setNode2"
             >设置node文本(方式:直接更改node内的值)</a-button
         >
+        <a-button @click="setNode1">设置node文本(方式:api)</a-button>
     </div>
 </template>
 
@@ -58,7 +58,7 @@ Boot.registerModule(markdownModule);
 const editorRef = shallowRef();
 const mode = ref('default'); // 编辑器模式，可选值：default、simple
 // 内容 HTML
-const valueHtml = ref('<p>hello</p>');
+const valueHtml = ref(`<p>asdasdadadasdasdasdasdasdad</p>`);
 
 const toolbarConfig = {};
 const editorConfig: IEditorConfig = {
