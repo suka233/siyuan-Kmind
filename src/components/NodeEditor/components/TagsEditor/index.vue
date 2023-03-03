@@ -3,7 +3,7 @@
         v-model:value="tagOptions"
         placeholder="请输入标签,回车添加"
         mode="tags"
-        class="w-80 mr-2"
+        class="w-80"
         :disabled="!node"
         :max-tag-count="2"
         :max-tag-text-length="5"

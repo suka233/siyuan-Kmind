@@ -1,29 +1,23 @@
 <template>
-    <div
-        style="border: 1px solid #ccc"
-        @blur="message.success('blur')"
-        @focus="message.success('focus')"
+    <a-modal
+        v-model:visible="visible"
+        width="1000px"
+        :title="type === 'node' ? '请输入节点文本' : '请输入备注文本'"
+        @ok="handleOk"
     >
-        <Toolbar
-            style="border-bottom: 1px solid #ccc"
-            :editor="editorRef"
-            :default-config="toolbarConfig"
-            :mode="mode"
-        />
-        <Editor
-            v-model="valueHtml"
-            style="height: 300px; overflow-y: hidden"
-            :default-config="editorConfig"
-            :mode="mode"
-            @on-created="handleCreated"
-            @on-blur="handleBlur"
-            @on-focus="handleFocus"
-        />
-        <a-button @click="setNode2"
-            >设置node文本(方式:直接更改node内的值)</a-button
-        >
-        <a-button @click="setNode1">设置node文本(方式:api)</a-button>
-    </div>
+        <div id="editor-container">
+            <quill-editor
+                v-model:content="editorContent"
+                theme="snow"
+                toolbar="full"
+                content-type="html"
+                style="height: 300px; overflow-y: auto"
+                class="p-2"
+                placeholder="请输入内容"
+            >
+            </quill-editor>
+        </div>
+    </a-modal>
 </template>
 
 <script lang="tsx">
@@ -33,67 +27,66 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import {
-    onBeforeUnmount,
-    ref,
-    shallowRef,
-    onMounted,
-    watch,
-    computed,
-} from 'vue';
-
-import { message } from 'ant-design-vue';
-import { Boot, IDomEditor, IEditorConfig } from '@wangeditor/editor';
-import markdownModule from '@wangeditor/plugin-md';
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
-import '@wangeditor/editor/dist/css/style.css'; // 引入 css
+import { computed, ref, watch } from 'vue';
+import { QuillEditor } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 const props = defineProps<{
+    visible: boolean;
     kmind: any;
     node: any;
+    /**
+     * node: 节点文本
+     * note: 备注文本
+     */
+    type: 'node' | 'note';
+}>();
+const emits = defineEmits<{
+    (event: 'update:visible', visible: boolean): void;
 }>();
 
-Boot.registerModule(markdownModule);
-// 编辑器实例，必须用 shallowRef
-const editorRef = shallowRef();
-const mode = ref('default'); // 编辑器模式，可选值：default、simple
-// 内容 HTML
-const valueHtml = ref(`<p>asdasdadadasdasdasdasdasdad</p>`);
-
-const toolbarConfig = {};
-const editorConfig: IEditorConfig = {
-    placeholder: '请输入内容...',
-};
-
-// 组件销毁时，也及时销毁编辑器
-onBeforeUnmount(() => {
-    const editor = editorRef.value;
-    if (editor == null) return;
-    editor.destroy();
+const visible = computed({
+    get() {
+        return props.visible;
+    },
+    set() {
+        emits('update:visible', !visible.value);
+    },
 });
 
-const handleCreated = (editor) => {
-    editorRef.value = editor; // 记录 editor 实例，重要！
+const editorContent = ref('');
+
+const handleOk = () => {
+    console.log(editorContent.value);
+    if (props.type === 'node') {
+        props.node.setText(editorContent.value, true);
+        // TODO 使用 html-to-text 转换为纯文本 构建纯文本文档树，用来支撑搜索，大纲，插入导图内超链接等功能
+        // props.node.nodeData.data.kmindParams = `测试额外数据`;
+    } else {
+        props.node.setNote(editorContent.value);
+    }
+    visible.value = false;
 };
 
-const handleBlur = (editor) => {
-    props.kmind.renderer.endTextEdit();
+const init = () => {
+    if (props.type === 'node') {
+        editorContent.value = props.node?.getData('text') ?? '';
+    } else {
+        editorContent.value = props.node?.getData('note') ?? '';
+    }
 };
 
-const handleFocus = (editor) => {
-    props.kmind.renderer.startTextEdit();
-};
-
-const setNode1 = () => {
-    console.log(editorRef.value?.getHtml());
-    props.node.setText(editorRef.value?.getHtml());
-    // props.node.render();
-    // props.kmind.reRender();
-};
-
-const setNode2 = () => {
-    props.node.nodeData.data.text = editorRef.value?.getHtml();
-};
+watch(
+    () => props.visible,
+    (visible) => {
+        if (visible) {
+            init();
+            props.kmind.renderer.startTextEdit();
+        } else {
+            props.kmind.renderer.endTextEdit();
+        }
+    },
+);
 </script>
 
 <style scoped></style>

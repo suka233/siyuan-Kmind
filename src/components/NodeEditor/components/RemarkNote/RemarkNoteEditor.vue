@@ -23,10 +23,10 @@ const props = defineProps<{
 onMounted(() => {
     vditor.value = new Vditor('vditor', {
         minHeight: 280,
-        focus(value: string) {
+        focus() {
             props.kmind.renderer.startTextEdit();
         },
-        blur(value: string) {
+        blur() {
             props.kmind.renderer.endTextEdit();
         },
         counter: {

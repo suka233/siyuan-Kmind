@@ -7,7 +7,7 @@ export interface IWidgetBlockAttr {
      */
     id: string;
     /**
-     * 挂件默认查询的笔记本id
+     * mindMap数据
      */
-    selectedNotebookId: string;
+    mindMapData: string;
 }

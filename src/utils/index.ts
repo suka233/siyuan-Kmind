@@ -6,6 +6,7 @@ export async function 向思源请求数据(
     { headers } = { headers: {} },
 ): Promise<any> {
     let resData = null;
+    // console.log(headers ? data : JSON.stringify(data));
     await fetch(url, {
         body: headers ? data : JSON.stringify(data),
         method: 'POST',
@@ -31,13 +32,13 @@ export async function 向思源请求数据(
 // 获取挂件所在块信息
 export const getWidgetBlockInfo = (): IWidgetBlockAttr => {
     const blockNode = window.frameElement?.parentElement?.parentElement;
-    const id = blockNode?.getAttribute('data-node-id') || '';
-    const selectedNotebookId =
-        blockNode?.getAttribute('custom-selected-notebook-id') || '';
+    const id =
+        blockNode?.getAttribute('data-node-id') || '20230302162223-3rxpzda';
+    const mindMapData = blockNode?.getAttribute('custom-mind-map-data') || '';
 
     return {
         id,
-        selectedNotebookId,
+        mindMapData,
     };
 };
 export function is(val: unknown, type: string) {

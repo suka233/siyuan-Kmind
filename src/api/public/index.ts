@@ -95,7 +95,9 @@ export const getBlockAttrs = (id) => {
  * 设置块属性
  */
 export const setBlockAttrs = (params: ISetBlockAttrsParam) => {
-    return 向思源请求数据(Api.SetBlockAttrs, params);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return 向思源请求数据(Api.SetBlockAttrs, params, { headers: undefined });
 };
 
 /**
@@ -126,7 +128,11 @@ export const putFile = ({
     const formData = new FormData();
     formData.append('file', file);
     formData.append('path', path);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     formData.append('isDir', isDir);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     formData.append('modeTime', modeTime);
 
     return http.post(Api.PutFile, formData, {
