@@ -4,8 +4,65 @@ import { getWidgetBlockInfo } from '/@/utils';
 import { setBlockAttrs } from '/@/api/public';
 import { message } from 'ant-design-vue';
 import store from '/@/store';
+import * as process from 'process';
+type NodeTreeType = {
+    title?: string;
+    key?: string;
+    _node?: any;
+    children?: NodeTreeType[];
+};
 export const usePublicStore = defineStore('app-public', () => {
+    // region 环境相关
+    const initIsDev = () => process.env.NODE_ENV === 'development';
+    const isDev = ref(initIsDev());
+    // endregion
+
+    // region map相关
+    const kmind = ref();
+    const setKmind = ({ kmind: map }) => {
+        kmind.value = map;
+    };
+    const treeData = ref();
+    // 递归展开tree
+    const expandTree = (data) => {
+        const temp: NodeTreeType = {};
+        temp.title = data.data.text;
+        temp.key = data._node.uid;
+        temp._node = data._node;
+        if (data.children.length) {
+            temp.children = [];
+            data.children.forEach((item) => {
+                temp.children?.push(expandTree(item));
+            });
+        }
+        return temp;
+    };
+
+    const buildTreeData = () => {
+        console.log('xx', kmind.value);
+        treeData.value = [expandTree(kmind.value.renderer.renderTree)];
+    };
+
+    const backEnd = ref<boolean>(true);
+    const forwardEnd = ref<boolean>(true);
+    const backForwardLength = ref<number>(0);
+    const setBackForwardStatus = (activeHistoryIndex, length) => {
+        // 这里是为了修复map本身的bug:当调用FORWARD的时候，length为undefined
+        if (length) {
+            backForwardLength.value = length;
+        }
+        backEnd.value = activeHistoryIndex <= 0;
+        forwardEnd.value = activeHistoryIndex >= backForwardLength.value - 1;
+    };
+
+    // endregion
+
     // region 节点相关
+    const node = ref();
+    const setNode = ({ node: _node }) => {
+        node.value = _node;
+    };
+
     // 当前节点备注content
     const noteContent = ref<string>();
     // 当前节点备注left
@@ -77,11 +134,22 @@ export const usePublicStore = defineStore('app-public', () => {
     const init = () => {
         const { id, mindMapData: data } = getWidgetBlockInfo();
         blockID.value = id;
-        mindMapData.value = JSON.parse(data);
+        if (data) {
+            mindMapData.value = JSON.parse(data);
+        }
+
         // mindMapData.value = data;
     };
 
     init();
+
+    // endregion
+
+    // region sidebar样式相关
+    const activeSidebar = ref<string>('');
+    const setActiveSidebar = (name: string) => {
+        activeSidebar.value = name;
+    };
 
     // endregion
 
@@ -96,6 +164,18 @@ export const usePublicStore = defineStore('app-public', () => {
         setLastClickNodeInfo,
         saveMindMapData,
         mindMapData,
+        isDev,
+        node,
+        setNode,
+        kmind,
+        treeData,
+        setKmind,
+        buildTreeData,
+        backEnd,
+        forwardEnd,
+        setBackForwardStatus,
+        activeSidebar,
+        setActiveSidebar,
     };
 });
 

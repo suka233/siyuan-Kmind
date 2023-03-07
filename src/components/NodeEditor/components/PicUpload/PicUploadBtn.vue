@@ -1,7 +1,7 @@
 <template>
     <a-button>
-        图片
-        <picture-outlined></picture-outlined>
+        <span class="align-middle">图片</span>
+        <picture-outlined class="align-middle" />
     </a-button>
 </template>
 

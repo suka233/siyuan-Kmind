@@ -1,7 +1,7 @@
 <template>
     <a-button>
-        备注
-        <file-text-outlined></file-text-outlined>
+        <span class="align-middle">备注</span>
+        <file-text-outlined class="align-middle" />
     </a-button>
 </template>
 

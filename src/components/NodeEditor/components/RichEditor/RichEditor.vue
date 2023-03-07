@@ -7,13 +7,16 @@
     >
         <div id="editor-container">
             <quill-editor
+                ref="editor"
                 v-model:content="editorContent"
                 theme="snow"
                 toolbar="full"
                 content-type="html"
-                style="height: 300px; overflow-y: auto"
+                style="height: 300px; overflow-y: auto; cursor: text"
                 class="p-2"
                 placeholder="请输入内容"
+                @click="handleClick"
+                @ready="handleReady"
             >
             </quill-editor>
         </div>
@@ -28,7 +31,7 @@ export default {
 
 <script lang="tsx" setup>
 import { computed, ref, watch } from 'vue';
-import { QuillEditor } from '@vueup/vue-quill';
+import { QuillEditor, Quill } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 const props = defineProps<{
@@ -68,6 +71,16 @@ const handleOk = () => {
     visible.value = false;
 };
 
+const handleClick = () => {
+    quill.value.focus();
+};
+
+const isQuillReady = ref(false);
+const handleReady = (e) => {
+    isQuillReady.value = true;
+    quill.value = e;
+};
+
 const init = () => {
     if (props.type === 'node') {
         editorContent.value = props.node?.getData('text') ?? '';
@@ -75,6 +88,9 @@ const init = () => {
         editorContent.value = props.node?.getData('note') ?? '';
     }
 };
+
+const editor = ref<Quill>(null);
+const quill = ref<Quill>(null);
 
 watch(
     () => props.visible,
@@ -84,6 +100,10 @@ watch(
             props.kmind.renderer.startTextEdit();
         } else {
             props.kmind.renderer.endTextEdit();
+
+            // init()不能清空编辑器内容，手动调用一下api清空
+            editorContent.value = '';
+            editor.value.setText('');
         }
     },
 );

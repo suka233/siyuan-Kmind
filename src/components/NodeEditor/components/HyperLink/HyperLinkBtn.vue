@@ -1,7 +1,7 @@
 <template>
     <a-button>
-        超链接
-        <link-outlined />
+        <span class="align-middle">超链接</span>
+        <link-outlined class="align-middle" />
     </a-button>
 </template>
 

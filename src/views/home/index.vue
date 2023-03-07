@@ -1,15 +1,22 @@
 <template>
     <div class="w-full h-full fixed">
-        <div id="mindMapContainer" class="w-full h-full"></div>
+        <div id="mindMapContainer" ref="kmindRef" class="w-full h-full"></div>
         <node-editor
+            ref="nodeEditorRef"
             :node="node"
             :kmind="kmind"
             class="fixed top-5 left-5"
         ></node-editor>
-        <!--        <div class="fixed bottom-20 left-5">-->
-        <!--            <p>节点数据：</p>-->
-        <!--            <p>{{ node?.nodeData?.data }}</p>-->
-        <!--        </div>-->
+        <side-bar-trigger></side-bar-trigger>
+
+        <theme></theme>
+        <map-structure></map-structure>
+        <main-point></main-point>
+        <div v-if="isDev" class="fixed bottom-20 left-5">
+            <p>节点数据：</p>
+            <p>{{ node?.nodeData?.data }}</p>
+        </div>
+        <show-note></show-note>
     </div>
 </template>
 
@@ -30,14 +37,29 @@ import RichText from 'simple-mind-map/src/RichText.js';
 import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
 import { useThrottleFn } from '@vueuse/core';
-const { setLastClickNodeInfo, saveMindMapData } = usePublicStore();
+import ShowNote from '/@/components/ShowNote/index.vue';
+import SideBarTrigger from '/@/components/SideBarTrigger/index.vue';
+import MainPoint from '/@/components/MainPoint/index.vue';
+import Theme from '/@/components/Theme/index.vue';
+import MapStructure from '/@/components/MapStructure/index.vue';
+const {
+    setLastClickNodeInfo,
+    saveMindMapData,
+    setNoteInfo,
+    setBackForwardStatus,
+    setKmind,
+    buildTreeData,
+} = usePublicStore();
 const publicStore = usePublicStore();
-const { mindMapData } = toRefs(publicStore);
+const { mindMapData, isDev, noteVisible } = toRefs(publicStore);
 const kmind = ref();
 MindMap.usePlugin(KeyboardNavigation)
     .usePlugin(Drag)
     .usePlugin(Select)
     .usePlugin(RichText);
+
+const kmindRef = ref();
+const nodeEditorRef = ref();
 onMounted(() => {
     kmind.value = new MindMap({
         el: document.getElementById('mindMapContainer'),
@@ -47,11 +69,44 @@ onMounted(() => {
             },
             children: [],
         },
+        customNoteContentShow: {
+            show(content, left, top) {
+                if (!noteVisible.value) {
+                    setNoteInfo({ content, left, top, visible: true });
+                }
+            },
+            hide() {
+                if (noteVisible.value) {
+                    setNoteInfo({ visible: false });
+                }
+            },
+        },
     });
+    console.log(kmind.value);
+    setKmind({ kmind: kmind.value });
+
     kmind.value.on('node_click', (_node, e) => {
         node.value = _node;
         console.log(e, _node);
+        if (e.target.attributes['p-id']?.nodeValue === '8793') {
+            // 点击了备注的svg图像
+            // TODO 由于这里会点击到其它的svg图像，所以导致这个事件触发率不是很高，要看看源码是怎么实现的这个备注显示逻辑
+            nodeEditorRef.value.handleShowRichEditor('note');
+        }
         setLastClickNodeInfo({ left: e.x, top: e.y });
+    });
+
+    kmind.value.on('draw_click', () => {
+        // 关闭没有正确关闭的备注展示框
+        setNoteInfo({ visible: false });
+
+        // 清空node
+        node.value = null;
+    });
+
+    kmind.value.on('back_forward', (activeHistoryIndex, length) => {
+        // 设置回退前进状态
+        setBackForwardStatus(activeHistoryIndex, length);
     });
 
     // 自动加载缓存数据
@@ -61,27 +116,22 @@ onMounted(() => {
         message.success('数据加载成功');
     } else {
         message.info(
-            '检测到首次使用，导图数据发生变化时，自动每2秒自动保存一次数据~',
+            '检测到首次使用，导图数据发生变化时，自动每1秒自动保存一次数据~',
         );
     }
 
     // 自动保存数据
     const throttleSaver = useThrottleFn((data) => {
         saveMindMapData({ data });
-    }, 2000);
+    }, 1000);
+    // 防抖构建tree
+    const throttleBuildTree = useThrottleFn(buildTreeData, 2000);
     kmind.value.on('data_change', () => {
-        // console.log('data_change', data);
-        // saveMindMapData(data);
-        console.log('data_change');
         throttleSaver(kmind.value.getData(true));
+        throttleBuildTree();
     });
 });
 const node = ref();
-// const getData = () => {
-//     console.log('所有数据：', kmind.value.getData(true));
-//     console.log('data数据：', kmind.value.getData());
-//     console.log('node数据：', node.value);
-// };
 </script>
 
 <style scoped>
