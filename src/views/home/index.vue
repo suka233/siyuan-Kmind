@@ -83,14 +83,20 @@ onMounted(() => {
         },
         customHandleMousewheel: (e) => {
             // 自定义鼠标滚轮事件
-            console.log(e);
-            let { deltaX, deltaY } = e;
-            if (deltaX === -0) {
-                // Y轴滚动
-                kmind.value.view.translateY(-deltaY / 3);
+            let { deltaX, deltaY, ctrlKey } = e;
+            // console.log(e);
+            if (ctrlKey) {
+                // 缩放
+                if (deltaY > 0 || deltaX > 0) kmind.value.view.narrow();
+                else kmind.value.view.enlarge();
             } else {
-                // X轴滚动
-                kmind.value.view.translateX(-deltaX / 3);
+                if (deltaX === -0) {
+                    // Y轴滚动 滚动一次默认是100，太大了，所以除以3，即滚动一次移动33px
+                    kmind.value.view.translateY(-deltaY / 3);
+                } else {
+                    // X轴滚动
+                    kmind.value.view.translateX(-deltaX / 3);
+                }
             }
         },
     });
@@ -147,8 +153,4 @@ onMounted(() => {
 const node = ref();
 </script>
 
-<style scoped>
-#map {
-    @apply w-full h-500px;
-}
-</style>
+<style scoped></style>
