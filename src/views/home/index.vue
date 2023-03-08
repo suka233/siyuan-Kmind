@@ -81,6 +81,18 @@ onMounted(() => {
                 }
             },
         },
+        customHandleMousewheel: (e) => {
+            // 自定义鼠标滚轮事件
+            console.log(e);
+            let { deltaX, deltaY } = e;
+            if (deltaX === -0) {
+                // Y轴滚动
+                kmind.value.view.translateY(-deltaY / 3);
+            } else {
+                // X轴滚动
+                kmind.value.view.translateX(-deltaX / 3);
+            }
+        },
     });
     console.log(kmind.value);
     setKmind({ kmind: kmind.value });
