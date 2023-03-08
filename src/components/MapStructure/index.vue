@@ -30,12 +30,14 @@ import { ref, toRefs } from 'vue';
 import { layoutList } from 'simple-mind-map/src/utils/constant';
 import { layoutImgMap } from '/@/config/constant';
 const publicStore = usePublicStore();
-const { activeSidebar, kmind } = toRefs(publicStore);
-
+const { activeSidebar } = toRefs(publicStore);
+const props = defineProps<{
+    kmind: any;
+}>();
 const layout = ref('');
 const useLayout = (item: any) => {
     layout.value = item;
-    kmind.value.setLayout(item);
+    props.kmind.value.setLayout(item);
 };
 </script>
 

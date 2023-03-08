@@ -9,9 +9,9 @@
         ></node-editor>
         <side-bar-trigger></side-bar-trigger>
 
-        <theme></theme>
-        <map-structure></map-structure>
-        <main-point></main-point>
+        <theme :kmind="kmind"></theme>
+        <map-structure :kmind="kmind"></map-structure>
+        <main-point :kmind="kmind"></main-point>
         <div v-if="isDev" class="fixed bottom-20 left-5">
             <p>节点数据：</p>
             <p>{{ node?.nodeData?.data }}</p>
@@ -44,11 +44,11 @@ import Theme from '/@/components/Theme/index.vue';
 import MapStructure from '/@/components/MapStructure/index.vue';
 const {
     setLastClickNodeInfo,
-    saveMindMapData,
     setNoteInfo,
     setBackForwardStatus,
-    setKmind,
+    saveMindMapData,
     buildTreeData,
+    setKmind,
 } = usePublicStore();
 const publicStore = usePublicStore();
 const { mindMapData, isDev, noteVisible } = toRefs(publicStore);
@@ -111,8 +111,8 @@ onMounted(() => {
 
     // 自动加载缓存数据
     if (mindMapData.value) {
-        console.log(mindMapData.value);
-        kmind.value.setFullData(mindMapData.value);
+        // FIX setFullData会让导图很卡。
+        kmind.value.setData(mindMapData.value.root);
         message.success('数据加载成功');
     } else {
         message.info(
@@ -127,6 +127,7 @@ onMounted(() => {
     // 防抖构建tree
     const throttleBuildTree = useThrottleFn(buildTreeData, 2000);
     kmind.value.on('data_change', () => {
+        // console.log(kmind.value.getData(true));
         throttleSaver(kmind.value.getData(true));
         throttleBuildTree();
     });

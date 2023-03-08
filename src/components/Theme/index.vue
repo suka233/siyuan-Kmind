@@ -31,12 +31,14 @@ import { ref, toRefs } from 'vue';
 import { themeList } from 'simple-mind-map/src/utils/constant';
 import { themeMap } from '/@/config/constant';
 const publicStore = usePublicStore();
-const { activeSidebar, kmind } = toRefs(publicStore);
-
+const { activeSidebar } = toRefs(publicStore);
+const props = defineProps<{
+    kmind: any;
+}>();
 const theme = ref('');
 const useTheme = (item: string) => {
     theme.value = item;
-    kmind.value.setTheme(item);
+    props.kmind.setTheme(item);
 };
 </script>
 

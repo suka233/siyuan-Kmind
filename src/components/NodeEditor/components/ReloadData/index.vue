@@ -30,7 +30,9 @@ const handleReload = async () => {
     await saveMindMapData({ data: props.kmind.getData(true) }).then(() => {
         message.success('保存导图数据成功');
     });
-    props.kmind.setFullData(mindMapData.value);
+    // console.log(toRaw(mindMapData.value));
+    // setFullData会超卡，所以使用setData，待排除BUG
+    props.kmind.setData(mindMapData.value?.root);
     message.success('重新加载导图数据成功');
 };
 </script>

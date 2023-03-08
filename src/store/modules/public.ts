@@ -11,6 +11,31 @@ type NodeTreeType = {
     _node?: any;
     children?: NodeTreeType[];
 };
+
+interface IMapFullData {
+    /**
+     * 布局名称
+     */
+    layout?: string;
+    /**
+     * 节点数据
+     */
+    root?: object;
+    /**
+     * 主题
+     */
+    theme?: {
+        template: string;
+        config: object;
+    };
+    /**
+     * 视图信息
+     */
+    view?: {
+        transform: object;
+        state: object;
+    };
+}
 export const usePublicStore = defineStore('app-public', () => {
     // region 环境相关
     const initIsDev = () => process.env.NODE_ENV === 'development';
@@ -39,7 +64,6 @@ export const usePublicStore = defineStore('app-public', () => {
     };
 
     const buildTreeData = () => {
-        console.log('xx', kmind.value);
         treeData.value = [expandTree(kmind.value.renderer.renderTree)];
     };
 
@@ -109,10 +133,10 @@ export const usePublicStore = defineStore('app-public', () => {
 
     // 挂件所在块id
     const blockID = ref<string>('');
-    const mindMapData = ref<string>('');
+    const mindMapData = ref<IMapFullData>();
     // 保存mindMap数据到挂件所在块
     // TODO 多Tab页导图
-    const saveMindMapData = async ({ data }) => {
+    const saveMindMapData = async ({ data }: { data: IMapFullData }) => {
         mindMapData.value = data;
         await setBlockAttrs({
             id: blockID.value,

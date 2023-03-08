@@ -25,13 +25,15 @@ import { usePublicStore } from '/@/store/modules/public';
 import { toRefs } from 'vue';
 const publicStore = usePublicStore();
 const { buildTreeData } = publicStore;
-const { treeData, kmind, activeSidebar } = toRefs(publicStore);
-
+const { treeData, activeSidebar } = toRefs(publicStore);
+const props = defineProps<{
+    kmind: any;
+}>();
 const handleClick = (node: any) => {
-    console.log(kmind.value.renderer);
+    // console.log(kmind.value.renderer);
     // kmind.value.renderer.clearAllActive();
     // kmind.value.renderer.addActiveNode(node);
-    kmind.value.renderer.moveNodeToCenter(node);
+    props.kmind.value.renderer.moveNodeToCenter(node);
     // kmind.value?.execCommand('CLEAR_ACTIVE_NODE');
 };
 </script>
