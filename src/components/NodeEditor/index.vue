@@ -29,6 +29,7 @@
                 @click="showPic = true"
             >
             </pic-upload-btn>
+            <icon-editor-btn :disabled="!node"></icon-editor-btn>
             <generalization :kmind="kmind" class="mr-2" :disabled="!node" />
             <reload-data class="mr-2" :kmind="kmind" />
 
@@ -81,7 +82,7 @@ import PicUploadBtn from './components/PicUpload/PicUploadBtn.vue';
 import PicUploader from './components/PicUpload/PicUploader.vue';
 import TagsEditorBtn from './components/TagsEditor/TagsEditorBtn.vue';
 import TagsEditor from './components/TagsEditor/TagsEditor.vue';
-
+import IconEditorBtn from './components/IconEditor/IconEditorBtn.vue';
 import RichEditor from './components/RichEditor/RichEditor.vue';
 import NodeEditorBtn from './components/NodeEditor/NodeEditorBtn.vue';
 import BackForward from './components/BackForward/index.vue';
@@ -99,6 +100,7 @@ const showRichEditor = ref(false);
 const showLinkEditor = ref(false);
 const showPic = ref(false);
 const showTagsEditor = ref(false);
+const showIconEditor = ref(false);
 const richEditorType = ref<'note' | 'node'>('note');
 const props = defineProps<{
     node: any;

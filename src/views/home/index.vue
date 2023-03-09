@@ -49,6 +49,7 @@ const {
     saveMindMapData,
     buildTreeData,
     setKmind,
+    setNode,
 } = usePublicStore();
 const publicStore = usePublicStore();
 const { mindMapData, isDev, noteVisible } = toRefs(publicStore);
@@ -100,7 +101,6 @@ onMounted(() => {
             }
         },
     });
-    console.log(kmind.value);
     setKmind({ kmind: kmind.value });
 
     kmind.value.on('node_click', (_node, e) => {
@@ -117,6 +117,9 @@ onMounted(() => {
     kmind.value.on('node_active', (_node, activeNodeList) => {
         // 编辑node会触发这个事件，所以这里要判断一下
         node.value = _node;
+
+        // 活动的node，存到仓库里
+        setNode({ node: _node, activeNodeList });
     });
 
     kmind.value.on('draw_click', () => {
@@ -124,7 +127,7 @@ onMounted(() => {
         setNoteInfo({ visible: false });
 
         // 清空node
-        node.value = null;
+        // node.value = null;
     });
 
     kmind.value.on('back_forward', (activeHistoryIndex, length) => {

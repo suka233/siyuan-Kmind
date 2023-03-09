@@ -83,8 +83,10 @@ export const usePublicStore = defineStore('app-public', () => {
 
     // region 节点相关
     const node = ref();
-    const setNode = ({ node: _node }) => {
+    const activeNodeList = ref<any[]>([]);
+    const setNode = ({ node: _node, activeNodeList: _activeNodeList = [] }) => {
         node.value = _node;
+        activeNodeList.value = _activeNodeList;
     };
 
     // 当前节点备注content
@@ -190,6 +192,7 @@ export const usePublicStore = defineStore('app-public', () => {
         mindMapData,
         isDev,
         node,
+        activeNodeList,
         setNode,
         kmind,
         treeData,
