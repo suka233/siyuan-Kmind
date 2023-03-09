@@ -37,7 +37,7 @@ const props = defineProps<{
 const layout = ref('');
 const useLayout = (item: any) => {
     layout.value = item;
-    props.kmind.value.setLayout(item);
+    props.kmind.setLayout(item);
 };
 </script>
 

@@ -7,7 +7,11 @@
                 :disabled="!node"
                 @click="handleShowRichEditor('node')"
             ></node-editor-btn>
-            <tags-editor :node="node" :kmind="kmind" class="mr-2"></tags-editor>
+            <tags-editor-btn
+                :disabled="!node"
+                class="mr-2"
+                @click="showTagsEditor = true"
+            ></tags-editor-btn>
             <hyper-link-btn
                 :disabled="!node"
                 class="mr-2"
@@ -29,6 +33,7 @@
             <reload-data class="mr-2" :kmind="kmind" />
 
             <a-button class="mr-2" @click="handleSave">保存</a-button>
+            <a-button v-if="isDev" @click="test">测试</a-button>
         </div>
         <div>
             <!--            <remark-note-editor-->
@@ -50,6 +55,11 @@
             </hyper-link-editor>
             <pic-uploader v-model:visible="showPic" :node="node" :kmind="kmind">
             </pic-uploader>
+            <tags-editor
+                v-model:visible="showTagsEditor"
+                :node="node"
+                :kmind="kmind"
+            ></tags-editor>
         </div>
     </div>
 </template>
@@ -63,13 +73,15 @@ export default {
 };
 </script>
 <script setup lang="tsx">
-import { ref } from 'vue';
+import { ref, toRefs } from 'vue';
 import HyperLinkBtn from './components/HyperLink/HyperLinkBtn.vue';
 import HyperLinkEditor from './components/HyperLink/HyperLinkEditor.vue';
 import RemarkNoteBtn from './components/RemarkNote/RemarkNoteBtn.vue';
 import PicUploadBtn from './components/PicUpload/PicUploadBtn.vue';
 import PicUploader from './components/PicUpload/PicUploader.vue';
-import TagsEditor from './components/TagsEditor/index.vue';
+import TagsEditorBtn from './components/TagsEditor/TagsEditorBtn.vue';
+import TagsEditor from './components/TagsEditor/TagsEditor.vue';
+
 import RichEditor from './components/RichEditor/RichEditor.vue';
 import NodeEditorBtn from './components/NodeEditor/NodeEditorBtn.vue';
 import BackForward from './components/BackForward/index.vue';
@@ -79,12 +91,14 @@ import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
 const publicStore = usePublicStore();
 const { saveMindMapData } = publicStore;
+const { isDev } = toRefs(publicStore);
 
 // 编辑器是否显示
 const showRichEditor = ref(false);
 // 超链接编辑器是否显示
 const showLinkEditor = ref(false);
 const showPic = ref(false);
+const showTagsEditor = ref(false);
 const richEditorType = ref<'note' | 'node'>('note');
 const props = defineProps<{
     node: any;
@@ -103,6 +117,114 @@ const handleSave = async () => {
     console.log('node', props.node);
     console.log('kmind', props.kmind);
     console.log('allData', JSON.stringify({ suka: props.kmind.getData(true) }));
+};
+
+const test = () => {
+    props.kmind.setData(testData.root);
+    console.log(props.kmind);
+    return;
+    props.kmind.setLayout(`logicalStructure`);
+    // props.kmind.setLayout(testData.layout);
+    // props.kmind.setTheme(testData.theme.template);
+    // props.kmind.setThemeConfig(testData.theme.config);
+    // props.kmind.view.setTransformData(testData.view);
+    // props.kmind.setFullData(testData);
+};
+
+const testData = {
+    layout: 'logicalStructure',
+    root: {
+        data: {
+            text: '<p><strong style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;; color: rgb(255, 255, 255); font-size: 16px;">asdasdasd</strong></p>',
+            expand: true,
+            isActive: false,
+            fontFamily: '微软雅黑, Microsoft YaHei',
+            color: '#fff',
+            fontStyle: 'normal',
+            fontWeight: 'bold',
+            fontSize: 16,
+            textDecoration: 'none',
+            richText: true,
+        },
+        children: [
+            {
+                data: {
+                    text: '<p><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;; color: rgb(86, 86, 86); font-size: 16px;">二级节点</span></p>',
+                    expand: true,
+                    isActive: false,
+                    fontFamily: '微软雅黑, Microsoft YaHei',
+                    color: '#565656',
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                    fontSize: 16,
+                    textDecoration: 'none',
+                    richText: true,
+                },
+                children: [],
+            },
+            {
+                data: {
+                    text: '<p><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;; color: rgb(86, 86, 86); font-size: 16px;">二级节点</span></p>',
+                    expand: true,
+                    isActive: false,
+                    fontFamily: '微软雅黑, Microsoft YaHei',
+                    color: '#565656',
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                    fontSize: 16,
+                    textDecoration: 'none',
+                    richText: true,
+                    tag: ['dddd', '22', '77', 'wsdad', '333'],
+                    note: '<p>asdasdasdasd</p>',
+                },
+                children: [],
+            },
+            {
+                data: {
+                    text: '<p><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;; color: rgb(86, 86, 86); font-size: 16px;">1111</span></p>',
+                    expand: true,
+                    isActive: false,
+                    fontFamily: '微软雅黑, Microsoft YaHei',
+                    color: '#565656',
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                    fontSize: 16,
+                    textDecoration: 'none',
+                    richText: true,
+                },
+                children: [],
+            },
+        ],
+    },
+    theme: {
+        template: 'default',
+        config: {},
+    },
+    view: {
+        transform: {
+            scaleX: 1.3000000000000003,
+            scaleY: 1.3000000000000003,
+            shear: 0,
+            rotate: 0,
+            translateX: -1092.3107421875006,
+            translateY: -368.0166666666669,
+            originX: 0,
+            originY: 0,
+            a: 1.3000000000000003,
+            b: 0,
+            c: 0,
+            d: 1.3000000000000003,
+            e: -1092.3107421875006,
+            f: -368.0166666666669,
+        },
+        state: {
+            scale: 1.3000000000000003,
+            x: -741.0107421875002,
+            y: -228.66666666666674,
+            sx: -741.0107421875002,
+            sy: -228.66666666666674,
+        },
+    },
 };
 </script>
 

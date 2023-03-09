@@ -105,13 +105,18 @@ onMounted(() => {
 
     kmind.value.on('node_click', (_node, e) => {
         node.value = _node;
-        console.log(e, _node);
+        // console.log(e, _node);
         if (e.target.attributes['p-id']?.nodeValue === '8793') {
             // 点击了备注的svg图像
             // TODO 由于这里会点击到其它的svg图像，所以导致这个事件触发率不是很高，要看看源码是怎么实现的这个备注显示逻辑
             nodeEditorRef.value.handleShowRichEditor('note');
         }
         setLastClickNodeInfo({ left: e.x, top: e.y });
+    });
+
+    kmind.value.on('node_active', (_node, activeNodeList) => {
+        // 编辑node会触发这个事件，所以这里要判断一下
+        node.value = _node;
     });
 
     kmind.value.on('draw_click', () => {
@@ -129,7 +134,7 @@ onMounted(() => {
 
     // 自动加载缓存数据
     if (mindMapData.value) {
-        // FIX setFullData会让导图很卡。
+        // FIX setFullData会让导图很卡。 setLayout方法的原因
         kmind.value.setData(mindMapData.value.root);
         message.success('数据加载成功');
     } else {
