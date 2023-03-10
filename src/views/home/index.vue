@@ -1,6 +1,18 @@
 <template>
-    <div class="w-full h-full fixed">
-        <div id="mindMapContainer" ref="kmindRef" class="w-full h-full"></div>
+    <div class="fixed" style="left: 0; right: 0; top: 0; bottom: 0">
+        <div
+            id="mindMapContainer"
+            ref="kmindRef"
+            class="absolute"
+            style="
+                width: auto;
+                height: auto;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+            "
+        ></div>
         <node-editor
             ref="nodeEditorRef"
             :node="node"
@@ -34,6 +46,7 @@ import Drag from 'simple-mind-map/src/Drag.js';
 import Select from 'simple-mind-map/src/Select.js';
 import NodeEditor from '/@/components/NodeEditor/index.vue';
 import RichText from 'simple-mind-map/src/RichText.js';
+import Export from 'simple-mind-map/src/Export.js';
 import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
 import { useThrottleFn } from '@vueuse/core';
@@ -57,7 +70,8 @@ const kmind = ref();
 MindMap.usePlugin(KeyboardNavigation)
     .usePlugin(Drag)
     .usePlugin(Select)
-    .usePlugin(RichText);
+    .usePlugin(RichText)
+    .usePlugin(Export);
 
 const kmindRef = ref();
 const nodeEditorRef = ref();
@@ -157,8 +171,16 @@ onMounted(() => {
         throttleSaver(kmind.value.getData(true));
         throttleBuildTree();
     });
+
+    // 自适应
+    const throttleResize = useThrottleFn(() => {
+        kmind.value.resize();
+    }, 1000);
+    addEventListener('resize', () => {
+        throttleResize();
+    });
 });
 const node = ref();
 </script>
 
-<style scoped></style>
+<style scoped lang="less"></style>
