@@ -6,6 +6,9 @@
 </template>
 
 <script lang="tsx">
+/**
+ * 节点编辑按钮
+ */
 export default {
     name: 'NodeEditor',
 };

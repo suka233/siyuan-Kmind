@@ -1,6 +1,7 @@
 <template>
     <div :class="`animate-animated animate-slideInDown editor-card`">
-        <div>
+        <!--      按钮区域-->
+        <span class="node-editor-btn">
             <back-forward :node="node" :kmind="kmind"></back-forward>
             <node-editor-btn
                 class="mr-2"
@@ -35,7 +36,15 @@
 
             <a-button class="mr-2" @click="handleSave">保存</a-button>
             <a-button v-if="isDev" @click="test">测试</a-button>
-        </div>
+        </span>
+        <!--      保存导入区-->
+        <span class="map-import-save-btn">
+            <export-file-btn
+                class="mr-2"
+                @click="showExportFile = true"
+            ></export-file-btn>
+        </span>
+        <!--      功能实现区-->
         <div>
             <!--            <remark-note-editor-->
             <!--                v-show="showVditor"-->
@@ -61,6 +70,7 @@
                 :node="node"
                 :kmind="kmind"
             ></tags-editor>
+            <export-file v-model:visible="showExportFile"></export-file>
         </div>
     </div>
 </template>
@@ -88,8 +98,10 @@ import NodeEditorBtn from './components/NodeEditor/NodeEditorBtn.vue';
 import BackForward from './components/BackForward/index.vue';
 import ReloadData from './components/ReloadData/index.vue';
 import Generalization from './components/Generalization/index.vue';
+import ExportFileBtn from './components/ExportFile/ExportFileBtn.vue';
 import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
+import ExportFile from '/@/components/NodeEditor/components/ExportFile/ExportFile.vue';
 const publicStore = usePublicStore();
 const { saveMindMapData } = publicStore;
 const { isDev } = toRefs(publicStore);
@@ -100,7 +112,7 @@ const showRichEditor = ref(false);
 const showLinkEditor = ref(false);
 const showPic = ref(false);
 const showTagsEditor = ref(false);
-const showIconEditor = ref(false);
+const showExportFile = ref(false);
 const richEditorType = ref<'note' | 'node'>('note');
 const props = defineProps<{
     node: any;
@@ -122,7 +134,7 @@ const handleSave = async () => {
 };
 
 const test = () => {
-    props.kmind.setData(testData.root);
+    // props.kmind.setData(testData.root);
     console.log(props.kmind);
     return;
     props.kmind.setLayout(`logicalStructure`);
@@ -230,7 +242,7 @@ const testData = {
 };
 </script>
 
-<style>
+<style scoped lang="less">
 .editor-card {
     transition: all 2s linear;
     background-color: #fff;
@@ -238,5 +250,12 @@ const testData = {
     box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.06);
     border-radius: 4px;
     padding: 10px;
+    .node-editor-btn {
+        @apply pr-6;
+        border-right: rgba(0, 0, 0, 0.06) solid 1px;
+    }
+    .map-import-save-btn {
+        @apply pl-6;
+    }
 }
 </style>
