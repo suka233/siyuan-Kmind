@@ -23,7 +23,7 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { computed, ref, toRefs } from 'vue';
+import { ref, toRefs } from 'vue';
 import { nodeIconList } from 'simple-mind-map/src/svg/icons';
 import { usePublicStore } from '/@/store/modules/public';
 const publicStore = usePublicStore();
