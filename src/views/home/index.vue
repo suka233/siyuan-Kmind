@@ -119,7 +119,6 @@ onMounted(() => {
 
     kmind.value.on('node_click', (_node, e) => {
         node.value = _node;
-        // console.log(e, _node);
         if (e.target.attributes['p-id']?.nodeValue === '8793') {
             // 点击了备注的svg图像
             // TODO 由于这里会点击到其它的svg图像，所以导致这个事件触发率不是很高，要看看源码是怎么实现的这个备注显示逻辑
@@ -152,7 +151,10 @@ onMounted(() => {
     // 自动加载缓存数据
     if (mindMapData.value) {
         // FIX setFullData会让导图很卡。 setLayout方法的原因
-        kmind.value.setData(mindMapData.value.root);
+        // kmind.value.setData(mindMapData.value.root);
+        kmind.value.setFullData(
+            Object.assign({}, mindMapData.value, { layout: undefined }),
+        );
         message.success('数据加载成功');
     } else {
         message.info(
@@ -179,6 +181,23 @@ onMounted(() => {
     addEventListener('resize', () => {
         throttleResize();
     });
+
+    // 拦截全局点击事件，如果点击到了a标签，就阻止默认事件，为跳转多tab页做准备
+    // addEventListener(
+    //     'click',
+    //     (e) => {
+    //         console.log('xxx', e.target.parentNode.nodeName === 'a');
+    //         if (e.target.parentNode.nodeName === 'a') {
+    //             e.preventDefault();
+    //             console.log(
+    //                 `点击到了a标签：${e.target.parentNode.getAttribute(
+    //                     'href',
+    //                 )}，${e.target.parentNode.getAttribute('title')}`,
+    //             );
+    //         }
+    //     },
+    //     true,
+    // );
 });
 const node = ref();
 </script>

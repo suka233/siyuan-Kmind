@@ -136,8 +136,9 @@ const handleSave = async () => {
 const test = () => {
     // props.kmind.setData(testData.root);
     console.log(props.kmind);
+    props.kmind.setFullData(Object.assign({}, testData, { layout: undefined }));
     return;
-    props.kmind.setLayout(`logicalStructure`);
+    // props.kmind.setLayout(`logicalStructure`);
     // props.kmind.setLayout(testData.layout);
     // props.kmind.setTheme(testData.theme.template);
     // props.kmind.setThemeConfig(testData.theme.config);
