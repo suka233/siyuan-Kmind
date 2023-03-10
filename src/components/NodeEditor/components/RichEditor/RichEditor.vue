@@ -67,7 +67,12 @@ const handleOk = () => {
         // TODO 使用 html-to-text 转换为纯文本 构建纯文本文档树，用来支撑搜索，大纲，插入导图内超链接等功能
         // props.node.nodeData.data.kmindParams = `测试额外数据`;
     } else {
-        props.node.setNote(editorContent.value);
+        // 即使编辑器为空，editorContent.value也会有一个p标签，所以需要判断一下
+        if (editorContent.value !== '<p><br></p>') {
+            props.node.setNote(editorContent.value);
+        } else {
+            props.node.setNote('');
+        }
     }
     visible.value = false;
 };
