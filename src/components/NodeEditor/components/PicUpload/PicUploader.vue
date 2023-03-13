@@ -102,7 +102,7 @@ const visible = computed({
 });
 const handlePicUpload = async (info: UploadChangeParam) => {
     await uploadAsset({ file: info.file }).then((res) => {
-        picUrl.value = res.data.succMap[info.file.name];
+        picUrl.value = `/${res.data.succMap[info.file.name]}`;
     });
 };
 
