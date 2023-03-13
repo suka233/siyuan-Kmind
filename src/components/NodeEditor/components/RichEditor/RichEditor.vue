@@ -125,7 +125,7 @@ const handlePicLoad = async (files: FileList) => {
     quill.value.insertEmbed(
         range.index,
         'image',
-        `${import.meta.env.VITE_BASE_URL}${picUrl}`,
+        `${import.meta.env.VITE_BASE_URL}/${picUrl}`,
     );
 };
 
