@@ -44,9 +44,6 @@ export const usePublicStore = defineStore('app-public', () => {
 
     // region map相关
     const kmind = ref();
-    const setKmind = ({ kmind: map }) => {
-        kmind.value = map;
-    };
     const treeData = ref();
     // 递归展开tree
     const expandTree = (data) => {
@@ -82,12 +79,8 @@ export const usePublicStore = defineStore('app-public', () => {
     // endregion
 
     // region 节点相关
-    const node = ref();
     const activeNodeList = ref<any[]>([]);
-    const setNode = ({ node: _node, activeNodeList: _activeNodeList = [] }) => {
-        node.value = _node;
-        activeNodeList.value = _activeNodeList;
-    };
+    const node = ref<any>({});
 
     // 当前节点备注content
     const noteContent = ref<string>();
@@ -193,10 +186,8 @@ export const usePublicStore = defineStore('app-public', () => {
         isDev,
         node,
         activeNodeList,
-        setNode,
         kmind,
         treeData,
-        setKmind,
         buildTreeData,
         backEnd,
         forwardEnd,

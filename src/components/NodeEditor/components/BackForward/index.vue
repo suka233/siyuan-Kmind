@@ -30,18 +30,14 @@ import { usePublicStore } from '/@/store/modules/public';
 import { toRefs } from 'vue';
 import { RollbackOutlined } from '@ant-design/icons-vue';
 const publicStore = usePublicStore();
-const { backEnd, forwardEnd } = toRefs(publicStore);
-const props = defineProps<{
-    node: any;
-    kmind: any;
-}>();
+const { backEnd, forwardEnd, kmind } = toRefs(publicStore);
 
 const handleBack = () => {
-    props.kmind.execCommand('BACK');
+    kmind.value.execCommand('BACK');
 };
 
 const handleForward = () => {
-    props.kmind.execCommand('FORWARD');
+    kmind.value.execCommand('FORWARD');
 };
 </script>
 

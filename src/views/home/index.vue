@@ -15,15 +15,13 @@
         ></div>
         <node-editor
             ref="nodeEditorRef"
-            :node="node"
-            :kmind="kmind"
             class="fixed top-5 left-5"
         ></node-editor>
         <side-bar-trigger></side-bar-trigger>
 
         <theme :kmind="kmind"></theme>
         <map-structure :kmind="kmind"></map-structure>
-        <main-point :kmind="kmind"></main-point>
+        <main-point></main-point>
         <div v-if="isDev" class="fixed bottom-20 left-5">
             <p>节点数据：</p>
             <p>{{ node?.nodeData?.data }}</p>
@@ -61,12 +59,10 @@ const {
     setBackForwardStatus,
     saveMindMapData,
     buildTreeData,
-    setKmind,
-    setNode,
 } = usePublicStore();
 const publicStore = usePublicStore();
-const { mindMapData, isDev, noteVisible } = toRefs(publicStore);
-const kmind = ref();
+const { mindMapData, isDev, noteVisible, node, activeNodeList, kmind } =
+    toRefs(publicStore);
 MindMap.usePlugin(KeyboardNavigation)
     .usePlugin(Drag)
     .usePlugin(Select)
@@ -115,7 +111,6 @@ onMounted(() => {
             }
         },
     });
-    setKmind({ kmind: kmind.value });
 
     kmind.value.on('node_click', (_node, e) => {
         node.value = _node;
@@ -127,12 +122,10 @@ onMounted(() => {
         setLastClickNodeInfo({ left: e.x, top: e.y });
     });
 
-    kmind.value.on('node_active', (_node, activeNodeList) => {
+    kmind.value.on('node_active', (_node, _activeNodeList) => {
         // 编辑node会触发这个事件，所以这里要判断一下
         node.value = _node;
-
-        // 活动的node，存到仓库里
-        setNode({ node: _node, activeNodeList });
+        activeNodeList.value = _activeNodeList;
     });
 
     kmind.value.on('draw_click', () => {
@@ -199,7 +192,6 @@ onMounted(() => {
     //     true,
     // );
 });
-const node = ref();
 </script>
 
 <style scoped lang="less"></style>

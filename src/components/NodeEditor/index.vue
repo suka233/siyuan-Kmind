@@ -2,7 +2,7 @@
     <div :class="`animate-animated animate-slideInDown editor-card`">
         <!--      按钮区域-->
         <span class="node-editor-btn">
-            <back-forward :node="node" :kmind="kmind"></back-forward>
+            <back-forward></back-forward>
             <node-editor-btn
                 class="mr-2"
                 :disabled="!node"
@@ -30,7 +30,9 @@
                 @click="showPic = true"
             >
             </pic-upload-btn>
-            <icon-editor-btn :disabled="!node"></icon-editor-btn>
+            <icon-editor-btn
+                :disabled="!activeNodeList.length"
+            ></icon-editor-btn>
             <generalization :kmind="kmind" class="mr-2" :disabled="!node" />
             <reload-data class="mr-2" :kmind="kmind" />
 
@@ -104,7 +106,7 @@ import { message } from 'ant-design-vue';
 import ExportFile from '/@/components/NodeEditor/components/ExportFile/ExportFile.vue';
 const publicStore = usePublicStore();
 const { saveMindMapData } = publicStore;
-const { isDev } = toRefs(publicStore);
+const { isDev, node, activeNodeList, kmind } = toRefs(publicStore);
 
 // 编辑器是否显示
 const showRichEditor = ref(false);
@@ -114,10 +116,6 @@ const showPic = ref(false);
 const showTagsEditor = ref(false);
 const showExportFile = ref(false);
 const richEditorType = ref<'note' | 'node'>('note');
-const props = defineProps<{
-    node: any;
-    kmind: any;
-}>();
 
 const handleShowRichEditor = (type) => {
     showRichEditor.value = true;
@@ -126,17 +124,18 @@ const handleShowRichEditor = (type) => {
 defineExpose({ handleShowRichEditor });
 
 const handleSave = async () => {
-    await saveMindMapData({ data: props.kmind.getData(true) });
+    await saveMindMapData({ data: kmind.value.getData(true) });
     message.success('保存导图数据成功');
-    console.log('node', props.node);
-    console.log('kmind', props.kmind);
-    console.log('allData', JSON.stringify({ suka: props.kmind.getData(true) }));
+    console.log('node', node.value);
+    console.log('kmind', kmind.value);
+    console.log('allData', JSON.stringify({ suka: kmind.value.getData(true) }));
 };
 
 const test = () => {
-    // props.kmind.setData(testData.root);
-    console.log(props.kmind);
-    props.kmind.setFullData(Object.assign({}, testData, { layout: undefined }));
+    kmind.value.setData(testData.root);
+    console.log(node.value);
+    console.log(activeNodeList.value);
+    // props.kmind.setFullData(Object.assign({}, testData, { layout: undefined }));
     return;
     // props.kmind.setLayout(`logicalStructure`);
     // props.kmind.setLayout(testData.layout);
