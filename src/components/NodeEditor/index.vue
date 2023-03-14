@@ -132,9 +132,13 @@ const handleSave = async () => {
 };
 
 const test = () => {
-    kmind.value.setData(testData.root);
-    console.log(node.value);
-    console.log(activeNodeList.value);
+    console.log(kmind.value.renderer.copyNode());
+    navigator.clipboard.writeText(
+        JSON.stringify(kmind.value.renderer.copyNode()),
+    );
+    // kmind.value.setData(testData.root);
+    // console.log(node.value);
+    // console.log(activeNodeList.value);
     // props.kmind.setFullData(Object.assign({}, testData, { layout: undefined }));
     return;
     // props.kmind.setLayout(`logicalStructure`);

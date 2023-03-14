@@ -22,6 +22,7 @@
         <theme :kmind="kmind"></theme>
         <map-structure :kmind="kmind"></map-structure>
         <main-point></main-point>
+        <shortcut-key></shortcut-key>
         <div v-if="isDev" class="fixed bottom-20 left-5">
             <p>节点数据：</p>
             <p>{{ node?.nodeData?.data }}</p>
@@ -53,6 +54,7 @@ import SideBarTrigger from '/@/components/SideBarTrigger/index.vue';
 import MainPoint from '/@/components/MainPoint/index.vue';
 import Theme from '/@/components/Theme/index.vue';
 import MapStructure from '/@/components/MapStructure/index.vue';
+import ShortcutKey from '/@/components/ShortcutKey/index.vue';
 const {
     setLastClickNodeInfo,
     setNoteInfo,
