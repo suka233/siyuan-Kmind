@@ -136,7 +136,7 @@ const test = () => {
     navigator.clipboard.writeText(
         JSON.stringify(kmind.value.renderer.copyNode()),
     );
-    // kmind.value.setData(testData.root);
+    kmind.value.setData(testData.root);
     // console.log(node.value);
     // console.log(activeNodeList.value);
     // props.kmind.setFullData(Object.assign({}, testData, { layout: undefined }));

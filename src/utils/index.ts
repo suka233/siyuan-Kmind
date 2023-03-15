@@ -58,3 +58,36 @@ export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
     }
     return src;
 }
+
+// 是否是符合Node节点数据类型的多叉树
+// TODO 增加更严格的类型检查
+export const isMultiTree = (data: any) => {
+    // 检查节点是否是一个对象，并且是否包含一个children属性
+    if (
+        typeof data !== 'object' ||
+        typeof data?.data !== 'object' ||
+        !data.hasOwnProperty('children')
+    ) {
+        return false;
+    }
+
+    // 检查children属性是否是一个数组
+    if (!Array.isArray(data.children)) {
+        return false;
+    }
+
+    // 遍历children数组，递归检查每个子节点
+    data.children.forEach((child: any) => {
+        if (!isMultiTree(child)) {
+            return false;
+        }
+    });
+    // for (let i = 0; i < data.children.length; i++) {
+    //     if (!isMultiTree(data.children[i])) {
+    //         return false;
+    //     }
+    // }
+
+    // 如果所有子节点都符合要求，则返回true
+    return true;
+};

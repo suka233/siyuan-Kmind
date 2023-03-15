@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { getWidgetBlockInfo } from '/@/utils';
 import { setBlockAttrs } from '/@/api/public';
 import { message } from 'ant-design-vue';
@@ -43,7 +43,7 @@ export const usePublicStore = defineStore('app-public', () => {
     // endregion
 
     // region map相关
-    const kmind = ref();
+    const kmind = ref<any>();
     const treeData = ref();
     // 递归展开tree
     const expandTree = (data) => {
@@ -81,6 +81,10 @@ export const usePublicStore = defineStore('app-public', () => {
     // region 节点相关
     const activeNodeList = ref<any[]>([]);
     const node = ref<any>({});
+    // 复制的节点
+    const copyNode = ref<any>({});
+    // 复制的节点的json数据,用于跨导图复制节点信息
+    const copyNodeJson = computed(() => JSON.stringify(copyNode.value));
 
     // 当前节点备注content
     const noteContent = ref<string>();
@@ -172,7 +176,17 @@ export const usePublicStore = defineStore('app-public', () => {
 
     // endregion
 
+    // region 右键菜单相关
+    const ctxMenuLeft = ref<string>();
+    const ctxMenuTop = ref<string>();
+    const ctxMenuVisible = ref<boolean>(false);
+    const ctxMenuType = ref<string>();
+
+    // endregion
+
     return {
+        copyNode,
+        copyNodeJson,
         noteLeft,
         noteTop,
         noteContent,
@@ -194,6 +208,10 @@ export const usePublicStore = defineStore('app-public', () => {
         setBackForwardStatus,
         activeSidebar,
         setActiveSidebar,
+        ctxMenuLeft,
+        ctxMenuTop,
+        ctxMenuVisible,
+        ctxMenuType,
     };
 });
 

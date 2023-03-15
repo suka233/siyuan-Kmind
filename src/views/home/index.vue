@@ -28,6 +28,7 @@
             <p>{{ node?.nodeData?.data }}</p>
         </div>
         <show-note></show-note>
+        <!--        <context-menu></context-menu>-->
     </div>
 </template>
 
@@ -55,6 +56,7 @@ import MainPoint from '/@/components/MainPoint/index.vue';
 import Theme from '/@/components/Theme/index.vue';
 import MapStructure from '/@/components/MapStructure/index.vue';
 import ShortcutKey from '/@/components/ShortcutKey/index.vue';
+// import ContextMenu from '/@/components/ContextMenu/index.vue';
 const {
     setLastClickNodeInfo,
     setNoteInfo,
@@ -63,8 +65,19 @@ const {
     buildTreeData,
 } = usePublicStore();
 const publicStore = usePublicStore();
-const { mindMapData, isDev, noteVisible, node, activeNodeList, kmind } =
-    toRefs(publicStore);
+const {
+    mindMapData,
+    isDev,
+    noteVisible,
+    node,
+    activeNodeList,
+    kmind,
+    ctxMenuLeft,
+    ctxMenuTop,
+    ctxMenuType,
+    ctxMenuVisible,
+    copyNode,
+} = toRefs(publicStore);
 MindMap.usePlugin(KeyboardNavigation)
     .usePlugin(Drag)
     .usePlugin(Select)
@@ -114,6 +127,7 @@ onMounted(() => {
         },
     });
 
+    // 导图节点点击
     kmind.value.on('node_click', (_node, e) => {
         node.value = _node;
         if (e.target.attributes['p-id']?.nodeValue === '8793') {
@@ -124,12 +138,14 @@ onMounted(() => {
         setLastClickNodeInfo({ left: e.x, top: e.y });
     });
 
+    // 导图节点激活
     kmind.value.on('node_active', (_node, _activeNodeList) => {
         // 编辑node会触发这个事件，所以这里要判断一下
         node.value = _node;
         activeNodeList.value = _activeNodeList;
     });
 
+    // 导图点击
     kmind.value.on('draw_click', () => {
         // 关闭没有正确关闭的备注展示框
         setNoteInfo({ visible: false });
@@ -138,9 +154,64 @@ onMounted(() => {
         // node.value = null;
     });
 
+    // 导图数据变化
     kmind.value.on('back_forward', (activeHistoryIndex, length) => {
         // 设置回退前进状态
         setBackForwardStatus(activeHistoryIndex, length);
+    });
+
+    // 导图右击
+    kmind.value.on('contextmenu', (e) => {
+        ctxMenuLeft.value = e.x;
+        ctxMenuTop.value = e.y;
+        ctxMenuVisible.value = true;
+        ctxMenuType.value = 'mindMap';
+    });
+
+    // 节点右击
+    kmind.value.on('node_contextmenu', (e, _node) => {
+        ctxMenuLeft.value = e.x;
+        ctxMenuTop.value = e.y;
+        ctxMenuVisible.value = true;
+        ctxMenuType.value = 'node';
+        node.value = _node;
+    });
+
+    // 绑定自定义快捷键
+    kmind.value.keyCommand.addShortcut('Control+c', () => {
+        // kmind.value.renderer.copyNode() 在没有选中节点的时候会返回undefined
+        kmind.value.renderer.copyNode() &&
+            (copyNode.value = kmind.value.renderer.copyNode());
+    });
+    kmind.value.keyCommand.addShortcut('Control+v', () => {
+        kmind.value.execCommand('PASTE_NODE', copyNode.value);
+        // kmind.value.execCommand('PASTE_NODE', {
+        //     data: {
+        //         text: 'ddd',
+        //         expand: true,
+        //         isActive: false,
+        //         fontFamily: '微软雅黑, Microsoft YaHei',
+        //         color: '#6a6d6c',
+        //         fontStyle: 'normal',
+        //         fontWeight: 'normal',
+        //         fontSize: 14,
+        //         textDecoration: 'none',
+        //         richText: true,
+        //     },
+        //     // children: [],
+        // });
+    });
+    kmind.value.keyCommand.addShortcut('Control+x', () => {
+        kmind.value.execCommand('CUT_NODE', (e) => (copyNode.value = e));
+    });
+    kmind.value.keyCommand.addShortcut('Control+s', async () => {
+        await saveMindMapData({ data: kmind.value.getData(true) });
+
+        console.log(activeNodeList.value);
+        // 当有节点激活的时候，隐藏保存成功的提示
+        if (!activeNodeList.value.length) {
+            message.success('保存导图数据成功');
+        }
     });
 
     // 自动加载缓存数据
