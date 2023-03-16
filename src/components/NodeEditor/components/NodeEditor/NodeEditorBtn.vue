@@ -1,8 +1,8 @@
 <template>
     <a-button>
         <span class="align-middle">节点</span>
-        <edit-outlined class="align-middle"></edit-outlined
-    ></a-button>
+        <edit-outlined class="align-middle"
+    /></a-button>
 </template>
 
 <script lang="tsx">

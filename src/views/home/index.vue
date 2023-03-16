@@ -13,22 +13,19 @@
                 bottom: 0;
             "
         ></div>
-        <node-editor
-            ref="nodeEditorRef"
-            class="fixed top-5 left-5"
-        ></node-editor>
-        <side-bar-trigger></side-bar-trigger>
+        <node-editor ref="nodeEditorRef" class="fixed top-5 left-5" />
+        <side-bar-trigger />
 
-        <theme :kmind="kmind"></theme>
-        <map-structure :kmind="kmind"></map-structure>
-        <main-point></main-point>
-        <shortcut-key></shortcut-key>
+        <theme :kmind="kmind" />
+        <map-structure :kmind="kmind" />
+        <main-point />
+        <shortcut-key />
         <div v-if="isDev" class="fixed bottom-20 left-5">
             <p>节点数据：</p>
             <p>{{ node?.nodeData?.data }}</p>
         </div>
-        <show-note></show-note>
-        <context-menu></context-menu>
+        <show-note />
+        <context-menu />
     </div>
 </template>
 

@@ -5,7 +5,7 @@
         title="回退（撤销）"
         @click="handleBack"
     >
-        <rollback-outlined class="align-middle"></rollback-outlined>
+        <rollback-outlined class="align-middle" />
     </a-button>
     <a-button
         :disabled="forwardEnd"
@@ -15,8 +15,7 @@
         ><rollback-outlined
             class="align-middle"
             style="transform: rotateY(180deg)"
-        ></rollback-outlined
-    ></a-button>
+    /></a-button>
 </template>
 
 <script lang="tsx">

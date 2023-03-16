@@ -4,7 +4,7 @@
         <partition-outlined
             class="align-middle"
             style="transform: rotateY(180deg)"
-        ></partition-outlined>
+        />
     </a-button>
 </template>
 

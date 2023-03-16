@@ -6,14 +6,14 @@
                 addon-before="链接:"
                 allow-clear
                 placeholder="请输入链接地址"
-            ></a-input>
+            />
             <a-input
                 v-model:value="link.name"
                 addon-before="名称:"
                 class="mt-2"
                 allow-clear
                 placeholder="请输入链接名称"
-            ></a-input>
+            />
         </div>
     </a-modal>
 </template>

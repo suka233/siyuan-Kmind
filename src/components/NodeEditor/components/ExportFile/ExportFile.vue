@@ -8,7 +8,7 @@
                 allow-clear
                 placeholder="请输入导出文件名称"
                 class="w-full"
-            ></a-input>
+            />
             <a-checkbox v-model:checked="includeConfig" class="text-gray-500/80"
                 >是否包含主题，结构等配置数据？</a-checkbox
             >

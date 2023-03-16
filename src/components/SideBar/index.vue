@@ -1,9 +1,6 @@
 <template>
     <div class="side-bar-container">
-        <close-outlined
-            class="close-button"
-            @click="setActiveSidebar('')"
-        ></close-outlined>
+        <close-outlined class="close-button" @click="setActiveSidebar('')" />
         <div v-if="title" class="side-bar-header">{{ title }}</div>
         <div class="side-bar-content">
             <slot></slot>
@@ -40,9 +37,11 @@ defineProps<{
     display: flex;
     flex-direction: column;
     transition: all 0.3s;
+
     &.show {
         left: 0;
     }
+
     .close-button {
         @apply top-3;
         position: absolute;
@@ -50,6 +49,7 @@ defineProps<{
         font-size: 16px;
         cursor: pointer;
     }
+
     .side-bar-header {
         width: 100%;
         height: 44px;

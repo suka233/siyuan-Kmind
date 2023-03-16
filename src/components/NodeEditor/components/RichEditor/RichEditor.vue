@@ -17,8 +17,7 @@
                 placeholder="请输入内容"
                 @click="handleClick"
                 @ready="handleReady"
-            >
-            </quill-editor>
+            />
         </div>
     </a-modal>
 </template>

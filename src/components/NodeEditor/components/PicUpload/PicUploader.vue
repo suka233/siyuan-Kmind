@@ -9,11 +9,8 @@
             <img v-if="picUrl" ref="img" :src="computedPicUrl" alt="pic" />
 
             <div v-else>
-                <loading-outlined v-if="picLoading"></loading-outlined>
-                <file-image-two-tone
-                    v-else
-                    class="text-4xl mb-4"
-                ></file-image-two-tone>
+                <loading-outlined v-if="picLoading" />
+                <file-image-two-tone v-else class="text-4xl mb-4" />
                 <p>点击或者拖拽到此区域上传图片</p>
                 <p class="text-gray-500/80">
                     注意：图片会默认保存在思源的/assets/目录下，一旦上传图片，只能手动去目录下删除图片资源，或者使用思源笔记的
@@ -27,7 +24,7 @@
             class="mt-2"
             allow-clear
             placeholder="支持手动输入图片地址"
-        ></a-input>
+        />
         <div class="mt-2">
             <a-input-number
                 v-model:value="picWidth"
