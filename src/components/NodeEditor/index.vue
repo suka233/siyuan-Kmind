@@ -2,37 +2,33 @@
     <div :class="`animate-animated animate-slideInDown editor-card`">
         <!--      按钮区域-->
         <span class="node-editor-btn">
-            <back-forward></back-forward>
+            <back-forward />
             <node-editor-btn
                 class="mr-2"
                 :disabled="!node"
                 @click="handleShowRichEditor('node')"
-            ></node-editor-btn>
+            />
             <tags-editor-btn
                 :disabled="!node"
                 class="mr-2"
                 @click="showTagsEditor = true"
-            ></tags-editor-btn>
+            />
             <hyper-link-btn
                 :disabled="!node"
                 class="mr-2"
                 @click="showLinkEditor = true"
-            ></hyper-link-btn>
+            />
             <remark-note-btn
                 :disabled="!node"
                 class="mr-2"
                 @click="handleShowRichEditor('note')"
-            >
-            </remark-note-btn>
+            />
             <pic-upload-btn
                 :disabled="!node"
                 class="mr-2"
                 @click="showPic = true"
-            >
-            </pic-upload-btn>
-            <icon-editor-btn
-                :disabled="!activeNodeList.length"
-            ></icon-editor-btn>
+            />
+            <icon-editor-btn :disabled="!activeNodeList.length" />
             <generalization :kmind="kmind" class="mr-2" :disabled="!node" />
             <reload-data class="mr-2" :kmind="kmind" />
 
@@ -41,10 +37,7 @@
         </span>
         <!--      保存导入区-->
         <span class="map-import-save-btn">
-            <export-file-btn
-                class="mr-2"
-                @click="showExportFile = true"
-            ></export-file-btn>
+            <export-file-btn class="mr-2" @click="showExportFile = true" />
         </span>
         <!--      功能实现区-->
         <div>
@@ -57,22 +50,24 @@
                 :kmind="kmind"
                 :node="node"
                 :type="richEditorType"
-            ></rich-editor>
+            />
 
             <hyper-link-editor
                 v-model:visible="showLinkEditor"
                 :node="node"
                 :kmind="kmind"
-            >
-            </hyper-link-editor>
-            <pic-uploader v-model:visible="showPic" :node="node" :kmind="kmind">
-            </pic-uploader>
+            />
+            <pic-uploader
+                v-model:visible="showPic"
+                :node="node"
+                :kmind="kmind"
+            />
             <tags-editor
                 v-model:visible="showTagsEditor"
                 :node="node"
                 :kmind="kmind"
-            ></tags-editor>
-            <export-file v-model:visible="showExportFile"></export-file>
+            />
+            <export-file v-model:visible="showExportFile" />
         </div>
     </div>
 </template>
@@ -255,10 +250,12 @@ const testData = {
     box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.06);
     border-radius: 4px;
     padding: 10px;
+
     .node-editor-btn {
         @apply pr-6;
         border-right: rgba(0, 0, 0, 0.06) solid 1px;
     }
+
     .map-import-save-btn {
         @apply pl-6;
     }
