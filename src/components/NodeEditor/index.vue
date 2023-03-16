@@ -124,8 +124,9 @@ const handleShowRichEditor = (type) => {
 defineExpose({ handleShowRichEditor });
 
 const handleSave = async () => {
-    await saveMindMapData({ data: kmind.value.getData(true) });
-    message.success('保存导图数据成功');
+    await saveMindMapData({ data: kmind.value.getData(true) }).then(() =>
+        message.success('保存导图数据成功'),
+    );
     console.log('node', node.value);
     console.log('kmind', kmind.value);
     console.log('allData', JSON.stringify({ suka: kmind.value.getData(true) }));

@@ -150,7 +150,7 @@ export const usePublicStore = defineStore('app-public', () => {
                 // console.log(res);
             })
             .catch((e) => {
-                message.error('导图数据保存失败');
+                message.error('导图数据保存失败，请手动导出备份数据！');
                 console.log(e);
             });
     };
