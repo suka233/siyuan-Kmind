@@ -38,8 +38,10 @@ interface IMapFullData {
 }
 export const usePublicStore = defineStore('app-public', () => {
     // region 环境相关
-    const initIsDev = () => process.env.NODE_ENV === 'development';
-    const isDev = ref(initIsDev());
+    const debuggerMode = ref<boolean>(false);
+    const isDev = computed(() => {
+        return process.env.NODE_ENV === 'development' || debuggerMode.value;
+    });
     // endregion
 
     // region map相关
@@ -156,13 +158,19 @@ export const usePublicStore = defineStore('app-public', () => {
     };
 
     const init = () => {
-        const { id, mindMapData: data } = getWidgetBlockInfo();
+        const {
+            id,
+            mindMapData: data,
+            debuggerMode: _debuggerMode,
+        } = getWidgetBlockInfo();
         blockID.value = id;
         if (data) {
             mindMapData.value = JSON.parse(data);
         }
-
-        // mindMapData.value = data;
+        // 如果存在值，则为debugger模式
+        if (_debuggerMode) {
+            debuggerMode.value = true;
+        }
     };
 
     init();

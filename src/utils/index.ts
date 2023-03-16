@@ -35,10 +35,13 @@ export const getWidgetBlockInfo = (): IWidgetBlockAttr => {
     const id =
         blockNode?.getAttribute('data-node-id') || '20230302162223-3rxpzda';
     const mindMapData = blockNode?.getAttribute('custom-mind-map-data') || '';
+    // 根据挂件属性开启debugger模式
+    const debuggerMode = blockNode?.getAttribute('custom-debugger') || '';
 
     return {
         id,
         mindMapData,
+        debuggerMode,
     };
 };
 export function is(val: unknown, type: string) {
