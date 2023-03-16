@@ -80,7 +80,8 @@ export const usePublicStore = defineStore('app-public', () => {
 
     // region 节点相关
     const activeNodeList = ref<any[]>([]);
-    const node = ref<any>({});
+    // const node = ref<any>({});
+    const node = computed(() => activeNodeList.value[0]);
     // 复制的节点
     const copyNode = ref<any>({});
     // 复制的节点的json数据,用于跨导图复制节点信息
@@ -180,7 +181,7 @@ export const usePublicStore = defineStore('app-public', () => {
     const ctxMenuLeft = ref<string>();
     const ctxMenuTop = ref<string>();
     const ctxMenuVisible = ref<boolean>(false);
-    const ctxMenuType = ref<string>();
+    const ctxMenuType = ref<'map' | 'node'>();
 
     // endregion
 

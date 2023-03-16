@@ -28,7 +28,7 @@
             <p>{{ node?.nodeData?.data }}</p>
         </div>
         <show-note></show-note>
-        <!--        <context-menu></context-menu>-->
+        <context-menu></context-menu>
     </div>
 </template>
 
@@ -56,7 +56,7 @@ import MainPoint from '/@/components/MainPoint/index.vue';
 import Theme from '/@/components/Theme/index.vue';
 import MapStructure from '/@/components/MapStructure/index.vue';
 import ShortcutKey from '/@/components/ShortcutKey/index.vue';
-// import ContextMenu from '/@/components/ContextMenu/index.vue';
+import ContextMenu from '/@/components/ContextMenu/index.vue';
 const {
     setLastClickNodeInfo,
     setNoteInfo,
@@ -129,7 +129,6 @@ onMounted(() => {
 
     // 导图节点点击
     kmind.value.on('node_click', (_node, e) => {
-        node.value = _node;
         if (e.target.attributes['p-id']?.nodeValue === '8793') {
             // 点击了备注的svg图像
             // TODO 由于这里会点击到其它的svg图像，所以导致这个事件触发率不是很高，要看看源码是怎么实现的这个备注显示逻辑
@@ -141,7 +140,6 @@ onMounted(() => {
     // 导图节点激活
     kmind.value.on('node_active', (_node, _activeNodeList) => {
         // 编辑node会触发这个事件，所以这里要判断一下
-        node.value = _node;
         activeNodeList.value = _activeNodeList;
     });
 
@@ -149,9 +147,6 @@ onMounted(() => {
     kmind.value.on('draw_click', () => {
         // 关闭没有正确关闭的备注展示框
         setNoteInfo({ visible: false });
-
-        // 清空node
-        // node.value = null;
     });
 
     // 导图数据变化
@@ -165,7 +160,7 @@ onMounted(() => {
         ctxMenuLeft.value = e.x;
         ctxMenuTop.value = e.y;
         ctxMenuVisible.value = true;
-        ctxMenuType.value = 'mindMap';
+        ctxMenuType.value = 'map';
     });
 
     // 节点右击
@@ -174,7 +169,6 @@ onMounted(() => {
         ctxMenuTop.value = e.y;
         ctxMenuVisible.value = true;
         ctxMenuType.value = 'node';
-        node.value = _node;
     });
 
     // 绑定自定义快捷键
