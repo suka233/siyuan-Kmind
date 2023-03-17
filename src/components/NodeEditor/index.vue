@@ -33,7 +33,7 @@
             <reload-data class="mr-2" :kmind="kmind" />
 
             <a-button class="mr-2" @click="handleSave">保存</a-button>
-            <a-button v-if="isDev" @click="test">测试</a-button>
+            <dev-component v-if="isDev" />
         </span>
         <!--      保存导入区-->
         <span class="map-import-save-btn">
@@ -99,6 +99,7 @@ import ExportFileBtn from './components/ExportFile/ExportFileBtn.vue';
 import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
 import ExportFile from '/@/components/NodeEditor/components/ExportFile/ExportFile.vue';
+import DevComponent from './components/DevComponent/index.vue';
 const publicStore = usePublicStore();
 const { saveMindMapData } = publicStore;
 const { isDev, node, activeNodeList, kmind } = toRefs(publicStore);
@@ -122,123 +123,6 @@ const handleSave = async () => {
     await saveMindMapData({ data: kmind.value.getData(true) }).then(() =>
         message.success('保存导图数据成功'),
     );
-    console.log('node', node.value);
-    console.log('kmind', kmind.value);
-    console.log('allData', JSON.stringify({ suka: kmind.value.getData(true) }));
-};
-
-const test = () => {
-    console.log(kmind.value.renderer.copyNode());
-    navigator.clipboard.writeText(
-        JSON.stringify(kmind.value.renderer.copyNode()),
-    );
-    kmind.value.setData(testData.root);
-    // console.log(node.value);
-    // console.log(activeNodeList.value);
-    // props.kmind.setFullData(Object.assign({}, testData, { layout: undefined }));
-    return;
-    // props.kmind.setLayout(`logicalStructure`);
-    // props.kmind.setLayout(testData.layout);
-    // props.kmind.setTheme(testData.theme.template);
-    // props.kmind.setThemeConfig(testData.theme.config);
-    // props.kmind.view.setTransformData(testData.view);
-    // props.kmind.setFullData(testData);
-};
-
-const testData = {
-    layout: 'logicalStructure',
-    root: {
-        data: {
-            text: '<p><strong style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;; color: rgb(255, 255, 255); font-size: 16px;">asdasdasd</strong></p>',
-            expand: true,
-            isActive: false,
-            fontFamily: '微软雅黑, Microsoft YaHei',
-            color: '#fff',
-            fontStyle: 'normal',
-            fontWeight: 'bold',
-            fontSize: 16,
-            textDecoration: 'none',
-            richText: true,
-        },
-        children: [
-            {
-                data: {
-                    text: '<p><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;; color: rgb(86, 86, 86); font-size: 16px;">二级节点</span></p>',
-                    expand: true,
-                    isActive: false,
-                    fontFamily: '微软雅黑, Microsoft YaHei',
-                    color: '#565656',
-                    fontStyle: 'normal',
-                    fontWeight: 'normal',
-                    fontSize: 16,
-                    textDecoration: 'none',
-                    richText: true,
-                },
-                children: [],
-            },
-            {
-                data: {
-                    text: '<p><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;; color: rgb(86, 86, 86); font-size: 16px;">二级节点</span></p>',
-                    expand: true,
-                    isActive: false,
-                    fontFamily: '微软雅黑, Microsoft YaHei',
-                    color: '#565656',
-                    fontStyle: 'normal',
-                    fontWeight: 'normal',
-                    fontSize: 16,
-                    textDecoration: 'none',
-                    richText: true,
-                    tag: ['dddd', '22', '77', 'wsdad', '333'],
-                    note: '<p>asdasdasdasd</p>',
-                },
-                children: [],
-            },
-            {
-                data: {
-                    text: '<p><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;; color: rgb(86, 86, 86); font-size: 16px;">1111</span></p>',
-                    expand: true,
-                    isActive: false,
-                    fontFamily: '微软雅黑, Microsoft YaHei',
-                    color: '#565656',
-                    fontStyle: 'normal',
-                    fontWeight: 'normal',
-                    fontSize: 16,
-                    textDecoration: 'none',
-                    richText: true,
-                },
-                children: [],
-            },
-        ],
-    },
-    theme: {
-        template: 'default',
-        config: {},
-    },
-    view: {
-        transform: {
-            scaleX: 1.3000000000000003,
-            scaleY: 1.3000000000000003,
-            shear: 0,
-            rotate: 0,
-            translateX: -1092.3107421875006,
-            translateY: -368.0166666666669,
-            originX: 0,
-            originY: 0,
-            a: 1.3000000000000003,
-            b: 0,
-            c: 0,
-            d: 1.3000000000000003,
-            e: -1092.3107421875006,
-            f: -368.0166666666669,
-        },
-        state: {
-            scale: 1.3000000000000003,
-            x: -741.0107421875002,
-            y: -228.66666666666674,
-            sx: -741.0107421875002,
-            sy: -228.66666666666674,
-        },
-    },
 };
 </script>
 
