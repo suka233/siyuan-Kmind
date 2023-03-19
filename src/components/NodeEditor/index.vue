@@ -57,11 +57,7 @@
                 :node="node"
                 :kmind="kmind"
             />
-            <pic-uploader
-                v-model:visible="showPic"
-                :node="node"
-                :kmind="kmind"
-            />
+            <pic-to-base64-modal v-model:visible="showPic" />
             <tags-editor
                 v-model:visible="showTagsEditor"
                 :node="node"
@@ -86,7 +82,6 @@ import HyperLinkBtn from './components/HyperLink/HyperLinkBtn.vue';
 import HyperLinkEditor from './components/HyperLink/HyperLinkEditor.vue';
 import RemarkNoteBtn from './components/RemarkNote/RemarkNoteBtn.vue';
 import PicUploadBtn from './components/PicUpload/PicUploadBtn.vue';
-import PicUploader from './components/PicUpload/PicUploader.vue';
 import TagsEditorBtn from './components/TagsEditor/TagsEditorBtn.vue';
 import TagsEditor from './components/TagsEditor/TagsEditor.vue';
 import IconEditorBtn from './components/IconEditor/IconEditorBtn.vue';
@@ -100,6 +95,7 @@ import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
 import ExportFile from '/@/components/NodeEditor/components/ExportFile/ExportFile.vue';
 import DevComponent from './components/DevComponent/index.vue';
+import PicToBase64Modal from './components/PicUpload/PicToBase64Modal.vue';
 const publicStore = usePublicStore();
 const { saveMindMapData } = publicStore;
 const { isDev, node, activeNodeList, kmind } = toRefs(publicStore);

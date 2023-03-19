@@ -21,6 +21,7 @@ enum Api {
     SetBlockAttrs = '/api/attr/setBlockAttrs',
     UploadAsset = '/api/asset/upload',
     PutFile = '/api/file/putFile',
+    GetFile = '/api/file/getFile',
 }
 
 /**
@@ -138,4 +139,11 @@ export const putFile = ({
     return http.post(Api.PutFile, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
     });
+};
+
+/**
+ * 获取文件
+ */
+export const getFile = ({ path }) => {
+    return 向思源请求数据(Api.GetFile, { path });
 };

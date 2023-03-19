@@ -32,8 +32,8 @@ export default {
 import { computed, ref, watch } from 'vue';
 import { QuillEditor, Quill } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import { uploadAsset } from '/@/api/public';
-import { message } from 'ant-design-vue';
+// import { uploadAsset } from '/@/api/public';
+// import { message } from 'ant-design-vue';
 const props = defineProps<{
     visible: boolean;
     kmind: any;
@@ -86,47 +86,47 @@ const handleReady = (e) => {
     quill.value = e;
 
     // 拦截粘贴图片事件，避免转为base64
-    quill.value.root.addEventListener(
-        'paste',
-        (e) => {
-            if (
-                e.clipboardData &&
-                e.clipboardData.files &&
-                e.clipboardData.files.length
-            ) {
-                e.preventDefault();
-                handlePicLoad(e.clipboardData.files);
-            }
-        },
-        true,
-    );
+    // quill.value.root.addEventListener(
+    //     'paste',
+    //     (e) => {
+    //         if (
+    //             e.clipboardData &&
+    //             e.clipboardData.files &&
+    //             e.clipboardData.files.length
+    //         ) {
+    //             e.preventDefault();
+    //             handlePicLoad(e.clipboardData.files);
+    //         }
+    //     },
+    //     true,
+    // );
 };
 
-const handlePicLoad = async (files: FileList) => {
-    const file = files[0];
-    if (!file) {
-        return;
-    }
-    const isImage = file.type.indexOf('image/') === 0;
-    if (!isImage) {
-        message.error('暂时仅支持图片格式');
-        return;
-    }
-
-    const hide = message.loading('正在将图片上传到思源文件夹...', 0);
-    const picUrl = await uploadAsset({ file }).then((res) => {
-        hide();
-        message.success('图片上传成功');
-        return res.data.succMap[file.name];
-    });
-    const range = quill.value.getSelection();
-    // TODO 有个bug,插入图片后，光标不能定位到图片后面，需要开关一下编辑器才能定位到图片后面
-    quill.value.insertEmbed(
-        range.index,
-        'image',
-        `${import.meta.env.VITE_BASE_URL}/${picUrl}`,
-    );
-};
+// const handlePicLoad = async (files: FileList) => {
+//     const file = files[0];
+//     if (!file) {
+//         return;
+//     }
+//     const isImage = file.type.indexOf('image/') === 0;
+//     if (!isImage) {
+//         message.error('暂时仅支持图片格式');
+//         return;
+//     }
+//
+//     const hide = message.loading('正在将图片上传到思源文件夹...', 0);
+//     const picUrl = await uploadAsset({ file }).then((res) => {
+//         hide();
+//         message.success('图片上传成功');
+//         return res.data.succMap[file.name];
+//     });
+//     const range = quill.value.getSelection();
+//     // TODO 有个bug,插入图片后，光标不能定位到图片后面，需要开关一下编辑器才能定位到图片后面
+//     quill.value.insertEmbed(
+//         range.index,
+//         'image',
+//         `${import.meta.env.VITE_BASE_URL}/${picUrl}`,
+//     );
+// };
 
 const init = () => {
     if (props.type === 'node') {

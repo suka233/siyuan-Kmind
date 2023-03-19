@@ -17,15 +17,15 @@
                 button-style="solid"
                 class="mt-8"
             >
-                <a-radio-button disabled value="kmind"
+                <a-radio-button disabled value="kmind" title="开发中...暂不开放"
                     >专有文件 ( .kmind )</a-radio-button
                 >
                 <a-radio-button value="json">json文件 ( .json )</a-radio-button>
-                <a-radio-button disabled value="png"
+                <a-radio-button disabled value="png" title="开发中...暂不开放"
                     >图片文件 ( .png )</a-radio-button
                 >
                 <a-radio-button value="svg">svg文件 ( .svg )</a-radio-button>
-                <a-radio-button disabled value="pdf"
+                <a-radio-button disabled value="pdf" title="开发中...暂不开放"
                     >pdf文件 ( .pdf )</a-radio-button
                 >
             </a-radio-group>
@@ -71,7 +71,7 @@ const visible = computed({
     },
 });
 
-const fileName = ref('思维导图');
+const fileName = ref('kmind');
 const fileType = ref('json');
 const includeConfig = ref(true);
 

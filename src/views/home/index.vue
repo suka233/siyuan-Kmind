@@ -60,6 +60,7 @@ const {
     setBackForwardStatus,
     saveMindMapData,
     buildTreeData,
+    init,
 } = usePublicStore();
 const publicStore = usePublicStore();
 const {
@@ -83,6 +84,7 @@ MindMap.usePlugin(KeyboardNavigation)
 
 const kmindRef = ref();
 const nodeEditorRef = ref();
+
 onMounted(() => {
     kmind.value = new MindMap({
         el: document.getElementById('mindMapContainer'),
@@ -99,9 +101,9 @@ onMounted(() => {
                 }
             },
             hide() {
-                if (noteVisible.value) {
-                    setNoteInfo({ visible: false });
-                }
+                // if (noteVisible.value) {
+                //     setNoteInfo({ visible: false });
+                // }
             },
         },
         customHandleMousewheel: (e) => {
@@ -256,6 +258,8 @@ onMounted(() => {
     //     true,
     // );
 });
+
+await init();
 </script>
 
 <style scoped lang="less"></style>

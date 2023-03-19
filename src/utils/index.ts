@@ -3,10 +3,9 @@ import { IWidgetBlockAttr } from './types';
 export async function 向思源请求数据(
     url: string,
     data: any,
-    { headers } = { headers: {} },
+    { headers }: { headers?: any } = { headers: undefined },
 ): Promise<any> {
     let resData = null;
-    // console.log(headers ? data : JSON.stringify(data));
     await fetch(url, {
         body: headers ? data : JSON.stringify(data),
         method: 'POST',
@@ -37,11 +36,17 @@ export const getWidgetBlockInfo = (): IWidgetBlockAttr => {
     const mindMapData = blockNode?.getAttribute('custom-mind-map-data') || '';
     // 根据挂件属性开启debugger模式
     const debuggerMode = blockNode?.getAttribute('custom-debugger') || '';
+    // TODO 打包的时候把后面的地址改成空
+    // /data/assets/kmind-20230302162223-3rxpzda.kmind
+    const filePath =
+        blockNode?.getAttribute('custom-file-path') ||
+        '/data/assets/kmind-20230302162223-3rxpzda.kmind';
 
     return {
         id,
         mindMapData,
         debuggerMode,
+        filePath,
     };
 };
 export function is(val: unknown, type: string) {

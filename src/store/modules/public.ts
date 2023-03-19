@@ -1,41 +1,10 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { getWidgetBlockInfo } from '/@/utils';
-import { setBlockAttrs } from '/@/api/public';
+import { setBlockAttrs, getFile, uploadAsset } from '/@/api/public';
 import { message } from 'ant-design-vue';
 import store from '/@/store';
 import * as process from 'process';
-type NodeTreeType = {
-    title?: string;
-    key?: string;
-    _node?: any;
-    children?: NodeTreeType[];
-};
-
-interface IMapFullData {
-    /**
-     * 布局名称
-     */
-    layout?: string;
-    /**
-     * 节点数据
-     */
-    root?: object;
-    /**
-     * 主题
-     */
-    theme?: {
-        template: string;
-        config: object;
-    };
-    /**
-     * 视图信息
-     */
-    view?: {
-        transform: object;
-        state: object;
-    };
-}
 export const usePublicStore = defineStore('app-public', () => {
     // region 环境相关
     const debuggerMode = ref<boolean>(false);
@@ -135,16 +104,22 @@ export const usePublicStore = defineStore('app-public', () => {
 
     // 挂件所在块id
     const blockID = ref<string>('');
-    const mindMapData = ref<IMapFullData>();
+    const mindMapData = ref<MapFullDataType>();
+    const filePath = ref<string>('');
+    const fileName = ref<string>('kmind');
     // 保存mindMap数据到挂件所在块
     // TODO 多Tab页导图
-    const saveMindMapData = async ({ data }: { data: IMapFullData }) => {
+    const saveMindMapData = async ({ data }: { data: MapFullDataType }) => {
         mindMapData.value = data;
+        filePath.value = `/data/assets/${fileName.value}-${blockID.value}.kmind`;
+
+        // 保存文件路径到挂件所在块
         await setBlockAttrs({
             id: blockID.value,
-            // id: '20230302162223-3rxpzda',
             attrs: {
-                'custom-mind-map-data': JSON.stringify(data),
+                'custom-mind-map-data': '',
+                // 'custom-mind-map-data': JSON.stringify(data),
+                'custom-file-path': filePath.value,
             },
         })
             .then(() => {
@@ -155,25 +130,58 @@ export const usePublicStore = defineStore('app-public', () => {
                 message.error('导图数据保存失败，请手动导出备份数据！');
                 console.log(e);
             });
+
+        // 保存到本地文件
+        const json = JSON.stringify(data);
+        const blob = new Blob([json], { type: 'application/json' });
+        // 文件名必须拼接上blockID.value，否则思源会自动随机一个id来覆盖
+        const file = new File([blob], `kmind-${blockID.value}.kmind`, {
+            type: 'application/json',
+            lastModified: Date.now(),
+        });
+
+        await uploadAsset({ file: file })
+            .then((res) => console.log(res))
+            .catch((e) => {
+                message.error('导图数据保存失败，请手动导出备份数据！');
+                console.log(e);
+            });
     };
 
-    const init = () => {
+    const init = async () => {
         const {
             id,
             mindMapData: data,
             debuggerMode: _debuggerMode,
+            filePath: _filePath,
         } = getWidgetBlockInfo();
         blockID.value = id;
+
+        // 兼容老版本插件，直接从挂件上获取数据
         if (data) {
             mindMapData.value = JSON.parse(data);
+        }
+
+        // 新版保存数据的方式：如果存在值，则从本地文件读取数据,覆盖从挂件上获取的数据
+        if (_filePath) {
+            filePath.value = _filePath;
+            await getFile({ path: _filePath })
+                .then((res) => {
+                    mindMapData.value = res;
+                    console.log('store', mindMapData.value);
+                })
+                .catch((e) => {
+                    message.error(
+                        '从本地读取导图数据失败，请检查此挂件的自定义属性的filePath是否正确!',
+                    );
+                    console.log(e);
+                });
         }
         // 如果存在值，则为debugger模式
         if (_debuggerMode) {
             debuggerMode.value = true;
         }
     };
-
-    init();
 
     // endregion
 
@@ -205,7 +213,10 @@ export const usePublicStore = defineStore('app-public', () => {
         lastClickNodeTop,
         setLastClickNodeInfo,
         saveMindMapData,
+        blockID,
         mindMapData,
+        filePath,
+        fileName,
         isDev,
         node,
         activeNodeList,
@@ -221,6 +232,7 @@ export const usePublicStore = defineStore('app-public', () => {
         ctxMenuTop,
         ctxMenuVisible,
         ctxMenuType,
+        init,
     };
 });
 
