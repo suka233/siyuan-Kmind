@@ -14,4 +14,8 @@ export interface IWidgetBlockAttr {
      * 是否开启debugger模式
      */
     debuggerMode: string;
+    /**
+     * 文件路径
+     */
+    filePath: string;
 }

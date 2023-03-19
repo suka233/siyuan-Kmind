@@ -1,0 +1,65 @@
+/**
+ * simple-mind-map的一些类型
+ */
+
+/**
+ * 节点数据类型
+ */
+declare type NodeTreeType = {
+    title?: string;
+    key?: string;
+    _node?: any;
+    children?: NodeTreeType[];
+};
+
+/**
+ * getData(true) 返回的数据类型
+ */
+declare type MapFullDataType = {
+    /**
+     * 布局名称
+     */
+    layout?: string;
+    /**
+     * 节点数据
+     */
+    root?: NodeTreeType;
+    /**
+     * 主题
+     */
+    theme?: {
+        template: string;
+        config: object;
+    };
+    /**
+     * 视图信息
+     */
+    view?: {
+        transform: object;
+        state: object;
+    };
+};
+
+/**
+ * kmind专用数据格式
+ */
+declare interface KmindFullDataType extends MapFullDataType {
+    /**
+     * 节点数据
+     */
+    kmind: KmindConfigType;
+}
+
+/**
+ * kmind配置数据类型
+ */
+declare interface KmindConfigType {
+    /**
+     * 数据存储形式
+     */
+    saveType: 'file' | 'block';
+    /**
+     * 文件路径
+     */
+    filePath: string;
+}
