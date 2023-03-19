@@ -4,6 +4,8 @@
             <a-menu @click="handleMenuClick">
                 <a-menu-item key="1"> 设置导图为测试数据 </a-menu-item>
                 <a-menu-item key="2"> console导图数据 </a-menu-item>
+                <a-menu-item key="3"> RESET_LAYOUT </a-menu-item>
+                <a-menu-item key="4"> 重载导图数据 </a-menu-item>
             </a-menu>
         </template>
         <a-button>
@@ -23,10 +25,11 @@ export default {
 import { DownOutlined } from '@ant-design/icons-vue';
 import { usePublicStore } from '/@/store/modules/public';
 import { toRefs } from 'vue';
+import { message } from 'ant-design-vue';
 
 const publicStore = usePublicStore();
 // const { saveMindMapData } = publicStore;
-const { kmind, node } = toRefs(publicStore);
+const { kmind, node, mindMapData } = toRefs(publicStore);
 const handleMenuClick = (e: any) => {
     switch (e.key) {
         case '1':
@@ -42,6 +45,15 @@ const handleMenuClick = (e: any) => {
                 JSON.stringify({ suka: kmind.value.getData(true) }),
             );
             break;
+        case '3':
+            kmind.value.execCommand('RESET_LAYOUT');
+            break;
+        case '4':
+            kmind.value.setFullData(
+                Object.assign({}, mindMapData.value, { layout: undefined }),
+            );
+            // props.kmind.setData(mindMapData.value?.root);
+            message.success('重新加载导图数据成功');
     }
 };
 
