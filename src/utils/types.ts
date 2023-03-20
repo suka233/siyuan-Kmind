@@ -18,4 +18,8 @@ export interface IWidgetBlockAttr {
      * 文件路径
      */
     filePath: string;
+    /**
+     * 思源会把custom-data-assets的值设置为引用资源，不会被清理掉
+     */
+    dataAssets: string;
 }

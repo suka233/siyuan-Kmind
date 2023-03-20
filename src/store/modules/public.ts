@@ -106,20 +106,25 @@ export const usePublicStore = defineStore('app-public', () => {
     const blockID = ref<string>('');
     const mindMapData = ref<MapFullDataType>();
     const filePath = ref<string>('');
+    const dataAssets = ref<string>('');
     const fileName = ref<string>('kmind');
     // 保存mindMap数据到挂件所在块
     // TODO 多Tab页导图
     const saveMindMapData = async ({ data }: { data: MapFullDataType }) => {
         mindMapData.value = data;
-        filePath.value = `/data/assets/${fileName.value}-${blockID.value}.kmind`;
+        dataAssets.value = `assets/${fileName.value}-${blockID.value}.kmind`;
+        filePath.value = `/data/${dataAssets.value}`;
 
         // 保存文件路径到挂件所在块
         await setBlockAttrs({
             id: blockID.value,
             attrs: {
-                'custom-mind-map-data': '',
                 // 'custom-mind-map-data': JSON.stringify(data),
-                'custom-file-path': filePath.value,
+                // 'custom-file-path': filePath.value,
+                // 将老数据源置空
+                'custom-mind-map-data': '',
+                'custom-file-path': '',
+                'custom-data-assets': dataAssets.value,
             },
         })
             .then(() => {
@@ -154,29 +159,39 @@ export const usePublicStore = defineStore('app-public', () => {
             mindMapData: data,
             debuggerMode: _debuggerMode,
             filePath: _filePath,
+            dataAssets: _dataAssets,
         } = getWidgetBlockInfo();
         blockID.value = id;
-
-        // 兼容老版本插件，直接从挂件上获取数据
-        if (data) {
-            mindMapData.value = JSON.parse(data);
-        }
-
-        // 新版保存数据的方式：如果存在值，则从本地文件读取数据,覆盖从挂件上获取的数据
-        if (_filePath) {
-            filePath.value = _filePath;
-            await getFile({ path: _filePath })
+        const getFileFromSiyuan = async ({ path, tip }) => {
+            await getFile({ path })
                 .then((res) => {
                     mindMapData.value = res;
-                    console.log('store', mindMapData.value);
                 })
                 .catch((e) => {
                     message.error(
-                        '从本地读取导图数据失败，请检查此挂件的自定义属性的filePath是否正确!',
+                        `从本地读取导图数据失败，请检查此挂件的自定义属性的${tip}是否正确!`,
                     );
                     console.log(e);
                 });
+        };
+
+        // 如果存在最新的数据源，则从最新的数据源读取数据，同时兼容老的数据源
+        if (_dataAssets) {
+            dataAssets.value = _dataAssets;
+            filePath.value = `/data/${_dataAssets}`;
+            await getFileFromSiyuan({
+                path: filePath.value,
+                tip: 'data-assets',
+            });
+        } else if (_filePath) {
+            // 如果存在老的数据源，则从老的数据源读取数据 v0.1.3
+            filePath.value = _filePath;
+            await getFileFromSiyuan({ path: filePath.value, tip: 'file-path' });
+        } else if (data) {
+            // 兼容老版本插件，直接从挂件上获取数据
+            mindMapData.value = JSON.parse(data);
         }
+
         // 如果存在值，则为debugger模式
         if (_debuggerMode) {
             debuggerMode.value = true;
