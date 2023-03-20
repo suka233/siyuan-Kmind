@@ -29,7 +29,7 @@ specifiers:
   postcss-less: ^6.0.0
   prettier: ^2.8.3
   quill: ^1.3.7
-  simple-mind-map: ^0.4.3
+  simple-mind-map: ^0.4.5
   stylelint: ^14.7.1
   stylelint-config-prettier: ^9.0.3
   stylelint-config-recommended: ^7.0.0
@@ -54,7 +54,7 @@ dependencies:
   lodash-es: 4.17.21
   pinia: 2.0.29_prq2uz4lho2pwp6irk4cfkrxwu
   quill: 1.3.7
-  simple-mind-map: 0.4.3
+  simple-mind-map: 0.4.5
   vditor: 3.9.0
   vue: 3.2.45
   vue-router: 4.1.6_vue@3.2.45
@@ -1425,6 +1425,12 @@ packages:
     requiresBuild: true
     dev: false
 
+  /core-js/3.29.1:
+    resolution: {integrity: sha512-+jwgnhg6cQxKYIIjGtAHq2nwUOolo9eoFZ4sHfUH09BLXBgxnH4gA0zEd+t+BO2cNB8idaBtZFcFTRjQJRJmAw==}
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /core-util-is/1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: false
@@ -2171,6 +2177,12 @@ packages:
     requiresBuild: true
     dev: true
 
+  /graceful-fs/4.2.11:
+    resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /grapheme-splitter/1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
     dev: true
@@ -2506,7 +2518,7 @@ packages:
       fflate: 0.4.8
     optionalDependencies:
       canvg: 3.0.10
-      core-js: 3.29.0
+      core-js: 3.29.1
       dompurify: 2.4.5
       html2canvas: 1.4.1
     dev: false
@@ -2559,7 +2571,7 @@ packages:
       tslib: 2.5.0
     optionalDependencies:
       errno: 0.1.8
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       image-size: 0.5.5
       make-dir: 2.1.0
       mime: 1.6.0
@@ -3482,8 +3494,8 @@ packages:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
     dev: true
 
-  /simple-mind-map/0.4.3:
-    resolution: {integrity: sha512-hnuK2imDrIPg+lzNaGbmS3wPqtWdWSb3WnffYmmsksjAKvOHp0Ez1KqHKwgKJi17L5TpA93LDfxAqa4lORWsEw==}
+  /simple-mind-map/0.4.5:
+    resolution: {integrity: sha512-RBybRv3Ygyekpr0hGHgGeXVQrpr0ORagh3Ma/Q57dD42F2NLJGsVet1d1idgweJIpZLhDMwCcNH3piCTTabdvw==}
     dependencies:
       '@svgdotjs/svg.js': 3.1.2
       canvg: 3.0.10
@@ -3493,6 +3505,7 @@ packages:
       jspdf: 2.5.1
       jszip: 3.10.1
       quill: 1.3.7
+      uuid: 9.0.0
       xml-js: 1.6.11
     dev: false
 
@@ -3941,6 +3954,11 @@ packages:
     resolution: {integrity: sha512-1MLa5ouZiOmQzUbjbu9VmjLzn1QLXBhwpUa7kdLUQK+KQ5KA9I1vk5U4YHe/X2Ch7PYnJfWuWT+VbuxbGwljhw==}
     dependencies:
       base64-arraybuffer: 1.0.2
+    dev: false
+
+  /uuid/9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
     dev: false
 
   /v8-compile-cache-lib/3.0.1:
