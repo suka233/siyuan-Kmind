@@ -25,6 +25,10 @@
                 <a-menu-item key="expandTo5">五级主题</a-menu-item>
                 <a-menu-item key="expandTo6">六级主题</a-menu-item>
             </a-sub-menu>
+            <a-menu-item key="zenMode"
+                >禅模式
+                <span class="ml-2">{{ localConfig.isZenMode ? '√' : '' }}</span>
+            </a-menu-item>
         </a-menu>
 
         <a-menu
@@ -83,6 +87,7 @@ import { usePublicStore } from '/@/store/modules/public';
 import { computed, ref, toRefs } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 const publicStore = usePublicStore();
+const { saveMindMapData } = publicStore;
 const {
     ctxMenuLeft,
     ctxMenuTop,
@@ -91,6 +96,7 @@ const {
     kmind,
     copyNode,
     node,
+    localConfig,
 } = toRefs(publicStore);
 
 const menuRef = ref<HTMLElement>();
@@ -151,6 +157,11 @@ const handleClick = ({ key }) => {
             break;
         case 'pasteNode':
             kmind.value.execCommand('PASTE_NODE', copyNode.value);
+            break;
+        case 'zenMode':
+            localConfig.value.isZenMode = !localConfig.value.isZenMode;
+            // zen模式并非导图数据变化，不会触发自动保存操作，所以手动保存一下
+            saveMindMapData({ data: kmind.value.getData(true) });
             break;
     }
 

@@ -13,13 +13,16 @@
                 bottom: 0;
             "
         ></div>
-        <node-editor ref="nodeEditorRef" class="fixed top-5 left-5" />
-        <side-bar-trigger />
+        <div v-show="!localConfig.isZenMode">
+            <node-editor ref="nodeEditorRef" class="fixed top-5 left-5" />
+            <side-bar-trigger />
 
-        <theme :kmind="kmind" />
-        <map-structure :kmind="kmind" />
-        <main-point />
-        <shortcut-key />
+            <theme :kmind="kmind" />
+            <map-structure :kmind="kmind" />
+            <main-point />
+            <shortcut-key />
+        </div>
+
         <div v-if="isDev" class="fixed bottom-20 left-5">
             <p>节点数据：</p>
             <p>{{ node?.nodeData?.data }}</p>
@@ -75,6 +78,7 @@ const {
     ctxMenuType,
     ctxMenuVisible,
     copyNode,
+    localConfig,
 } = toRefs(publicStore);
 MindMap.usePlugin(KeyboardNavigation)
     .usePlugin(Drag)
@@ -215,6 +219,24 @@ onMounted(() => {
             Object.assign({}, mindMapData.value, { layout: undefined }),
         );
         message.success('数据加载成功');
+        if (localConfig.value.isZenMode) {
+            // @ts-ignore
+            const closeMsg = message.info(() => {
+                const handleCloseZenMode = () => {
+                    localConfig.value.isZenMode = false;
+                    closeMsg();
+                    saveMindMapData({ data: kmind.value.getData(true) });
+                };
+                return (
+                    <span>
+                        禅模式已经开启，
+                        <a onClick={handleCloseZenMode} class="text-blue-500">
+                            点我关闭
+                        </a>
+                    </span>
+                );
+            });
+        }
     } else {
         message.info(
             '检测到首次使用，导图数据发生变化时，自动每1秒自动保存一次数据~',

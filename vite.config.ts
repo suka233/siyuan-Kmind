@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import WindiCSS from 'vite-plugin-windicss';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 function pathResolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
 }
@@ -16,7 +17,7 @@ export default defineConfig({
             },
         ],
     },
-    plugins: [vue(), WindiCSS()],
+    plugins: [vue(), WindiCSS(), vueJsx()],
     server: {
         proxy: {
             '/api': {

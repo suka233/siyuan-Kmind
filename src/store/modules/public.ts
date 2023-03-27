@@ -16,6 +16,11 @@ export const usePublicStore = defineStore('app-public', () => {
     // region map相关
     const kmind = ref<any>();
     const treeData = ref();
+    // 初始化导图的配置
+    const localConfig = ref<KmindLocaleConfigType>({
+        // 是否开启禅模式
+        isZenMode: false,
+    });
     // 递归展开tree
     const expandTree = (data) => {
         const temp: NodeTreeType = {};
@@ -137,7 +142,15 @@ export const usePublicStore = defineStore('app-public', () => {
             });
 
         // 保存到本地文件
-        const json = JSON.stringify(data);
+        const kmindData: KmindFullDataType = {
+            kmind: {
+                saveType: 'file',
+                filePath: filePath.value,
+                localeConfig: localConfig.value,
+            },
+            ...data,
+        };
+        const json = JSON.stringify(kmindData);
         const blob = new Blob([json], { type: 'application/json' });
         // 文件名必须拼接上blockID.value，否则思源会自动随机一个id来覆盖
         const file = new File([blob], `kmind-${blockID.value}.kmind`, {
@@ -146,7 +159,7 @@ export const usePublicStore = defineStore('app-public', () => {
         });
 
         await uploadAsset({ file: file })
-            .then((res) => console.log(res))
+            .then()
             .catch((e) => {
                 message.error('导图数据保存失败，请手动导出备份数据！');
                 console.log(e);
@@ -166,6 +179,11 @@ export const usePublicStore = defineStore('app-public', () => {
             await getFile({ path })
                 .then((res) => {
                     mindMapData.value = res;
+                    // 老版本数据没有kmind字段，需要兼容
+                    // TODO：初始化localConfig为用户已经存储在挂件文件夹下的默认值
+                    localConfig.value = res?.kmind?.localeConfig ?? {
+                        isZenMode: false,
+                    };
                 })
                 .catch((e) => {
                     message.error(
@@ -237,6 +255,7 @@ export const usePublicStore = defineStore('app-public', () => {
         activeNodeList,
         kmind,
         treeData,
+        localConfig,
         buildTreeData,
         backEnd,
         forwardEnd,

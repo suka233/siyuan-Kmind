@@ -47,7 +47,7 @@ declare interface KmindFullDataType extends MapFullDataType {
     /**
      * 节点数据
      */
-    kmind: KmindConfigType;
+    kmind?: KmindConfigType;
 }
 
 /**
@@ -57,9 +57,20 @@ declare interface KmindConfigType {
     /**
      * 数据存储形式
      */
-    saveType: 'file' | 'block';
+    saveType?: 'file' | 'block';
     /**
      * 文件路径
      */
-    filePath: string;
+    filePath?: string;
+    /**
+     * 导图模式
+     */
+    localeConfig?: KmindLocaleConfigType;
+}
+
+declare interface KmindLocaleConfigType {
+    /**
+     * 是否是禅模式
+     */
+    isZenMode?: boolean;
 }
