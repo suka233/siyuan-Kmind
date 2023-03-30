@@ -20,6 +20,12 @@
 
 ## 更新记录：
 
+#### v0.1.6
+- 新增：
+  - 节点样式 设置菜单（现在可以在节点样式选项卡中快速为节点添加或者删除icon图标了）
+- 优化：
+  - 保存，重设画布大小，构建大纲树结构，均从节流更改为防抖 [issue #5](https://github.com/suka233/siyuan-Kmind/issues/5)
+
 #### v0.1.5
 - 新增：
   - 新增禅模式（[issue #4](https://github.com/suka233/siyuan-Kmind/issues/4)）：使用方式：右键菜单-禅模式
