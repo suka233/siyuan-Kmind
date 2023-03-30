@@ -93,7 +93,7 @@ export const usePublicStore = defineStore('app-public', () => {
         lineWidth: '',
     });
     // 当前节点active态的style
-    const nodeActiveStyle = ref({});
+    const nodeActiveStyle = ref<Record<string, any>>({});
 
     // 保存备注相关信息
     const setNoteInfo = ({
