@@ -1,6 +1,6 @@
 <template>
     <div v-for="item in nodeIconList" :key="item.name" class="item">
-        <div class="title">{{ item.name }}</div>
+        <div class="title select-none">{{ item.name }}</div>
         <div class="list">
             <div
                 v-for="icon in item.list"
