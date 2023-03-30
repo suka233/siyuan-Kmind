@@ -1,12 +1,12 @@
 <template>
     <side-bar title="大纲" :class="{ show: activeSidebar === 'mainPoint' }">
         <div>
-            <a-button
-                class="w-full"
-                title="出于性能考虑，大纲设定为2秒刷新一次，如果需要最新的大纲，可以手动刷新一下"
-                @click="buildTreeData"
-                >刷新大纲</a-button
-            >
+            <!--            <a-button-->
+            <!--                class="w-full"-->
+            <!--                title="出于性能考虑，大纲设定为2秒刷新一次，如果需要最新的大纲，可以手动刷新一下"-->
+            <!--                @click="buildTreeData"-->
+            <!--                >刷新大纲</a-button-->
+            <!--            >-->
             <a-tree :tree-data="treeData">
                 <template #title="{ title, _node }">
                     <a @click="handleClick(_node)" v-html="title"></a>
@@ -29,7 +29,7 @@ import SideBar from '/@/components/SideBar/index.vue';
 import { usePublicStore } from '/@/store/modules/public';
 import { toRefs } from 'vue';
 const publicStore = usePublicStore();
-const { buildTreeData } = publicStore;
+// const { buildTreeData } = publicStore;
 const { treeData, activeSidebar, kmind } = toRefs(publicStore);
 const handleClick = (node: any) => {
     // kmind.value.renderer.clearAllActive();
