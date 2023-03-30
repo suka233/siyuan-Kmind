@@ -1,7 +1,12 @@
 <template>
     <div class="side-bar-container">
         <close-outlined class="close-button" @click="setActiveSidebar('')" />
-        <div v-if="title" class="side-bar-header">{{ title }}</div>
+        <div v-if="$slots.title" class="side-bar-header">
+            <slot name="title"></slot>
+        </div>
+        <div v-else class="side-bar-header">
+            {{ title }}
+        </div>
         <div class="side-bar-content">
             <slot></slot>
         </div>
@@ -28,8 +33,8 @@ defineProps<{
 <style scoped lang="less">
 .side-bar-container {
     @apply fixed top-20;
-    left: -300px;
-    width: 300px;
+    left: -280px;
+    width: 280px;
     bottom: 0;
     background-color: #fff;
     border-left: 1px solid #e8e8e8;
@@ -37,9 +42,10 @@ defineProps<{
     display: flex;
     flex-direction: column;
     transition: all 0.3s;
+    overflow: auto;
 
     &.show {
-        left: 0;
+        left: 20px;
     }
 
     .close-button {
@@ -62,6 +68,7 @@ defineProps<{
     }
 
     .side-bar-content {
+        @apply p-2;
         width: 100%;
         height: 100%;
         overflow: auto;

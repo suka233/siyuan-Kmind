@@ -71,6 +71,29 @@ export const usePublicStore = defineStore('app-public', () => {
     const noteTop = ref<string>();
     // 当前节点备注显示隐藏
     const noteVisible = ref<boolean>(false);
+    // 当前节点normal态的style
+    const nodeNormalStyle = ref({
+        shape: '',
+        paddingX: 0,
+        paddingY: 0,
+        color: '',
+        fontFamily: '',
+        fontSize: '',
+        lineHeight: '',
+        textDecoration: '',
+        fontWeight: '',
+        fontStyle: '',
+        borderWidth: '',
+        borderColor: '',
+        fillColor: '',
+        borderDasharray: '',
+        borderRadius: '',
+        lineColor: '',
+        lineDasharray: '',
+        lineWidth: '',
+    });
+    // 当前节点active态的style
+    const nodeActiveStyle = ref({});
 
     // 保存备注相关信息
     const setNoteInfo = ({
@@ -241,6 +264,8 @@ export const usePublicStore = defineStore('app-public', () => {
         noteTop,
         noteContent,
         noteVisible,
+        nodeNormalStyle,
+        nodeActiveStyle,
         setNoteInfo,
         lastClickNodeLeft,
         lastClickNodeTop,

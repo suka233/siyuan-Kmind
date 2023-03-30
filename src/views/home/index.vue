@@ -20,6 +20,7 @@
             <theme :kmind="kmind" />
             <map-structure :kmind="kmind" />
             <main-point />
+            <node-style />
             <shortcut-key />
         </div>
 
@@ -49,13 +50,14 @@ import RichText from 'simple-mind-map/src/RichText.js';
 import Export from 'simple-mind-map/src/Export.js';
 import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
-import { useThrottleFn } from '@vueuse/core';
+import { useDebounceFn } from '@vueuse/core';
 import ShowNote from '/@/components/ShowNote/index.vue';
 import SideBarTrigger from '/@/components/SideBarTrigger/index.vue';
 import MainPoint from '/@/components/MainPoint/index.vue';
 import Theme from '/@/components/Theme/index.vue';
 import MapStructure from '/@/components/MapStructure/index.vue';
 import ShortcutKey from '/@/components/ShortcutKey/index.vue';
+import NodeStyle from '/@/components/NodeStyle/index.vue';
 import ContextMenu from '/@/components/ContextMenu/index.vue';
 const {
     setLastClickNodeInfo,
@@ -79,6 +81,8 @@ const {
     ctxMenuVisible,
     copyNode,
     localConfig,
+    nodeNormalStyle,
+    nodeActiveStyle,
 } = toRefs(publicStore);
 MindMap.usePlugin(KeyboardNavigation)
     .usePlugin(Drag)
@@ -142,8 +146,41 @@ onMounted(() => {
 
     // 导图节点激活
     kmind.value.on('node_active', (_node, _activeNodeList) => {
-        // 编辑node会触发这个事件，所以这里要判断一下
-        activeNodeList.value = _activeNodeList;
+        // 直接给activeNodeList.value赋值，会丢失响应式,导致store中的node不会及时刷新
+        activeNodeList.value = [..._activeNodeList];
+        [
+            'shape',
+            'paddingX',
+            'paddingY',
+            'color',
+            'fontFamily',
+            'fontSize',
+            'lineHeight',
+            'textDecoration',
+            'fontWeight',
+            'fontStyle',
+            'borderWidth',
+            'borderColor',
+            'fillColor',
+            'borderDasharray',
+            'borderRadius',
+            'lineColor',
+            'lineDasharray',
+            'lineWidth',
+        ].forEach((item) => {
+            // 普通状态的节点样式
+            nodeNormalStyle.value[item] = _activeNodeList[0]?.getStyle(
+                item,
+                false,
+                false,
+            );
+            // 激活状态的节点样式
+            nodeActiveStyle.value[item] = _activeNodeList[0]?.getStyle(
+                item,
+                false,
+                true,
+            );
+        });
     });
 
     // 导图点击
@@ -244,23 +281,23 @@ onMounted(() => {
     }
 
     // 自动保存数据
-    const throttleSaver = useThrottleFn((data) => {
+    const debounceSaver = useDebounceFn((data) => {
         saveMindMapData({ data });
     }, 1000);
     // 防抖构建tree
-    const throttleBuildTree = useThrottleFn(buildTreeData, 2000);
+    const debounceBuildTree = useDebounceFn(buildTreeData, 2000);
     kmind.value.on('data_change', () => {
         // console.log(kmind.value.getData(true));
-        throttleSaver(kmind.value.getData(true));
-        throttleBuildTree();
+        debounceSaver(kmind.value.getData(true));
+        debounceBuildTree();
     });
 
     // 自适应
-    const throttleResize = useThrottleFn(() => {
+    const debounceResize = useDebounceFn(() => {
         kmind.value.resize();
     }, 1000);
     addEventListener('resize', () => {
-        throttleResize();
+        debounceResize();
     });
 
     // 拦截全局点击事件，如果点击到了a标签，就阻止默认事件，为跳转多tab页做准备
