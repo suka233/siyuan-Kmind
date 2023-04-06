@@ -6,6 +6,7 @@
                 <a-menu-item key="2"> console导图数据 </a-menu-item>
                 <a-menu-item key="3"> RESET_LAYOUT </a-menu-item>
                 <a-menu-item key="4"> 重载导图数据 </a-menu-item>
+                <a-menu-item key="5"> 打印activeNodeList </a-menu-item>
             </a-menu>
         </template>
         <a-button>
@@ -29,7 +30,7 @@ import { message } from 'ant-design-vue';
 
 const publicStore = usePublicStore();
 // const { saveMindMapData } = publicStore;
-const { kmind, node, mindMapData } = toRefs(publicStore);
+const { kmind, node, mindMapData, activeNodeList } = toRefs(publicStore);
 const handleMenuClick = (e: any) => {
     switch (e.key) {
         case '1':
@@ -54,6 +55,10 @@ const handleMenuClick = (e: any) => {
             );
             // props.kmind.setData(mindMapData.value?.root);
             message.success('重新加载导图数据成功');
+            break;
+        case '5':
+            console.log('activeNodeList', activeNodeList.value);
+            break;
     }
 };
 

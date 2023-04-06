@@ -109,6 +109,7 @@ onMounted(() => {
                 }
             },
             hide() {
+                console.log('hide');
                 // if (noteVisible.value) {
                 //     setNoteInfo({ visible: false });
                 // }
