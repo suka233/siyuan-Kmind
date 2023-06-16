@@ -30,7 +30,7 @@
             />
             <icon-editor-btn :disabled="!activeNodeList.length" />
             <generalization :kmind="kmind" class="mr-2" :disabled="!node" />
-            <connector class="mr-2" />
+            <connector class="mr-2" :disabled="!node" />
             <reload-data class="mr-2" :kmind="kmind" />
 
             <a-button class="mr-2" @click="handleSave">保存</a-button>
