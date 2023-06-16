@@ -30,6 +30,7 @@
             />
             <icon-editor-btn :disabled="!activeNodeList.length" />
             <generalization :kmind="kmind" class="mr-2" :disabled="!node" />
+            <connector class="mr-2" />
             <reload-data class="mr-2" :kmind="kmind" />
 
             <a-button class="mr-2" @click="handleSave">保存</a-button>
@@ -91,6 +92,7 @@ import BackForward from './components/BackForward/index.vue';
 import ReloadData from './components/ReloadData/index.vue';
 import Generalization from './components/Generalization/index.vue';
 import ExportFileBtn from './components/ExportFile/ExportFileBtn.vue';
+import Connector from './components/Connector/index.vue';
 import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
 import ExportFile from '/@/components/NodeEditor/components/ExportFile/ExportFile.vue';

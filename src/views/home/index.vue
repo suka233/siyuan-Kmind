@@ -48,6 +48,7 @@ import Select from 'simple-mind-map/src/plugins/Select.js';
 import NodeEditor from '/@/components/NodeEditor/index.vue';
 import RichText from 'simple-mind-map/src/plugins/RichText.js';
 import Export from 'simple-mind-map/src/plugins/Export.js';
+import AssociativeLine from 'simple-mind-map/src/plugins/AssociativeLine.js';
 import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
 import { useDebounceFn } from '@vueuse/core';
@@ -88,7 +89,8 @@ MindMap.usePlugin(KeyboardNavigation)
     .usePlugin(Drag)
     .usePlugin(Select)
     .usePlugin(RichText)
-    .usePlugin(Export);
+    .usePlugin(Export)
+    .usePlugin(AssociativeLine);
 
 const kmindRef = ref();
 const nodeEditorRef = ref();
