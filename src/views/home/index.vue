@@ -42,12 +42,12 @@ export default {
 <script setup lang="tsx">
 import { onMounted, ref, toRefs } from 'vue';
 import MindMap from 'simple-mind-map';
-import KeyboardNavigation from 'simple-mind-map/src/KeyboardNavigation.js';
-import Drag from 'simple-mind-map/src/Drag.js';
-import Select from 'simple-mind-map/src/Select.js';
+import KeyboardNavigation from 'simple-mind-map/src/plugins/KeyboardNavigation.js';
+import Drag from 'simple-mind-map/src/plugins/Drag.js';
+import Select from 'simple-mind-map/src/plugins/Select.js';
 import NodeEditor from '/@/components/NodeEditor/index.vue';
-import RichText from 'simple-mind-map/src/RichText.js';
-import Export from 'simple-mind-map/src/Export.js';
+import RichText from 'simple-mind-map/src/plugins/RichText.js';
+import Export from 'simple-mind-map/src/plugins/Export.js';
 import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
 import { useDebounceFn } from '@vueuse/core';

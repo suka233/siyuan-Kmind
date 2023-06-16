@@ -28,7 +28,7 @@ export default {
 import SideBar from '/@/components/SideBar/index.vue';
 import { usePublicStore } from '/@/store/modules/public';
 import { ref, toRefs } from 'vue';
-import { themeList } from 'simple-mind-map/src/utils/constant';
+import { themeList } from 'simple-mind-map/src/constants/constant';
 import { themeMap } from '/@/config/constant';
 const publicStore = usePublicStore();
 const { activeSidebar } = toRefs(publicStore);
@@ -76,6 +76,7 @@ const useTheme = (item: string) => {
                 width: 100%;
             }
         }
+
         .name {
             text-align: center;
             font-size: 14px;

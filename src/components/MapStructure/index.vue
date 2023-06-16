@@ -27,7 +27,7 @@ export default {
 import SideBar from '/@/components/SideBar/index.vue';
 import { usePublicStore } from '/@/store/modules/public';
 import { ref, toRefs } from 'vue';
-import { layoutList } from 'simple-mind-map/src/utils/constant';
+import { layoutList } from 'simple-mind-map/src/constants/constant';
 import { layoutImgMap } from '/@/config/constant';
 const publicStore = usePublicStore();
 const { activeSidebar } = toRefs(publicStore);
@@ -75,6 +75,7 @@ const useLayout = (item: any) => {
                 width: 100%;
             }
         }
+
         .name {
             text-align: center;
             font-size: 14px;
