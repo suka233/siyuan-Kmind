@@ -111,3 +111,12 @@ export const isMultiTree = (data: any) => {
     // 如果所有子节点都符合要求，则返回true
     return true;
 };
+
+// 是否点击到了备注icon
+export const isClickRemarkIcon = (e: any) => {
+    // 备注icon的p-id为8793，备注icon的父节点的p-id为8792，无论点击备注icon还是父节点都会触发click事件
+    return (
+        e.target?.nextElementSibling?.attributes['p-id']?.nodeValue ===
+            '8792' || e.target.attributes['p-id']?.nodeValue === '8793'
+    );
+};

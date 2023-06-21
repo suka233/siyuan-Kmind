@@ -60,6 +60,7 @@ import MapStructure from '/@/components/MapStructure/index.vue';
 import ShortcutKey from '/@/components/ShortcutKey/index.vue';
 import NodeStyle from '/@/components/NodeStyle/index.vue';
 import ContextMenu from '/@/components/ContextMenu/index.vue';
+import { isClickRemarkIcon } from '/@/utils';
 const {
     setLastClickNodeInfo,
     setNoteInfo,
@@ -139,9 +140,8 @@ onMounted(() => {
 
     // 导图节点点击
     kmind.value.on('node_click', (_node, e) => {
-        if (e.target.attributes['p-id']?.nodeValue === '8793') {
+        if (isClickRemarkIcon(e)) {
             // 点击了备注的svg图像
-            // TODO 由于这里会点击到其它的svg图像，所以导致这个事件触发率不是很高，要看看源码是怎么实现的这个备注显示逻辑
             nodeEditorRef.value.handleShowRichEditor('note');
         }
         setLastClickNodeInfo({ left: e.x, top: e.y });
