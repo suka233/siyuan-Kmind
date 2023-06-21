@@ -7,6 +7,7 @@
                 <a-menu-item key="3"> RESET_LAYOUT </a-menu-item>
                 <a-menu-item key="4"> 重载导图数据 </a-menu-item>
                 <a-menu-item key="5"> 打印activeNodeList </a-menu-item>
+                <a-menu-item key="6">调用插件打开浮窗</a-menu-item>
             </a-menu>
         </template>
         <a-button>
@@ -31,6 +32,7 @@ import { message } from 'ant-design-vue';
 const publicStore = usePublicStore();
 // const { saveMindMapData } = publicStore;
 const { kmind, node, mindMapData, activeNodeList } = toRefs(publicStore);
+
 const handleMenuClick = (e: any) => {
     switch (e.key) {
         case '1':
@@ -58,6 +60,15 @@ const handleMenuClick = (e: any) => {
             break;
         case '5':
             console.log('activeNodeList', activeNodeList.value);
+            break;
+        case '6':
+            // @ts-ignore
+            window.parent.openAPI.plugin.addFloatLayer({
+                ids: ['20210428212840-8rqwn5o', '20201225220955-l154bn4'],
+                defIds: ['20230415111858-vgohvf3', '20200813131152-0wk5akh'],
+                x: window.innerWidth - 768 - 120,
+                y: 32,
+            });
             break;
     }
 };
