@@ -120,3 +120,60 @@ export const isClickRemarkIcon = (e: any) => {
             '8792' || e.target.attributes['p-id']?.nodeValue === '8793'
     );
 };
+
+// 是否点击到了超链接icon
+// 实测只会点击到path和rect，所以只需要判断这俩情况就行了
+// 还会有很小的概率点到a
+export const isClickLinkIcon = (
+    e: any,
+): { isLink: boolean; linkUrl?: string } => {
+    // console.log(e.target?.nextElementSibling?.attributes['p-id']?.nodeValue);
+    let isLink = false;
+    let linkUrl = '';
+    // 以下使用switch为啥不行？用if else就行。
+    // switch (e) {
+    //     // 点击到rect的情况：rect的nextElementSibling的p-id为7982
+    //     case e.target?.nextElementSibling?.attributes['p-id']?.nodeValue ===
+    //         '7982':
+    //         // return {
+    //         //     isLink: true,
+    //         //     linkUrl: e.target.parentNode.getAttribute('href'),
+    //         // };
+    //         console.log('xxx');
+    //         isLink = true;
+    //         linkUrl = e.target.parentNode.getAttribute('href');
+    //         break;
+    //     // 点击到path的情况：path的parentNode的p-id为7982
+    //     case e.target?.parentNode?.attributes['p-id']?.nodeValue === '7982':
+    //         // return {
+    //         //     isLink: true,
+    //         //     linkUrl: e.target.parentNode.parentNode.getAttribute('href'),
+    //         // };
+    //         isLink = true;
+    //         linkUrl = e.target.parentNode.parentNode.getAttribute('href');
+    //         break;
+    // }
+
+    if (
+        e.target?.nextElementSibling?.attributes['p-id']?.nodeValue === '7982'
+    ) {
+        // 点击到rect的情况：rect的nextElementSibling的p-id为7982
+        isLink = true;
+        linkUrl = e.target.parentNode.getAttribute('href');
+    } else if (e.target?.parentNode?.attributes['p-id']?.nodeValue === '7982') {
+        // 点击到path的情况：path的parentNode的p-id为7982
+        isLink = true;
+        linkUrl = e.target.parentNode.parentNode.getAttribute('href');
+    } else if (
+        e.target?.childNodes[1]?.attributes['p-id']?.nodeValue === '7982'
+    ) {
+        // 点击到a标签的情况
+        isLink = true;
+        linkUrl = e.target.getAttribute('href');
+    }
+
+    return {
+        isLink,
+        linkUrl,
+    };
+};

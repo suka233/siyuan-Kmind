@@ -22,6 +22,7 @@
             <main-point />
             <node-style />
             <shortcut-key />
+            <!--            <setting />-->
         </div>
 
         <div v-if="isDev" class="fixed bottom-20 left-5">
@@ -58,9 +59,10 @@ import MainPoint from '/@/components/MainPoint/index.vue';
 import Theme from '/@/components/Theme/index.vue';
 import MapStructure from '/@/components/MapStructure/index.vue';
 import ShortcutKey from '/@/components/ShortcutKey/index.vue';
+// import Setting from '/@/components/Setting/index.vue';
 import NodeStyle from '/@/components/NodeStyle/index.vue';
 import ContextMenu from '/@/components/ContextMenu/index.vue';
-import { isClickRemarkIcon } from '/@/utils';
+import { isClickRemarkIcon, isClickLinkIcon } from '/@/utils';
 const {
     setLastClickNodeInfo,
     setNoteInfo,
@@ -107,12 +109,15 @@ onMounted(() => {
         },
         customNoteContentShow: {
             show(content, left, top) {
+                // console.log('show');
                 if (!noteVisible.value) {
                     setNoteInfo({ content, left, top, visible: true });
                 }
             },
             hide() {
-                console.log('hide');
+                // console.log('hide');
+                // 如果鼠标一直在备注icon上或者移动到了note上，则不隐藏，否则2秒后隐藏
+                // console.log('hide');
                 // if (noteVisible.value) {
                 //     setNoteInfo({ visible: false });
                 // }
@@ -304,21 +309,35 @@ onMounted(() => {
     });
 
     // 拦截全局点击事件，如果点击到了a标签，就阻止默认事件，为跳转多tab页做准备
-    // addEventListener(
-    //     'click',
-    //     (e) => {
-    //         console.log('xxx', e.target.parentNode.nodeName === 'a');
-    //         if (e.target.parentNode.nodeName === 'a') {
-    //             e.preventDefault();
-    //             console.log(
-    //                 `点击到了a标签：${e.target.parentNode.getAttribute(
-    //                     'href',
-    //                 )}，${e.target.parentNode.getAttribute('title')}`,
-    //             );
-    //         }
-    //     },
-    //     true,
-    // );
+    addEventListener(
+        'click',
+        (e) => {
+            // console.log(e);
+            const { isLink, linkUrl } = isClickLinkIcon(e);
+            // 如果按住alt键点击到了siyuan开头的超链接
+            if (isLink && e.altKey && linkUrl?.startsWith('siyuan://')) {
+                e.preventDefault();
+                // @ts-ignore kmind插件把api挂载到了window上
+                window.parent.kmindApi.plugin.addFloatLayer({
+                    // 获取最后一个斜杠后的id
+                    ids: [linkUrl?.substr(linkUrl.lastIndexOf('/') + 1)],
+                    x: e.screenX,
+                    y: e.screenY,
+                });
+            }
+        },
+        true,
+    );
+
+    // // 节点鼠标移入
+    // kmind.value.on('node_mouseenter', (node, e) => {
+    //     // console.log('node_mouseenter', node, e);
+    // });
+    //
+    // // 节点鼠标移出
+    // kmind.value.on('node_mouseleave', (node, e) => {
+    //     // console.log('node_mouseleave', node, e);
+    // });
 });
 
 await init();
