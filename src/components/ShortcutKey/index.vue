@@ -21,7 +21,7 @@
 
 <script lang="tsx">
 /**
- * 大纲
+ * 快捷键
  */
 export default {
     name: 'ShortcutKey',
