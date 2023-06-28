@@ -3,7 +3,7 @@ name: Create Release on Tag Push
 on:
   push:
     tags:
-      - 'v*'
+      - 'kmind-v*'
 
 jobs:
   build:
@@ -58,5 +58,5 @@ jobs:
           allowUpdates: true
           artifactErrorsFailBuild: true
           artifacts: 'package.zip'
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.TOKEN }} # 这个需要在该仓库的Settings/secrets and variables中设置，名称为TOKEN，值为申请的GitHub Personal Access Token
           prerelease: false
