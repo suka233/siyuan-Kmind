@@ -25,3 +25,7 @@ dist-ssr
 *.sw?
 !/dist/
 /dist/
+!/package.zip
+/package.zip
+!/dev/
+/dev

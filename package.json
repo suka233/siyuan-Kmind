@@ -1,9 +1,12 @@
 {
-    "name": "siyuan-diarium",
+    "name": "siyuan-kmind",
     "private": true,
     "version": "0.0.0",
+    "type": "commonjs",
     "scripts": {
+        "make-link": "node ./scripts/make_dev_link.js",
         "dev": "vite",
+        "ad-dev": "vite build --watch --mode dev",
         "build": "vue-tsc && vite build",
         "preview": "vite preview",
         "eslint-comment": "使用eslint检查代码并自动修复src目录下所有拓展名为.js .vue的文件",

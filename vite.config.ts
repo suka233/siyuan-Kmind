@@ -7,9 +7,9 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import minimist from 'minimist';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
-// import livereload from 'rollup-plugin-livereload';
-// import zipPack from 'vite-plugin-zip-pack';
-// import fg from 'fast-glob';
+import livereload from 'rollup-plugin-livereload';
+import zipPack from 'vite-plugin-zip-pack';
+import fg from 'fast-glob';
 
 const args = minimist(process.argv.slice(2));
 const isWatch = args.watch || args.w || false;
@@ -80,6 +80,45 @@ export default defineConfig({
         emptyOutDir: false,
         sourcemap: false,
         minify: !isWatch,
+        rollupOptions: {
+            plugins: isWatch
+                ? [
+                      livereload(devDistDir),
+                      {
+                          // 监听静态资源文件
+                          name: 'watch-external',
+                          async buildStart() {
+                              const files = await fg([
+                                  './README*.md',
+                                  './widget.json',
+                              ]);
+                              for (const file of files) {
+                                  this.addWatchFile(file);
+                              }
+                          },
+                      },
+                  ]
+                : [
+                      zipPack({
+                          inDir: './dist',
+                          outDir: './',
+                          outFileName: 'package.zip',
+                      }),
+                  ],
+            // external: ['siyuan', 'process'],
+            // @ts-ignore
+            output: {
+                // entryFileNames: '[name].js',
+                // assetFileNames: (assetInfo) => {
+                //     if (assetInfo.name?.endsWith('.css')) {
+                //         return 'index.css';
+                //     }
+                // },
+                entryFileNames: 'js/[name].js',
+                chunkFileNames: 'js/[name].[hash].js',
+                assetFileNames: '[ext]/[name].[ext]',
+            },
+        },
     },
     css: {
         preprocessorOptions: {
@@ -89,6 +128,6 @@ export default defineConfig({
         },
     },
     define: {
-        'process.env.DEV_MODE': `"${isWatch}"`,
+        // 'process.env.DEV_MODE': `"${isWatch}"`,
     },
 });
