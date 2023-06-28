@@ -4,7 +4,7 @@
     "version": "0.0.0",
     "type": "commonjs",
     "scripts": {
-        "make-link": "node ./scripts/make_dev_link.js",
+        "make-link": "node ./scripts/make_dev_link.mjs",
         "dev": "vite",
         "ad-dev": "vite build --watch --mode dev",
         "build": "vue-tsc && vite build",
