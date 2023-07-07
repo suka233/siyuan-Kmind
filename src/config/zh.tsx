@@ -3,7 +3,6 @@ import {
     SkinOutlined,
     LaptopOutlined,
     HighlightOutlined,
-    SettingOutlined,
 } from '@ant-design/icons-vue';
 // side-bar-trigger
 export const sideBarTriggerList = [
@@ -32,11 +31,11 @@ export const sideBarTriggerList = [
         value: 'shortcutKey',
         icon: LaptopOutlined,
     },
-    {
-        title: '设置',
-        value: 'setting',
-        icon: SettingOutlined,
-    },
+    // {
+    //     title: '设置',
+    //     value: 'setting',
+    //     icon: SettingOutlined,
+    // },
 ];
 
 // 快捷键列表

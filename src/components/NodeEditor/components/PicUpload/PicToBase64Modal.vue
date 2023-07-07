@@ -5,21 +5,21 @@
         @ok="handleOk"
         :width="800"
     >
-        <a-row v-show="picUrl">
-            <a-col :span="4"><span>调整宽度：</span></a-col>
-            <a-col :span="12">
-                <a-slider v-model:value="picWidth" :min="1" :max="1000" />
-            </a-col>
-            <a-col :span="8">
-                <a-input-number
-                    v-model:value="picWidth"
-                    addon-before="宽度"
-                    class="w-full"
-                    :min="1"
-                    :max="1000"
-                />
-            </a-col>
-        </a-row>
+        <!--        <a-row v-show="picUrl">-->
+        <!--            <a-col :span="4"><span>调整宽度：</span></a-col>-->
+        <!--            <a-col :span="12">-->
+        <!--                <a-slider v-model:value="picWidth" :min="1" :max="1000" />-->
+        <!--            </a-col>-->
+        <!--            <a-col :span="8">-->
+        <!--                <a-input-number-->
+        <!--                    v-model:value="picWidth"-->
+        <!--                    addon-before="宽度"-->
+        <!--                    class="w-full"-->
+        <!--                    :min="1"-->
+        <!--                    :max="1000"-->
+        <!--                />-->
+        <!--            </a-col>-->
+        <!--        </a-row>-->
         <a-upload-dragger
             :file-list="picFile"
             list-type="picture-card"

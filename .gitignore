@@ -29,3 +29,6 @@ dist-ssr
 /package.zip
 !/dev/
 /dev
+!/package.zip
+/package.zip
+/pnpm-lock.yaml
