@@ -1,13 +1,21 @@
 //  布局结构图片映射
-import logicalStructure from '../assets/img/logicalStructure.jpg';
-import mindMap from '../assets/img/mindMap.jpg';
-import organizationStructure from '../assets/img/organizationStructure.jpg';
-import catalogOrganization from '../assets/img/catalogOrganization.jpg';
+import logicalStructure from '../assets/img/logicalStructure.png';
+import mindMap from '../assets/img/mindMap.png';
+import organizationStructure from '../assets/img/organizationStructure.png';
+import catalogOrganization from '../assets/img/catalogOrganization.png';
+import timeline from '../assets/img/timeline.png';
+import timeline2 from '../assets/img/timeline2.png';
+import fishbone from '../assets/img/fishbone.png';
+import verticalTimeline from '../assets/img/verticalTimeline.png';
 export const layoutImgMap = {
     logicalStructure,
     mindMap,
     organizationStructure,
     catalogOrganization,
+    timeline,
+    timeline2,
+    fishbone,
+    verticalTimeline,
 };
 
 //  主题图片映射
