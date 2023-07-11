@@ -30,15 +30,14 @@ import { usePublicStore } from '/@/store/modules/public';
 import { ref, toRefs } from 'vue';
 import { themeList } from 'simple-mind-map/src/constants/constant';
 import { themeMap } from '/@/config/constant';
+import { kmind } from '/@/hooks/useKmind';
 const publicStore = usePublicStore();
 const { activeSidebar } = toRefs(publicStore);
-const props = defineProps<{
-    kmind: any;
-}>();
 const theme = ref('');
 const useTheme = (item: string) => {
     theme.value = item;
-    props.kmind.setTheme(item);
+    console.log(kmind);
+    kmind.setTheme(item);
 };
 </script>
 

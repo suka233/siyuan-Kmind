@@ -17,8 +17,8 @@
             <node-editor ref="nodeEditorRef" class="fixed top-5 left-5" />
             <side-bar-trigger />
 
-            <theme :kmind="kmind" />
-            <map-structure :kmind="kmind" />
+            <theme />
+            <map-structure />
             <main-point />
             <node-style />
             <shortcut-key />
@@ -42,16 +42,7 @@ export default {
 
 <script setup lang="tsx">
 import { onMounted, ref, toRefs } from 'vue';
-import MindMap from 'simple-mind-map';
-import KeyboardNavigation from 'simple-mind-map/src/plugins/KeyboardNavigation.js';
-import Drag from 'simple-mind-map/src/plugins/Drag.js';
-import Select from 'simple-mind-map/src/plugins/Select.js';
 import NodeEditor from '/@/components/NodeEditor/index.vue';
-import RichText from 'simple-mind-map/src/plugins/RichText.js';
-import Export from 'simple-mind-map/src/plugins/Export.js';
-import AssociativeLine from 'simple-mind-map/src/plugins/AssociativeLine.js';
-import NodeImgAdjust from 'simple-mind-map/src/plugins/NodeImgAdjust.js';
-import TouchEvent from 'simple-mind-map/src/plugins/TouchEvent.js';
 import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
 import { useDebounceFn } from '@vueuse/core';
@@ -65,22 +56,22 @@ import ShortcutKey from '/@/components/ShortcutKey/index.vue';
 import NodeStyle from '/@/components/NodeStyle/index.vue';
 import ContextMenu from '/@/components/ContextMenu/index.vue';
 import { isClickRemarkIcon, isClickLinkIcon } from '/@/utils';
+import { useKmind, kmind, buildTreeData } from '/@/hooks/useKmind';
+import { cloneDeep } from 'lodash-es';
 const {
     setLastClickNodeInfo,
     setNoteInfo,
     setBackForwardStatus,
     saveMindMapData,
-    buildTreeData,
+    // buildTreeData,
     init,
 } = usePublicStore();
 const publicStore = usePublicStore();
 const {
     mindMapData,
     isDev,
-    noteVisible,
     node,
     activeNodeList,
-    kmind,
     ctxMenuLeft,
     ctxMenuTop,
     ctxMenuType,
@@ -90,65 +81,15 @@ const {
     nodeNormalStyle,
     nodeActiveStyle,
 } = toRefs(publicStore);
-MindMap.usePlugin(KeyboardNavigation)
-    .usePlugin(Drag)
-    .usePlugin(Select)
-    .usePlugin(RichText)
-    .usePlugin(Export)
-    .usePlugin(AssociativeLine)
-    .usePlugin(NodeImgAdjust)
-    .usePlugin(TouchEvent);
 
 const kmindRef = ref();
 const nodeEditorRef = ref();
 
 onMounted(() => {
-    kmind.value = new MindMap({
-        el: document.getElementById('mindMapContainer'),
-        data: {
-            data: {
-                text: `suka`,
-            },
-            children: [],
-        },
-        customNoteContentShow: {
-            show(content, left, top) {
-                // console.log('show');
-                if (!noteVisible.value) {
-                    setNoteInfo({ content, left, top, visible: true });
-                }
-            },
-            hide() {
-                // console.log('hide');
-                // 如果鼠标一直在备注icon上或者移动到了note上，则不隐藏，否则2秒后隐藏
-                // console.log('hide');
-                // if (noteVisible.value) {
-                //     setNoteInfo({ visible: false });
-                // }
-            },
-        },
-        customHandleMousewheel: (e) => {
-            // 自定义鼠标滚轮事件
-            let { deltaX, deltaY, ctrlKey } = e;
-            // console.log(e);
-            if (ctrlKey) {
-                // 缩放
-                if (deltaY > 0 || deltaX > 0) kmind.value.view.narrow();
-                else kmind.value.view.enlarge();
-            } else {
-                if (deltaX === -0) {
-                    // Y轴滚动 滚动一次默认是100，太大了，所以除以3，即滚动一次移动33px
-                    kmind.value.view.translateY(-deltaY / 3);
-                } else {
-                    // X轴滚动
-                    kmind.value.view.translateX(-deltaX / 3);
-                }
-            }
-        },
-    });
+    useKmind(document.getElementById('mindMapContainer'));
 
     // 导图节点点击
-    kmind.value.on('node_click', (_node, e) => {
+    kmind.on('node_click', (_node, e) => {
         if (isClickRemarkIcon(e)) {
             // 点击了备注的svg图像
             nodeEditorRef.value.handleShowRichEditor('note');
@@ -157,7 +98,7 @@ onMounted(() => {
     });
 
     // 导图节点激活
-    kmind.value.on('node_active', (_node, _activeNodeList) => {
+    kmind.on('node_active', (_node, _activeNodeList) => {
         // 直接给activeNodeList.value赋值，会丢失响应式,导致store中的node不会及时刷新
         activeNodeList.value = [..._activeNodeList];
         [
@@ -196,19 +137,19 @@ onMounted(() => {
     });
 
     // 导图点击
-    kmind.value.on('draw_click', () => {
+    kmind.on('draw_click', () => {
         // 关闭没有正确关闭的备注展示框
         setNoteInfo({ visible: false });
     });
 
     // 导图数据变化
-    kmind.value.on('back_forward', (activeHistoryIndex, length) => {
+    kmind.on('back_forward', (activeHistoryIndex, length) => {
         // 设置回退前进状态
         setBackForwardStatus(activeHistoryIndex, length);
     });
 
     // 导图右击
-    kmind.value.on('contextmenu', (e) => {
+    kmind.on('contextmenu', (e) => {
         ctxMenuLeft.value = e.x;
         ctxMenuTop.value = e.y;
         ctxMenuVisible.value = true;
@@ -216,7 +157,7 @@ onMounted(() => {
     });
 
     // 节点右击
-    kmind.value.on('node_contextmenu', (e, _node) => {
+    kmind.on('node_contextmenu', (e, _node) => {
         ctxMenuLeft.value = e.x;
         ctxMenuTop.value = e.y;
         ctxMenuVisible.value = true;
@@ -224,13 +165,13 @@ onMounted(() => {
     });
 
     // 绑定自定义快捷键
-    kmind.value.keyCommand.addShortcut('Control+c', () => {
+    kmind.keyCommand.addShortcut('Control+c', () => {
         // kmind.value.renderer.copyNode() 在没有选中节点的时候会返回undefined
-        kmind.value.renderer.copyNode() &&
-            (copyNode.value = kmind.value.renderer.copyNode());
+        kmind.renderer.copyNode() &&
+            (copyNode.value = kmind.renderer.copyNode());
     });
-    kmind.value.keyCommand.addShortcut('Control+v', () => {
-        kmind.value.execCommand('PASTE_NODE', copyNode.value);
+    kmind.keyCommand.addShortcut('Control+v', () => {
+        kmind.execCommand('PASTE_NODE', copyNode.value);
         // kmind.value.execCommand('PASTE_NODE', {
         //     data: {
         //         text: 'ddd',
@@ -247,11 +188,11 @@ onMounted(() => {
         //     // children: [],
         // });
     });
-    kmind.value.keyCommand.addShortcut('Control+x', () => {
-        kmind.value.execCommand('CUT_NODE', (e) => (copyNode.value = e));
+    kmind.keyCommand.addShortcut('Control+x', () => {
+        kmind.execCommand('CUT_NODE', (e) => (copyNode.value = e));
     });
-    kmind.value.keyCommand.addShortcut('Control+s', async () => {
-        await saveMindMapData({ data: kmind.value.getData(true) });
+    kmind.keyCommand.addShortcut('Control+s', async () => {
+        await saveMindMapData({ data: kmind.getData(true) });
 
         console.log(activeNodeList.value);
         // 当有节点激活的时候，隐藏保存成功的提示
@@ -262,11 +203,7 @@ onMounted(() => {
 
     // 自动加载缓存数据
     if (mindMapData.value) {
-        // FIX setFullData会让导图很卡。 setLayout方法的原因
-        // kmind.value.setData(mindMapData.value.root);
-        kmind.value.setFullData(
-            Object.assign({}, mindMapData.value, { layout: undefined }),
-        );
+        kmind.setFullData(cloneDeep(mindMapData.value));
         message.success('数据加载成功');
         if (localConfig.value.isZenMode) {
             // @ts-ignore
@@ -274,7 +211,7 @@ onMounted(() => {
                 const handleCloseZenMode = () => {
                     localConfig.value.isZenMode = false;
                     closeMsg();
-                    saveMindMapData({ data: kmind.value.getData(true) });
+                    saveMindMapData({ data: kmind.getData(true) });
                 };
                 return (
                     <span>
@@ -298,15 +235,15 @@ onMounted(() => {
     }, 1000);
     // 防抖构建tree
     const debounceBuildTree = useDebounceFn(buildTreeData, 2000);
-    kmind.value.on('data_change', () => {
+    kmind.on('data_change', () => {
         // console.log(kmind.value.getData(true));
-        debounceSaver(kmind.value.getData(true));
+        debounceSaver(kmind.getData(true));
         debounceBuildTree();
     });
 
     // 自适应
     const debounceResize = useDebounceFn(() => {
-        kmind.value.resize();
+        kmind.resize();
     }, 1000);
     addEventListener('resize', () => {
         debounceResize();

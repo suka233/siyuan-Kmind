@@ -32,11 +32,11 @@ export default {
 import { computed, ref, watch } from 'vue';
 import { QuillEditor, Quill } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import { kmind } from '/@/hooks/useKmind';
 // import { uploadAsset } from '/@/api/public';
 // import { message } from 'ant-design-vue';
 const props = defineProps<{
     visible: boolean;
-    kmind: any;
     node: any;
     /**
      * node: 节点文本
@@ -154,9 +154,9 @@ watch(
     (visible) => {
         if (visible) {
             init();
-            props.kmind.renderer.startTextEdit();
+            kmind.renderer.startTextEdit();
         } else {
-            props.kmind.renderer.endTextEdit();
+            kmind.renderer.endTextEdit();
 
             // init()不能清空编辑器内容，手动调用一下api清空
             editorContent.value = '';

@@ -18,11 +18,11 @@ export default {
 <script lang="tsx" setup>
 import { computed, ref, watch } from 'vue';
 import { message } from 'ant-design-vue';
+import { kmind } from '/@/hooks/useKmind';
 
 const props = defineProps<{
     visible: boolean;
     node: any;
-    kmind: any;
 }>();
 const emits = defineEmits<{
     (event: 'update:visible', visible: boolean): void;
@@ -50,9 +50,9 @@ watch(
     () => props.visible,
     (val) => {
         if (val) {
-            props.kmind.renderer.startTextEdit();
+            kmind.renderer.startTextEdit();
         } else {
-            props.kmind.renderer.endTextEdit();
+            kmind.renderer.endTextEdit();
         }
     },
 );

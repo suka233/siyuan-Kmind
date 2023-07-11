@@ -11,13 +11,10 @@ export default {
 </script>
 <script setup lang="ts">
 import { NodeIndexOutlined } from '@ant-design/icons-vue';
-import { usePublicStore } from '/@/store/modules/public';
-import { toRefs } from 'vue';
-const publicStore = usePublicStore();
-const { kmind } = toRefs(publicStore);
+import { kmind } from '/@/hooks/useKmind';
 
 const handleCreateConnector = () => {
-    kmind.value.associativeLine.createLineFromActiveNode();
+    kmind.associativeLine.createLineFromActiveNode();
 };
 </script>
 

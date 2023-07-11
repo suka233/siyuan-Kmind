@@ -14,31 +14,13 @@ export const usePublicStore = defineStore('app-public', () => {
     // endregion
 
     // region map相关
-    const kmind = ref<any>();
+    // const kmind = ref<any>();
     const treeData = ref();
     // 初始化导图的配置
     const localConfig = ref<KmindLocaleConfigType>({
         // 是否开启禅模式
         isZenMode: false,
     });
-    // 递归展开tree
-    const expandTree = (data) => {
-        const temp: NodeTreeType = {};
-        temp.title = data.data.text;
-        temp.key = data._node.uid;
-        temp._node = data._node;
-        if (data.children.length) {
-            temp.children = [];
-            data.children.forEach((item) => {
-                temp.children?.push(expandTree(item));
-            });
-        }
-        return temp;
-    };
-
-    const buildTreeData = () => {
-        treeData.value = [expandTree(kmind.value.renderer.renderTree)];
-    };
 
     const backEnd = ref<boolean>(true);
     const forwardEnd = ref<boolean>(true);
@@ -278,10 +260,8 @@ export const usePublicStore = defineStore('app-public', () => {
         isDev,
         node,
         activeNodeList,
-        kmind,
         treeData,
         localConfig,
-        buildTreeData,
         backEnd,
         forwardEnd,
         setBackForwardStatus,

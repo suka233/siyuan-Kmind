@@ -29,15 +29,13 @@ import { usePublicStore } from '/@/store/modules/public';
 import { ref, toRefs } from 'vue';
 import { layoutList } from 'simple-mind-map/src/constants/constant';
 import { layoutImgMap } from '/@/config/constant';
+import { kmind } from '/@/hooks/useKmind';
 const publicStore = usePublicStore();
 const { activeSidebar } = toRefs(publicStore);
-const props = defineProps<{
-    kmind: any;
-}>();
 const layout = ref('');
 const useLayout = (item: any) => {
     layout.value = item;
-    props.kmind.setLayout(item);
+    kmind.setLayout(item);
 };
 </script>
 

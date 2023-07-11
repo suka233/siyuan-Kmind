@@ -29,14 +29,15 @@ import { usePublicStore } from '/@/store/modules/public';
 import { toRefs } from 'vue';
 import { RollbackOutlined } from '@ant-design/icons-vue';
 const publicStore = usePublicStore();
-const { backEnd, forwardEnd, kmind } = toRefs(publicStore);
+import { kmind } from '/@/hooks/useKmind';
+const { backEnd, forwardEnd } = toRefs(publicStore);
 
 const handleBack = () => {
-    kmind.value.execCommand('BACK');
+    kmind.execCommand('BACK');
 };
 
 const handleForward = () => {
-    kmind.value.execCommand('FORWARD');
+    kmind.execCommand('FORWARD');
 };
 </script>
 

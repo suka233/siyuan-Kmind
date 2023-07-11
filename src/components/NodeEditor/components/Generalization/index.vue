@@ -17,12 +17,10 @@ export default {
 
 <script lang="tsx" setup>
 import { PartitionOutlined } from '@ant-design/icons-vue';
-const props = defineProps<{
-    kmind: any;
-}>();
+import { kmind } from '/@/hooks/useKmind';
 
 const handleClick = () => {
-    props.kmind.execCommand('ADD_GENERALIZATION');
+    kmind.execCommand('ADD_GENERALIZATION');
 };
 </script>
 

@@ -29,9 +29,9 @@
                 @click="showPic = true"
             />
             <icon-editor-btn :disabled="!activeNodeList.length" />
-            <generalization :kmind="kmind" class="mr-2" :disabled="!node" />
+            <generalization class="mr-2" :disabled="!node" />
             <connector class="mr-2" :disabled="!node" />
-            <reload-data class="mr-2" :kmind="kmind" />
+            <!--            <reload-data class="mr-2" />-->
 
             <a-button class="mr-2" @click="handleSave">保存</a-button>
             <dev-component v-if="isDev" />
@@ -48,22 +48,13 @@
             <!--            ></remark-note-editor>-->
             <rich-editor
                 v-model:visible="showRichEditor"
-                :kmind="kmind"
                 :node="node"
                 :type="richEditorType"
             />
 
-            <hyper-link-editor
-                v-model:visible="showLinkEditor"
-                :node="node"
-                :kmind="kmind"
-            />
+            <hyper-link-editor v-model:visible="showLinkEditor" :node="node" />
             <pic-to-base64-modal v-model:visible="showPic" />
-            <tags-editor
-                v-model:visible="showTagsEditor"
-                :node="node"
-                :kmind="kmind"
-            />
+            <tags-editor v-model:visible="showTagsEditor" :node="node" />
             <export-file v-model:visible="showExportFile" />
         </div>
     </div>
@@ -89,7 +80,7 @@ import IconEditorBtn from './components/IconEditor/IconEditorBtn.vue';
 import RichEditor from './components/RichEditor/RichEditor.vue';
 import NodeEditorBtn from './components/NodeEditor/NodeEditorBtn.vue';
 import BackForward from './components/BackForward/index.vue';
-import ReloadData from './components/ReloadData/index.vue';
+// import ReloadData from './components/ReloadData/index.vue';
 import Generalization from './components/Generalization/index.vue';
 import ExportFileBtn from './components/ExportFile/ExportFileBtn.vue';
 import Connector from './components/Connector/index.vue';
@@ -98,9 +89,10 @@ import { message } from 'ant-design-vue';
 import ExportFile from '/@/components/NodeEditor/components/ExportFile/ExportFile.vue';
 import DevComponent from './components/DevComponent/index.vue';
 import PicToBase64Modal from './components/PicUpload/PicToBase64Modal.vue';
+import { kmind } from '/@/hooks/useKmind';
 const publicStore = usePublicStore();
 const { saveMindMapData } = publicStore;
-const { isDev, node, activeNodeList, kmind } = toRefs(publicStore);
+const { isDev, node, activeNodeList } = toRefs(publicStore);
 
 // 编辑器是否显示
 const showRichEditor = ref(false);
@@ -118,7 +110,7 @@ const handleShowRichEditor = (type) => {
 defineExpose({ handleShowRichEditor });
 
 const handleSave = async () => {
-    await saveMindMapData({ data: kmind.value.getData(true) }).then(() =>
+    await saveMindMapData({ data: kmind.getData(true) }).then(() =>
         message.success('保存导图数据成功'),
     );
 };

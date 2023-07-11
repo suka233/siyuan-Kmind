@@ -19,23 +19,17 @@ export default {
 import { usePublicStore } from '/@/store/modules/public';
 import { toRefs } from 'vue';
 import { message } from 'ant-design-vue';
+import { kmind } from '/@/hooks/useKmind';
+import { cloneDeep } from 'lodash-es';
 const { saveMindMapData } = usePublicStore();
 const publicStore = usePublicStore();
 const { mindMapData } = toRefs(publicStore);
-const props = defineProps<{
-    kmind: any;
-}>();
 
 const handleReload = async () => {
-    await saveMindMapData({ data: props.kmind.getData(true) }).then(() => {
+    await saveMindMapData({ data: kmind.getData(true) }).then(() => {
         message.success('保存导图数据成功');
     });
-    // console.log(Object.assign({}, mindMapData.value, { layout: undefined }));
-    // setFullData会超卡，所以使用setData，待排除BUG
-    props.kmind.setFullData(
-        Object.assign({}, mindMapData.value, { layout: undefined }),
-    );
-    // props.kmind.setData(mindMapData.value?.root);
+    kmind.setFullData(cloneDeep(mindMapData.value));
     message.success('重新加载导图数据成功');
 };
 </script>
