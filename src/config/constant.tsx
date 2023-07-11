@@ -40,6 +40,9 @@ import redSpirit from '../assets/img/redSpirit.jpg';
 import blackHumour from '../assets/img/blackHumour.jpg';
 import lateNightOffice from '../assets/img/lateNightOffice.jpg';
 import blackGold from '../assets/img/blackGold.jpg';
+import autumn from '../assets/img/autumn.jpg';
+import avocado from '../assets/img/avocado.jpg';
+import orangeJuice from '../assets/img/orangeJuice.jpg';
 
 export const themeMap = {
     default: defaultPic,
@@ -71,4 +74,7 @@ export const themeMap = {
     blackHumour,
     lateNightOffice,
     blackGold,
+    autumn,
+    avocado,
+    orangeJuice,
 };
