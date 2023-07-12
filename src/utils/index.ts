@@ -38,6 +38,7 @@ export async function 向思源请求数据(
 // 获取挂件所在块信息
 export const getWidgetBlockInfo = (): IWidgetBlockAttr => {
     const blockNode = window.frameElement?.parentElement?.parentElement;
+    const iframeNode = window.frameElement as HTMLIFrameElement;
     const id =
         blockNode?.getAttribute('data-node-id') || '20230302162223-3rxpzda';
     const mindMapData = blockNode?.getAttribute('custom-mind-map-data') || '';
@@ -59,6 +60,8 @@ export const getWidgetBlockInfo = (): IWidgetBlockAttr => {
         debuggerMode,
         filePath,
         dataAssets,
+        blockNode,
+        iframeNode,
     };
 };
 export function is(val: unknown, type: string) {
@@ -116,8 +119,8 @@ export const isMultiTree = (data: any) => {
 export const isClickRemarkIcon = (e: any) => {
     // 备注icon的p-id为8793，备注icon的父节点的p-id为8792，无论点击备注icon还是父节点都会触发click事件
     return (
-        e.target?.nextElementSibling?.attributes['p-id']?.nodeValue ===
-            '8792' || e.target.attributes['p-id']?.nodeValue === '8793'
+        e.target?.nextElementSibling?.attributes?.['p-id']?.nodeValue ===
+            '8792' || e.target.attributes?.['p-id']?.nodeValue === '8793'
     );
 };
 
@@ -155,17 +158,19 @@ export const isClickLinkIcon = (
     // }
 
     if (
-        e.target?.nextElementSibling?.attributes['p-id']?.nodeValue === '7982'
+        e.target?.nextElementSibling?.attributes?.['p-id']?.nodeValue === '7982'
     ) {
         // 点击到rect的情况：rect的nextElementSibling的p-id为7982
         isLink = true;
         linkUrl = e.target.parentNode.getAttribute('href');
-    } else if (e.target?.parentNode?.attributes['p-id']?.nodeValue === '7982') {
+    } else if (
+        e.target?.parentNode?.attributes?.['p-id']?.nodeValue === '7982'
+    ) {
         // 点击到path的情况：path的parentNode的p-id为7982
         isLink = true;
         linkUrl = e.target.parentNode.parentNode.getAttribute('href');
     } else if (
-        e.target?.childNodes[1]?.attributes['p-id']?.nodeValue === '7982'
+        e.target?.childNodes[1]?.attributes?.['p-id']?.nodeValue === '7982'
     ) {
         // 点击到a标签的情况
         isLink = true;

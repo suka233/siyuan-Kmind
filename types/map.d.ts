@@ -73,4 +73,8 @@ declare interface KmindLocaleConfigType {
      * 是否是禅模式
      */
     isZenMode?: boolean;
+    /**
+     * 是否是全屏
+     */
+    isFullScreen?: boolean;
 }

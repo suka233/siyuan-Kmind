@@ -29,6 +29,12 @@
                 >禅模式
                 <span class="ml-2">{{ localConfig.isZenMode ? '√' : '' }}</span>
             </a-menu-item>
+            <a-menu-item key="fullScreen"
+                >全屏
+                <span class="ml-2">{{
+                    localConfig.isFullScreen ? '√' : ''
+                }}</span>
+            </a-menu-item>
         </a-menu>
 
         <a-menu
@@ -86,6 +92,8 @@ export default {
 import { usePublicStore } from '/@/store/modules/public';
 import { computed, ref, toRefs } from 'vue';
 import { onClickOutside } from '@vueuse/core';
+import { kmind } from '/@/hooks/useKmind';
+import { getWidgetBlockInfo } from '/@/utils';
 const publicStore = usePublicStore();
 const { saveMindMapData } = publicStore;
 const {
@@ -93,75 +101,83 @@ const {
     ctxMenuTop,
     ctxMenuVisible,
     ctxMenuType,
-    kmind,
     copyNode,
     node,
     localConfig,
 } = toRefs(publicStore);
 
 const menuRef = ref<HTMLElement>();
-
+const { iframeNode } = getWidgetBlockInfo();
 const handleClick = ({ key }) => {
     switch (key) {
         case 'goCenter':
-            kmind.value.view.reset();
+            kmind.view.reset();
             break;
         case 'expandAll':
-            kmind.value.execCommand('EXPAND_ALL');
+            kmind.execCommand('EXPAND_ALL');
             break;
         case 'collapseAll':
-            kmind.value.execCommand('UNEXPAND_ALL');
+            kmind.execCommand('UNEXPAND_ALL');
             break;
         case 'expandTo1':
-            kmind.value.execCommand('UNEXPAND_TO_LEVEL', 1);
+            kmind.execCommand('UNEXPAND_TO_LEVEL', 1);
             break;
         case 'expandTo2':
-            kmind.value.execCommand('UNEXPAND_TO_LEVEL', 2);
+            kmind.execCommand('UNEXPAND_TO_LEVEL', 2);
             break;
         case 'expandTo3':
-            kmind.value.execCommand('UNEXPAND_TO_LEVEL', 3);
+            kmind.execCommand('UNEXPAND_TO_LEVEL', 3);
             break;
         case 'expandTo4':
-            kmind.value.execCommand('UNEXPAND_TO_LEVEL', 4);
+            kmind.execCommand('UNEXPAND_TO_LEVEL', 4);
             break;
         case 'expandTo5':
-            kmind.value.execCommand('UNEXPAND_TO_LEVEL', 5);
+            kmind.execCommand('UNEXPAND_TO_LEVEL', 5);
             break;
         case 'expandTo6':
-            kmind.value.execCommand('UNEXPAND_TO_LEVEL', 6);
+            kmind.execCommand('UNEXPAND_TO_LEVEL', 6);
             break;
         case 'insertBrotherNode':
-            kmind.value.execCommand('INSERT_NODE');
+            kmind.execCommand('INSERT_NODE');
             break;
         case 'insertChildNode':
-            kmind.value.execCommand('INSERT_CHILD_NODE');
+            kmind.execCommand('INSERT_CHILD_NODE');
             break;
         case 'insertGeneralization':
-            kmind.value.execCommand('ADD_GENERALIZATION');
+            kmind.execCommand('ADD_GENERALIZATION');
             break;
         case 'upNode':
-            kmind.value.execCommand('UP_NODE');
+            kmind.execCommand('UP_NODE');
             break;
         case 'downNode':
-            kmind.value.execCommand('DOWN_NODE');
+            kmind.execCommand('DOWN_NODE');
             break;
         case 'deleteNode':
-            kmind.value.execCommand('REMOVE_NODE');
+            kmind.execCommand('REMOVE_NODE');
             break;
         case 'copyNode':
-            kmind.value.renderer.copyNode() &&
-                (copyNode.value = kmind.value.renderer.copyNode());
+            kmind.renderer.copyNode() &&
+                (copyNode.value = kmind.renderer.copyNode());
             break;
         case 'cutNode':
-            kmind.value.execCommand('CUT_NODE', (e) => (copyNode.value = e));
+            kmind.execCommand('CUT_NODE', (e) => (copyNode.value = e));
             break;
         case 'pasteNode':
-            kmind.value.execCommand('PASTE_NODE', copyNode.value);
+            kmind.execCommand('PASTE_NODE', copyNode.value);
             break;
         case 'zenMode':
             localConfig.value.isZenMode = !localConfig.value.isZenMode;
             // zen模式并非导图数据变化，不会触发自动保存操作，所以手动保存一下
-            saveMindMapData({ data: kmind.value.getData(true) });
+            saveMindMapData({ data: kmind.getData(true) });
+            break;
+        case 'fullScreen':
+            if (window.parent.document.fullscreenElement === iframeNode) {
+                window.parent.document.exitFullscreen();
+                localConfig.value.isFullScreen = false;
+            } else {
+                iframeNode!.requestFullscreen();
+                localConfig.value.isFullScreen = true;
+            }
             break;
     }
 

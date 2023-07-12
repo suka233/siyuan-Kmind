@@ -63,7 +63,6 @@ const {
     setNoteInfo,
     setBackForwardStatus,
     saveMindMapData,
-    // buildTreeData,
     init,
 } = usePublicStore();
 const publicStore = usePublicStore();

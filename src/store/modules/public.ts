@@ -20,6 +20,8 @@ export const usePublicStore = defineStore('app-public', () => {
     const localConfig = ref<KmindLocaleConfigType>({
         // 是否开启禅模式
         isZenMode: false,
+        // 是否全屏，此项不需要同步存储
+        isFullScreen: false,
     });
 
     const backEnd = ref<boolean>(true);
@@ -188,6 +190,7 @@ export const usePublicStore = defineStore('app-public', () => {
                     // TODO：初始化localConfig为用户已经存储在挂件文件夹下的默认值
                     localConfig.value = res?.kmind?.localeConfig ?? {
                         isZenMode: false,
+                        isFullScreen: false,
                     };
                 })
                 .catch((e) => {

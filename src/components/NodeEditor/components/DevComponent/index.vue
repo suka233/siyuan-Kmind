@@ -2,12 +2,21 @@
     <a-dropdown>
         <template #overlay>
             <a-menu @click="handleMenuClick">
-                <a-menu-item key="1"> 设置导图为测试数据 </a-menu-item>
-                <a-menu-item key="2"> console导图数据 </a-menu-item>
-                <a-menu-item key="3"> RESET_LAYOUT </a-menu-item>
-                <a-menu-item key="4"> 重载导图数据 </a-menu-item>
-                <a-menu-item key="5"> 打印activeNodeList </a-menu-item>
-                <a-menu-item key="6">调用插件打开浮窗</a-menu-item>
+                <a-menu-item key="设置导图为测试数据">
+                    设置导图为测试数据
+                </a-menu-item>
+                <a-menu-item key="console导图数据">
+                    console导图数据
+                </a-menu-item>
+                <a-menu-item key="RESET_LAYOUT"> RESET_LAYOUT </a-menu-item>
+                <a-menu-item key="重载导图数据"> 重载导图数据 </a-menu-item>
+                <a-menu-item key="打印activeNodeList">
+                    打印activeNodeList
+                </a-menu-item>
+                <a-menu-item key="调用插件打开浮窗"
+                    >调用插件打开浮窗</a-menu-item
+                >
+                <a-menu-item key="全屏">全屏</a-menu-item>
             </a-menu>
         </template>
         <a-button>
@@ -28,19 +37,21 @@ import { DownOutlined } from '@ant-design/icons-vue';
 import { usePublicStore } from '/@/store/modules/public';
 import { toRefs } from 'vue';
 import { message } from 'ant-design-vue';
-
+import { kmind } from '/@/hooks/useKmind';
+import { getWidgetBlockInfo } from '/@/utils';
 const publicStore = usePublicStore();
 // const { saveMindMapData } = publicStore;
-const { kmind, node, mindMapData, activeNodeList } = toRefs(publicStore);
+const { node, mindMapData, activeNodeList } = toRefs(publicStore);
+const { iframeNode } = getWidgetBlockInfo();
 
 const handleMenuClick = (e: any) => {
     switch (e.key) {
-        case '1':
-            kmind.value.setFullData(
+        case '设置导图为测试数据':
+            kmind.setFullData(
                 Object.assign({}, testData, { layout: undefined }),
             );
             break;
-        case '2':
+        case 'console导图数据':
             console.log('node', node.value);
             console.log('kmind', kmind.value);
             console.log(
@@ -48,20 +59,20 @@ const handleMenuClick = (e: any) => {
                 JSON.stringify({ suka: kmind.value.getData(true) }),
             );
             break;
-        case '3':
-            kmind.value.execCommand('RESET_LAYOUT');
+        case 'RESET_LAYOUT':
+            kmind.execCommand('RESET_LAYOUT');
             break;
-        case '4':
-            kmind.value.setFullData(
+        case '重载导图数据':
+            kmind.setFullData(
                 Object.assign({}, mindMapData.value, { layout: undefined }),
             );
             // props.kmind.setData(mindMapData.value?.root);
             message.success('重新加载导图数据成功');
             break;
-        case '5':
+        case '打印activeNodeList':
             console.log('activeNodeList', activeNodeList.value);
             break;
-        case '6':
+        case '调用插件打开浮窗':
             // @ts-ignore
             window.parent.openAPI.plugin.addFloatLayer({
                 ids: ['20210428212840-8rqwn5o', '20201225220955-l154bn4'],
@@ -69,6 +80,16 @@ const handleMenuClick = (e: any) => {
                 x: window.innerWidth - 768 - 120,
                 y: 32,
             });
+            break;
+        case '全屏/退出全屏':
+            if (window.parent.document.fullscreenElement === iframeNode) {
+                window.parent.document.exitFullscreen();
+            } else {
+                iframeNode!.requestFullscreen();
+            }
+
+            break;
+        default:
             break;
     }
 };
