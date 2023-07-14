@@ -1,5 +1,5 @@
 <template>
-    <div class="side-bar-container">
+    <div class="side-bar-container fixed top-20">
         <close-outlined class="close-button" @click="setActiveSidebar('')" />
         <div v-if="$slots.title" class="side-bar-header">
             <slot name="title"></slot>

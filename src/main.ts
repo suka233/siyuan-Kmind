@@ -4,7 +4,8 @@ import App from './App.vue';
 import { setupStore } from './store';
 // import 'ant-design-vue/dist/antd.css';
 import Antd from 'ant-design-vue';
-import 'virtual:windi.css';
+// import 'virtual:windi.css';
+import 'virtual:uno.css';
 import '/@/assets/icon-font/iconfont.css';
 
 const init = async () => {
