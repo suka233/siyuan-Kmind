@@ -44,12 +44,13 @@ const visible = computed({
 //         props.node.setTag(value);
 //     },
 // });
-const tagOptions = ref(props.node?.nodeData?.data.tag || []);
+const tagOptions = ref([]);
 
 watch(
     () => props.visible,
     (val) => {
         if (val) {
+            tagOptions.value = props.node?.nodeData?.data.tag || [];
             kmind.renderer.startTextEdit();
         } else {
             kmind.renderer.endTextEdit();
