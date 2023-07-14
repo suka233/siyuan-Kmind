@@ -53,10 +53,10 @@ const handleMenuClick = (e: any) => {
             break;
         case 'console导图数据':
             console.log('node', node.value);
-            console.log('kmind', kmind.value);
+            console.log('kmind', kmind);
             console.log(
                 'allData',
-                JSON.stringify({ suka: kmind.value.getData(true) }),
+                JSON.stringify({ suka: kmind.getData(true) }),
             );
             break;
         case 'RESET_LAYOUT':

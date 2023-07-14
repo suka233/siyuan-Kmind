@@ -51,10 +51,8 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { computed, ref, toRefs, watch } from 'vue';
-import { usePublicStore } from '/@/store/modules/public';
-const publicStore = usePublicStore();
-const { kmind } = toRefs(publicStore);
+import { computed, ref, watch } from 'vue';
+import { kmind } from '/@/hooks/useKmind';
 
 const props = defineProps<{
     visible: boolean;
@@ -79,15 +77,15 @@ watch(
     () => props.visible,
     (val) => {
         if (val) {
-            kmind.value.renderer.startTextEdit();
+            kmind.renderer.startTextEdit();
         } else {
-            kmind.value.renderer.endTextEdit();
+            kmind.renderer.endTextEdit();
         }
     },
 );
 
 const handleOk = () => {
-    kmind.value.export(fileType.value, true, fileName.value);
+    kmind.export(fileType.value, true, fileName.value);
 };
 </script>
 

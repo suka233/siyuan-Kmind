@@ -71,7 +71,8 @@ import { computed, ref, toRefs, watch } from 'vue';
 import { message, UploadChangeParam, UploadProps } from 'ant-design-vue';
 import { usePublicStore } from '/@/store/modules/public';
 const publicStore = usePublicStore();
-const { node, kmind } = toRefs(publicStore);
+const { node } = toRefs(publicStore);
+import { kmind } from '/@/hooks/useKmind';
 
 const props = defineProps<{
     visible: boolean;
@@ -152,9 +153,9 @@ watch(
     (val) => {
         if (val) {
             init();
-            kmind.value.renderer.startTextEdit();
+            kmind.renderer.startTextEdit();
         } else {
-            kmind.value.renderer.endTextEdit();
+            kmind.renderer.endTextEdit();
         }
     },
 );
