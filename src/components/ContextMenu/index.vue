@@ -78,6 +78,7 @@
             <a-menu-item key="pasteNode"
                 >粘贴节点<span class="desc">Ctrl + V</span></a-menu-item
             >
+            <a-menu-item key="customNode">插入自定义节点</a-menu-item>
         </a-menu>
     </div>
 </template>
@@ -164,6 +165,11 @@ const handleClick = ({ key }) => {
             break;
         case 'pasteNode':
             kmind.execCommand('PASTE_NODE', copyNode.value);
+            break;
+        case 'customNode':
+            kmind.execCommand('SET_NODE_DATA', node.value, {
+                kmind: { type: 'suka' },
+            });
             break;
         case 'zenMode':
             localConfig.value.isZenMode = !localConfig.value.isZenMode;

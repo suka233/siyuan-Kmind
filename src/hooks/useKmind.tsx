@@ -67,6 +67,23 @@ export const useKmind = (el) => {
                     }
                 }
             },
+            isUseCustomNodeContent: true,
+            customCreateNodeContent: (node) => {
+                console.log(node);
+                console.log(node?.nodeData?.data?.kmind?.type);
+                const div = document.createElement('div');
+                div.style.height = '360px';
+                div.style.width = '360px';
+                // new window.parent.kmindApi.siyuan.Protyle(this.app, div, {
+                //     blockId: '20200812220555-lj3enxa',
+                // });
+
+                if (node?.nodeData?.data?.kmind?.type === 'suka') {
+                    return div;
+                } else {
+                    return null;
+                }
+            },
         });
     }
 };
