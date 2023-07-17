@@ -13,6 +13,7 @@
                 bottom: 0;
             "
         ></div>
+
         <div v-show="!localConfig.isZenMode">
             <node-editor ref="nodeEditorRef" class="fixed top-5 left-5" />
             <side-bar-trigger />

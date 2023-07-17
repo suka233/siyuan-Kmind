@@ -37,7 +37,6 @@ export default defineConfig({
     plugins: [
         vue(),
         // WindiCSS(),
-        UnoCSS(),
         vueJsx(),
         viteStaticCopy({
             targets: [
@@ -59,6 +58,7 @@ export default defineConfig({
                 },
             ],
         }),
+        UnoCSS(),
     ],
     server: {
         proxy: {
