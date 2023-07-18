@@ -7,6 +7,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 
 import minimist from 'minimist';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import cleanPlugin from 'vite-plugin-clean';
 
 import livereload from 'rollup-plugin-livereload';
 import zipPack from 'vite-plugin-zip-pack';
@@ -23,6 +24,32 @@ console.log('distDir=>', distDir);
 function pathResolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
 }
+
+const handleOutput = (isWatch: boolean) => {
+    if (isWatch) {
+        return {
+            // entryFileNames: '[name].js',
+            // assetFileNames: (assetInfo) => {
+            //     if (assetInfo.name?.endsWith('.css')) {
+            //         return 'index.css';
+            //     }
+            // },
+            entryFileNames: 'js/[name].js',
+            chunkFileNames: 'js/[name].[hash].js',
+            assetFileNames: '[ext]/[name].[ext]',
+            // assetFileNames: '[ext]/[name].[ext]',
+            globals: {
+                vue: 'Vue',
+            },
+        };
+    } else {
+        return {
+            globals: {
+                vue: 'Vue',
+            },
+        };
+    }
+};
 // https://vitejs.dev/config/
 export default defineConfig({
     base: './',
@@ -38,27 +65,33 @@ export default defineConfig({
         vue(),
         // WindiCSS(),
         vueJsx(),
-        viteStaticCopy({
-            targets: [
-                {
-                    src: './README*.md',
-                    dest: './',
-                },
-                {
-                    src: './icon.png',
-                    dest: './',
-                },
-                {
-                    src: './preview.png',
-                    dest: './',
-                },
-                {
-                    src: './widget.json',
-                    dest: './',
-                },
-            ],
-        }),
+        isWatch
+            ? viteStaticCopy({
+                  targets: [
+                      {
+                          src: './README*.md',
+                          dest: './',
+                      },
+                      {
+                          src: './icon.png',
+                          dest: './',
+                      },
+                      {
+                          src: './preview.png',
+                          dest: './',
+                      },
+                      {
+                          src: './widget.json',
+                          dest: './',
+                      },
+                  ],
+              })
+            : null,
         UnoCSS(),
+        // @ts-ignore
+        cleanPlugin({
+            targetFiles: [distDir],
+        }),
     ],
     server: {
         proxy: {
@@ -82,6 +115,14 @@ export default defineConfig({
         emptyOutDir: false,
         sourcemap: false,
         minify: !isWatch,
+        cssCodeSplit: true,
+        lib: isWatch
+            ? false
+            : {
+                  entry: resolve(__dirname, 'src/packages/index.ts'),
+                  name: 'siyuan-kmind',
+                  fileName: 'siyuan-kmind',
+              },
         rollupOptions: {
             plugins: isWatch
                 ? [
@@ -107,19 +148,24 @@ export default defineConfig({
                           outFileName: 'package.zip',
                       }),
                   ],
-            // external: ['siyuan', 'process'],
-            // @ts-ignore
-            output: {
-                // entryFileNames: '[name].js',
-                // assetFileNames: (assetInfo) => {
-                //     if (assetInfo.name?.endsWith('.css')) {
-                //         return 'index.css';
-                //     }
-                // },
-                entryFileNames: 'js/[name].js',
-                chunkFileNames: 'js/[name].[hash].js',
-                assetFileNames: '[ext]/[name].[ext]',
-            },
+            // 如果是构建库的话，就可以排除vue
+            external: isWatch ? undefined : ['vue'],
+            // output: {
+            //     // entryFileNames: '[name].js',
+            //     // assetFileNames: (assetInfo) => {
+            //     //     if (assetInfo.name?.endsWith('.css')) {
+            //     //         return 'index.css';
+            //     //     }
+            //     // },
+            //     以下配置项使用三元运算符，会导致isWatch为false的时候，dist目录下的文件带有hash，暂时不知道怎么解决，所以使用handleOutput来处理
+            //     entryFileNames: isWatch ? 'js/[name].js' : undefined,
+            //     chunkFileNames: isWatch ? 'js/[name].[hash].js' : undefined,
+            //     assetFileNames: isWatch ? '[ext]/[name].[ext]' : undefined,
+            //     globals: {
+            //         vue: 'Vue',
+            //     },
+            // },
+            output: handleOutput(isWatch),
         },
     },
     css: {
@@ -130,6 +176,6 @@ export default defineConfig({
         },
     },
     define: {
-        // 'process.env.DEV_MODE': `"${isWatch}"`,
+        'process.env.DEV_MODE': `"${isWatch}"`,
     },
 });

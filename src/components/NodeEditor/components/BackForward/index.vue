@@ -28,8 +28,8 @@ export default {
 import { usePublicStore } from '/@/store/modules/public';
 import { toRefs } from 'vue';
 import { RollbackOutlined } from '@ant-design/icons-vue';
-const publicStore = usePublicStore();
 import { kmind } from '/@/hooks/useKmind';
+const publicStore = usePublicStore();
 const { backEnd, forwardEnd } = toRefs(publicStore);
 
 const handleBack = () => {

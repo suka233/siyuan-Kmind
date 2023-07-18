@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "noEmit": true,
+//    "noEmit": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
@@ -26,7 +26,10 @@
     "paths": {
       "/@/*": ["src/*"],
       "/#/*": ["types/*"]
-    }
+    },
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "dist/types",
   },
   "include": [
     "tests/**/*.ts",

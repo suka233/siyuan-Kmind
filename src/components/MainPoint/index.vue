@@ -28,9 +28,9 @@ export default {
 import SideBar from '/@/components/SideBar/index.vue';
 import { usePublicStore } from '/@/store/modules/public';
 import { toRefs } from 'vue';
+import { kmind } from '/@/hooks/useKmind';
 const publicStore = usePublicStore();
 // const { buildTreeData } = publicStore;
-import { kmind } from '/@/hooks/useKmind';
 const { treeData, activeSidebar } = toRefs(publicStore);
 const handleClick = (node: any) => {
     // kmind.value.renderer.clearAllActive();

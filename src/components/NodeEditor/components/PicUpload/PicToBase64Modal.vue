@@ -70,9 +70,9 @@ import {
 import { computed, ref, toRefs, watch } from 'vue';
 import { message, UploadChangeParam, UploadProps } from 'ant-design-vue';
 import { usePublicStore } from '/@/store/modules/public';
+import { kmind } from '/@/hooks/useKmind';
 const publicStore = usePublicStore();
 const { node } = toRefs(publicStore);
-import { kmind } from '/@/hooks/useKmind';
 
 const props = defineProps<{
     visible: boolean;

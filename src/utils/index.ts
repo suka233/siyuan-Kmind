@@ -15,7 +15,7 @@ export async function 向思源请求数据(
         // },
         // 多工作空间开发的时候，需要鉴权
         headers:
-            process.env.NODE_ENV === 'development'
+            process?.env?.NODE_ENV === 'development'
                 ? {
                       Authorization: 'Token vynpj02enbofr6u1',
                   }
@@ -48,7 +48,7 @@ export const getWidgetBlockInfo = (): IWidgetBlockAttr => {
     const filePath = blockNode?.getAttribute('custom-file-path') || '';
 
     let dataAssets;
-    if (process.env.NODE_ENV === 'development') {
+    if (process?.env?.NODE_ENV === 'development') {
         dataAssets = 'assets/kmind-20230302162223-3rxpzda.kmind';
     } else {
         dataAssets = blockNode?.getAttribute('custom-data-assets') || '';

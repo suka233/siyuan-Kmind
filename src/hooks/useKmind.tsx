@@ -69,8 +69,8 @@ export const useKmind = (el) => {
             },
             isUseCustomNodeContent: true,
             customCreateNodeContent: (node) => {
-                console.log(node);
-                console.log(node?.nodeData?.data?.kmind?.type);
+                // console.log(node);
+                // console.log(node?.nodeData?.data?.kmind?.type);
                 const div = document.createElement('div');
                 div.style.height = '360px';
                 div.style.width = '360px';

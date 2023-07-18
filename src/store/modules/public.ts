@@ -9,7 +9,8 @@ export const usePublicStore = defineStore('app-public', () => {
     // region 环境相关
     const debuggerMode = ref<boolean>(false);
     const isDev = computed(() => {
-        return process.env.NODE_ENV === 'development' || debuggerMode.value;
+        // return false;
+        return process?.env?.NODE_ENV === 'development' || debuggerMode.value;
     });
     // endregion
 

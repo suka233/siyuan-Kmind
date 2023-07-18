@@ -6,8 +6,8 @@ import Antd from 'ant-design-vue';
 // import 'virtual:windi.css';
 import '/@/assets/icon-font/iconfont.css';
 import '@unocss/reset/tailwind.css';
-import 'uno.css';
-
+// import 'uno.css';
+import 'virtual:uno.css';
 const init = async () => {
     const app = createApp(App);
     app.use(Antd);
