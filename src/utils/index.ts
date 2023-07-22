@@ -1,5 +1,9 @@
 import { IWidgetBlockAttr } from './types';
-import * as process from 'process';
+import { usePublicStoreWithOut } from '/@/store/modules/public';
+import { storeToRefs } from 'pinia';
+const publicStoreWithOut = usePublicStoreWithOut();
+const { isDev } = storeToRefs(publicStoreWithOut);
+// import * as process from 'process';
 export async function 向思源请求数据(
     url: string,
     data: any,
@@ -14,12 +18,12 @@ export async function 向思源请求数据(
         //     // Authorization: `Token ${config.token}`,
         // },
         // 多工作空间开发的时候，需要鉴权
-        headers:
-            process?.env?.NODE_ENV === 'development'
-                ? {
-                      Authorization: 'Token vynpj02enbofr6u1',
-                  }
-                : undefined,
+        // headers:
+        //     process?.env?.NODE_ENV === 'development'
+        //         ? {
+        //               Authorization: 'Token vynpj02enbofr6u1',
+        //           }
+        //         : undefined,
     }).then(function (response) {
         if (response.ok) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -48,7 +52,8 @@ export const getWidgetBlockInfo = (): IWidgetBlockAttr => {
     const filePath = blockNode?.getAttribute('custom-file-path') || '';
 
     let dataAssets;
-    if (process?.env?.NODE_ENV === 'development') {
+    // if (process?.env?.NODE_ENV === 'development') {
+    if (isDev.value) {
         dataAssets = 'assets/kmind-20230302162223-3rxpzda.kmind';
     } else {
         dataAssets = blockNode?.getAttribute('custom-data-assets') || '';

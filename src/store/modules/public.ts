@@ -4,13 +4,14 @@ import { getWidgetBlockInfo } from '/@/utils';
 import { setBlockAttrs, getFile, uploadAsset } from '/@/api/public';
 import { message } from 'ant-design-vue';
 import store from '/@/store';
-import * as process from 'process';
+// import * as process from 'process';
 export const usePublicStore = defineStore('app-public', () => {
     // region 环境相关
     const debuggerMode = ref<boolean>(false);
     const isDev = computed(() => {
         // return false;
-        return process?.env?.NODE_ENV === 'development' || debuggerMode.value;
+        // return process?.env?.NODE_ENV === 'development' || debuggerMode.value;
+        return debuggerMode.value;
     });
     // endregion
 

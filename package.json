@@ -34,7 +34,8 @@
         "simple-mind-map": "^0.6.6",
         "vditor": "^3.9.0",
         "vue": "^3.3.4",
-        "vue-router": "^4.1.6"
+        "vue-router": "^4.1.6",
+        "process": "^0.11.10"
     },
     "devDependencies": {
         "@commitlint/cli": "^16.2.3",
@@ -60,6 +61,7 @@
         "postcss-html": "^1.4.1",
         "postcss-less": "^6.0.0",
         "prettier": "^2.8.3",
+        "process": "^0.11.10",
         "rollup-plugin-livereload": "^2.0.5",
         "siyuan": "0.7.4",
         "stylelint": "^14.7.1",
