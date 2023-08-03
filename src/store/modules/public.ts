@@ -4,6 +4,7 @@ import { getWidgetBlockInfo } from '/@/utils';
 import { setBlockAttrs, getFile, uploadAsset } from '/@/api/public';
 import { message } from 'ant-design-vue';
 import store from '/@/store';
+import dayjs from 'dayjs';
 // import * as process from 'process';
 export const usePublicStore = defineStore('app-public', () => {
     // region 环境相关
@@ -122,6 +123,7 @@ export const usePublicStore = defineStore('app-public', () => {
     const filePath = ref<string>('');
     const dataAssets = ref<string>('');
     const fileName = ref<string>('kmind');
+    const lastSaveTime = ref<string>('');
     // 保存mindMap数据到挂件所在块
     // TODO 多Tab页导图
     const saveMindMapData = async ({ data }: { data: MapFullDataType }) => {
@@ -168,7 +170,9 @@ export const usePublicStore = defineStore('app-public', () => {
         });
 
         await uploadAsset({ file: file })
-            .then()
+            .then(() => {
+                lastSaveTime.value = dayjs().format('YYYY-MM-DD HH:mm:ss');
+            })
             .catch((e) => {
                 message.error('导图数据保存失败，请手动导出备份数据！');
                 console.log(e);
@@ -277,6 +281,7 @@ export const usePublicStore = defineStore('app-public', () => {
         ctxMenuVisible,
         ctxMenuType,
         init,
+        lastSaveTime,
     };
 });
 

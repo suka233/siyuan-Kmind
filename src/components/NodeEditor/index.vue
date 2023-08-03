@@ -33,7 +33,8 @@
             <connector class="mr-2" :disabled="!node" />
             <!--            <reload-data class="mr-2" />-->
 
-            <a-button class="mr-2" @click="handleSave">保存</a-button>
+            <!--            <a-button class="mr-2" @click="handleSave">保存</a-button>-->
+            <save-button class="mr-2" />
             <dev-component v-if="isDev" />
         </span>
         <!--      保存导入区-->
@@ -87,13 +88,11 @@ import Generalization from './components/Generalization/index.vue';
 import FileButton from './components/FileButton/index.vue';
 import Connector from './components/Connector/index.vue';
 import { usePublicStore } from '/@/store/modules/public';
-import { message } from 'ant-design-vue';
 import ExportFile from '/@/components/NodeEditor/components/ExportFile/ExportFile.vue';
 import DevComponent from './components/DevComponent/index.vue';
 import PicToBase64Modal from './components/PicUpload/PicToBase64Modal.vue';
-import { kmind } from '/@/hooks/useKmind';
+import SaveButton from './components/SaveButton/index.vue';
 const publicStore = usePublicStore();
-const { saveMindMapData } = publicStore;
 const { isDev, node, activeNodeList } = toRefs(publicStore);
 
 // 编辑器是否显示
@@ -110,12 +109,6 @@ const handleShowRichEditor = (type) => {
     richEditorType.value = type;
 };
 defineExpose({ handleShowRichEditor });
-
-const handleSave = async () => {
-    await saveMindMapData({ data: kmind.getData(true) }).then(() =>
-        message.success('保存导图数据成功'),
-    );
-};
 </script>
 
 <style scoped lang="less">
