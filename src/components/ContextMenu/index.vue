@@ -47,36 +47,36 @@
         >
             <a-menu-item key="insertBrotherNode"
                 >插入同级节点
-                <span class="desc">Enter</span>
+                <span class="desc ml-10">Enter</span>
             </a-menu-item>
             <a-menu-item key="insertChildNode"
                 >插入子节点
-                <span class="desc">Tab</span>
+                <span class="desc ml-10">Tab</span>
             </a-menu-item>
             <a-menu-item
                 key="insertGeneralization"
                 :disabled="insertBrotherNodeBtnDisabled"
                 >插入概要
-                <span class="desc">Ctrl + S</span>
+                <span class="desc ml-10">Ctrl + S</span>
             </a-menu-item>
             <a-menu-item key="upNode" :disabled="upNodeBtnDisabled"
-                >上移节点<span class="desc">Ctrl + ↑</span></a-menu-item
+                >上移节点<span class="desc ml-10">Ctrl + ↑</span></a-menu-item
             >
             <a-menu-item key="downNode" :disabled="downNodeBtnDisabled"
-                >下移节点<span class="desc">Ctrl + ↓</span></a-menu-item
+                >下移节点<span class="desc ml-10">Ctrl + ↓</span></a-menu-item
             >
             <a-menu-item key="deleteNode"
                 ><span class="text-red-500">删除节点</span
-                ><span class="desc">Delete</span></a-menu-item
+                ><span class="desc ml-10">Delete</span></a-menu-item
             >
             <a-menu-item key="copyNode"
-                >复制节点<span class="desc">Ctrl + C</span></a-menu-item
+                >复制节点<span class="desc ml-10">Ctrl + C</span></a-menu-item
             >
             <a-menu-item key="cutNode"
-                >剪切节点<span class="desc">Ctrl + X</span></a-menu-item
+                >剪切节点<span class="desc ml-10">Ctrl + X</span></a-menu-item
             >
             <a-menu-item key="pasteNode"
-                >粘贴节点<span class="desc">Ctrl + V</span></a-menu-item
+                >粘贴节点<span class="desc ml-10">Ctrl + V</span></a-menu-item
             >
             <a-menu-item key="customNode">插入自定义节点</a-menu-item>
         </a-menu>
@@ -228,7 +228,7 @@ const downNodeBtnDisabled = computed(() => {
 <style scoped lang="less">
 .nodeCtx {
     .desc {
-        @apply ml-10;
+        //@apply ml-10;
         color: #999;
         font-size: 12px;
         float: right;

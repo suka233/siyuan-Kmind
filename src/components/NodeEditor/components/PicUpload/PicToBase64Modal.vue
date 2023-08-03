@@ -215,11 +215,11 @@ const init = () => {
 </script>
 
 <style scoped lang="less">
-.image-box {
-    @apply relative;
-
-    .image-mask {
-        @apply absolute top-0 left-0 right-0 bottom-0 bg-blue-500/50;
-    }
-}
+//.image-box {
+//    @apply relative;
+//
+//    .image-mask {
+//        @apply absolute top-0 left-0 right-0 bottom-0 bg-blue-500/50;
+//    }
+//}
 </style>

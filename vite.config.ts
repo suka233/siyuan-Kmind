@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
-// import WindiCSS from 'vite-plugin-windicss';
-import UnoCSS from 'unocss/vite';
+import WindiCSS from 'vite-plugin-windicss';
+// import UnoCSS from 'unocss/vite';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 
 import minimist from 'minimist';
@@ -25,31 +25,31 @@ function pathResolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
 }
 
-const handleOutput = (isWatch: boolean) => {
-    if (isWatch) {
-        return {
-            // entryFileNames: '[name].js',
-            // assetFileNames: (assetInfo) => {
-            //     if (assetInfo.name?.endsWith('.css')) {
-            //         return 'index.css';
-            //     }
-            // },
-            entryFileNames: 'js/[name].js',
-            chunkFileNames: 'js/[name].[hash].js',
-            assetFileNames: '[ext]/[name].[ext]',
-            // assetFileNames: '[ext]/[name].[ext]',
-            globals: {
-                vue: 'Vue',
-            },
-        };
-    } else {
-        return {
-            globals: {
-                vue: 'Vue',
-            },
-        };
-    }
-};
+// const handleOutput = (isWatch: boolean) => {
+//     if (isWatch) {
+//         return {
+//             // entryFileNames: '[name].js',
+//             // assetFileNames: (assetInfo) => {
+//             //     if (assetInfo.name?.endsWith('.css')) {
+//             //         return 'index.css';
+//             //     }
+//             // },
+//             entryFileNames: 'js/[name].js',
+//             chunkFileNames: 'js/[name].[hash].js',
+//             assetFileNames: '[ext]/[name].[ext]',
+//             // assetFileNames: '[ext]/[name].[ext]',
+//             globals: {
+//                 vue: 'Vue',
+//             },
+//         };
+//     } else {
+//         return {
+//             globals: {
+//                 vue: 'Vue',
+//             },
+//         };
+//     }
+// };
 // https://vitejs.dev/config/
 export default defineConfig({
     base: './',
@@ -59,35 +59,41 @@ export default defineConfig({
                 find: /\/@\//,
                 replacement: pathResolve('src') + '/',
             },
+            {
+                find: 'stream',
+                replacement: 'stream-browserify',
+            },
+            {
+                find: 'events',
+                replacement: 'rollup-plugin-node-polyfills/polyfills/events',
+            },
         ],
     },
     plugins: [
         vue(),
-        // WindiCSS(),
+        WindiCSS(),
         vueJsx(),
-        isWatch
-            ? viteStaticCopy({
-                  targets: [
-                      {
-                          src: './README*.md',
-                          dest: './',
-                      },
-                      {
-                          src: './icon.png',
-                          dest: './',
-                      },
-                      {
-                          src: './preview.png',
-                          dest: './',
-                      },
-                      {
-                          src: './widget.json',
-                          dest: './',
-                      },
-                  ],
-              })
-            : null,
-        UnoCSS(),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: './README*.md',
+                    dest: './',
+                },
+                {
+                    src: './icon.png',
+                    dest: './',
+                },
+                {
+                    src: './preview.png',
+                    dest: './',
+                },
+                {
+                    src: './widget.json',
+                    dest: './',
+                },
+            ],
+        }),
+        // UnoCSS(),
         // @ts-ignore
         cleanPlugin({
             targetFiles: [distDir],
@@ -115,14 +121,14 @@ export default defineConfig({
         emptyOutDir: false,
         sourcemap: false,
         minify: !isWatch,
-        cssCodeSplit: true,
-        lib: isWatch
-            ? false
-            : {
-                  entry: resolve(__dirname, 'src/packages/index.ts'),
-                  name: 'siyuan-kmind',
-                  fileName: 'siyuan-kmind',
-              },
+        // cssCodeSplit: true,
+        // lib: isWatch
+        //     ? false
+        //     : {
+        //           entry: resolve(__dirname, 'src/packages/index.ts'),
+        //           name: 'siyuan-kmind',
+        //           fileName: 'siyuan-kmind',
+        //       },
         rollupOptions: {
             plugins: isWatch
                 ? [
@@ -149,7 +155,7 @@ export default defineConfig({
                       }),
                   ],
             // 如果是构建库的话，就可以排除vue
-            external: isWatch ? undefined : ['vue'],
+            // external: isWatch ? undefined : ['vue'],
             // output: {
             //     // entryFileNames: '[name].js',
             //     // assetFileNames: (assetInfo) => {
@@ -165,7 +171,18 @@ export default defineConfig({
             //         vue: 'Vue',
             //     },
             // },
-            output: handleOutput(isWatch),
+            // output: handleOutput(isWatch),
+            output: {
+                // entryFileNames: '[name].js',
+                // assetFileNames: (assetInfo) => {
+                //     if (assetInfo.name?.endsWith('.css')) {
+                //         return 'index.css';
+                //     }
+                // },
+                entryFileNames: 'js/[name].js',
+                chunkFileNames: 'js/[name].[hash].js',
+                assetFileNames: '[ext]/[name].[ext]',
+            },
         },
     },
     css: {

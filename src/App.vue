@@ -8,9 +8,9 @@ export default {
 </script>
 <script setup lang="ts">
 import HomeView from '/@/views/home/index.vue';
-const props = defineProps<{
-    type?: 'widget' | 'plugin';
-}>();
-console.log('接收到参数：', props.type);
+// const props = defineProps<{
+//     type?: 'widget' | 'plugin';
+// }>();
+// console.log('接收到参数：', props.type);
 </script>
 <style scoped></style>

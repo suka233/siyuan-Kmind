@@ -1,9 +1,9 @@
 import { IWidgetBlockAttr } from './types';
-import { usePublicStoreWithOut } from '/@/store/modules/public';
-import { storeToRefs } from 'pinia';
-const publicStoreWithOut = usePublicStoreWithOut();
-const { isDev } = storeToRefs(publicStoreWithOut);
-// import * as process from 'process';
+// import { usePublicStoreWithOut } from '/@/store/modules/public';
+// import { storeToRefs } from 'pinia';
+// const publicStoreWithOut = usePublicStoreWithOut();
+// const { isDev } = storeToRefs(publicStoreWithOut);
+import * as process from 'process';
 export async function 向思源请求数据(
     url: string,
     data: any,
@@ -52,8 +52,8 @@ export const getWidgetBlockInfo = (): IWidgetBlockAttr => {
     const filePath = blockNode?.getAttribute('custom-file-path') || '';
 
     let dataAssets;
-    // if (process?.env?.NODE_ENV === 'development') {
-    if (isDev.value) {
+    if (process.env.NODE_ENV === 'development') {
+        // if (isDev.value) {
         dataAssets = 'assets/kmind-20230302162223-3rxpzda.kmind';
     } else {
         dataAssets = blockNode?.getAttribute('custom-data-assets') || '';
@@ -186,4 +186,14 @@ export const isClickLinkIcon = (
         isLink,
         linkUrl,
     };
+};
+
+export const fileToBuffer = (file) => {
+    return new Promise((r) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            r(reader.result);
+        };
+        reader.readAsArrayBuffer(file);
+    });
 };

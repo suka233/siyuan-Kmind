@@ -60,9 +60,9 @@ import { isClickRemarkIcon, isClickLinkIcon } from '/@/utils';
 import { useKmind, kmind, buildTreeData } from '/@/hooks/useKmind';
 import { cloneDeep } from 'lodash-es';
 
-const props = defineProps<{
-    type?: 'widget' | 'plugin';
-}>();
+// const props = defineProps<{
+//     type?: 'widget' | 'plugin';
+// }>();
 const {
     setLastClickNodeInfo,
     setNoteInfo,
@@ -90,7 +90,7 @@ const kmindRef = ref();
 const nodeEditorRef = ref();
 
 onMounted(() => {
-    console.log('homeView参数', props.type);
+    // console.log('homeView参数', props.type);
     useKmind(document.getElementById('mindMapContainer'));
 
     // 导图节点点击

@@ -13,6 +13,7 @@ import {
     backgroundPositionList,
     backgroundSizeList,
     shapeList,
+    exportTypeList,
 } from './zh';
 
 // 快捷键
@@ -38,4 +39,5 @@ export {
     backgroundPositionList,
     backgroundSizeList,
     shapeList,
+    exportTypeList,
 };

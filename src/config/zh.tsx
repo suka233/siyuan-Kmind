@@ -4,6 +4,13 @@ import {
     LaptopOutlined,
     HighlightOutlined,
     DeploymentUnitOutlined,
+    SmileOutlined,
+    FileTextOutlined,
+    FileImageOutlined,
+    StarOutlined,
+    FileMarkdownOutlined,
+    FileExcelOutlined,
+    FilePdfOutlined,
 } from '@ant-design/icons-vue';
 // side-bar-trigger
 export const sideBarTriggerList = [
@@ -429,5 +436,59 @@ export const shapeList = [
     {
         name: '圆',
         value: 'circle',
+    },
+];
+
+// 导出文件类型列表
+export const exportTypeList = [
+    {
+        name: 'kmind',
+        icon: SmileOutlined,
+        type: 'kmind',
+        title: 'kmind',
+        class: 'text-blue-500',
+        content: '可以用于导入到 kmind 中',
+    },
+    {
+        name: 'json',
+        icon: FileTextOutlined,
+        type: 'json',
+        title: 'json',
+        content: '流行的数据交换格式，可用于导入',
+    },
+    {
+        name: '图片',
+        icon: FileImageOutlined,
+        type: 'png',
+        title: '图片',
+        content: '静态图片，适合查看分享',
+    },
+    {
+        name: 'svg',
+        icon: StarOutlined,
+        type: 'svg',
+        title: 'svg',
+        content: '矢量图，可用于导入到其他矢量图软件',
+    },
+    {
+        name: 'pdf',
+        icon: FilePdfOutlined,
+        type: 'pdf',
+        title: 'pdf',
+        content: '可以用于打印',
+    },
+    {
+        name: 'markdown',
+        icon: FileMarkdownOutlined,
+        type: 'md',
+        title: 'markdown',
+        content: '可以用于导入到 markdown 编辑器',
+    },
+    {
+        name: 'xmind',
+        icon: FileExcelOutlined,
+        type: 'xmind',
+        title: 'xmind',
+        content: '可以用于导入到 xmind 中',
     },
 ];

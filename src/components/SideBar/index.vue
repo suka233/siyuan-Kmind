@@ -71,7 +71,7 @@ defineProps<{
     }
 
     .side-bar-content {
-        @apply p-2;
+        //@apply p-2;
         width: 100%;
         height: 100%;
         overflow: auto;

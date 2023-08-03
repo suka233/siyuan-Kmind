@@ -6,17 +6,20 @@ import Drag from 'simple-mind-map/src/plugins/Drag';
 import Select from 'simple-mind-map/src/plugins/Select';
 import RichText from 'simple-mind-map/src/plugins/RichText';
 import Export from 'simple-mind-map/src/plugins/Export';
+import ExportPDF from 'simple-mind-map/src/plugins/ExportPDF';
 import AssociativeLine from 'simple-mind-map/src/plugins/AssociativeLine';
 import NodeImgAdjust from 'simple-mind-map/src/plugins/NodeImgAdjust';
 import TouchEvent from 'simple-mind-map/src/plugins/TouchEvent';
+import ExportXMind from 'simple-mind-map/src/plugins/ExportXMind';
 const publicStoreWithOut = usePublicStoreWithOut();
 const { setNoteInfo } = publicStoreWithOut;
-const { noteVisible, treeData } = storeToRefs(publicStoreWithOut);
+const { noteVisible, treeData, filePath, localConfig } =
+    storeToRefs(publicStoreWithOut);
 
 export let kmind;
 
 export const useKmind = (el) => {
-    if (!kmind) {
+    if (el && !kmind) {
         MindMap.usePlugin(KeyboardNavigation)
             .usePlugin(Drag)
             .usePlugin(Select)
@@ -24,7 +27,9 @@ export const useKmind = (el) => {
             .usePlugin(Export)
             .usePlugin(AssociativeLine)
             .usePlugin(NodeImgAdjust)
-            .usePlugin(TouchEvent);
+            .usePlugin(TouchEvent)
+            .usePlugin(ExportXMind)
+            .usePlugin(ExportPDF);
         kmind = new MindMap({
             el,
             data: {
@@ -86,6 +91,42 @@ export const useKmind = (el) => {
             },
         });
     }
+
+    const downloadKmind = (filename: string, isFullValue: boolean) => {
+        const kmindData: KmindFullDataType = {
+            kmind: {
+                saveType: 'file',
+                filePath: filePath.value,
+                localeConfig: localConfig.value,
+            },
+            ...kmind.getData(isFullValue),
+        };
+
+        const json = JSON.stringify(kmindData);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename + '.kmind';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    const loadKmindFullData = (data: KmindFullDataType) => {
+        kmind.setFullData(data);
+        // 加载额外的配置
+        // 避免不存在kmind节点导致默认的localConfig被覆盖
+        if (data?.kmind?.localeConfig) {
+            localConfig.value = data.kmind.localeConfig;
+        }
+    };
+
+    return {
+        downloadKmind,
+        loadKmindFullData,
+    };
 };
 
 // 递归展开tree

@@ -1,7 +1,7 @@
 <template>
     <div :class="`animate-animated animate-slideInDown editor-card`">
         <!--      按钮区域-->
-        <span class="node-editor-btn">
+        <span class="node-editor-btn pr-6">
             <back-forward />
             <node-editor-btn
                 class="mr-2"
@@ -37,8 +37,9 @@
             <dev-component v-if="isDev" />
         </span>
         <!--      保存导入区-->
-        <span class="map-import-save-btn">
-            <export-file-btn class="mr-2" @click="showExportFile = true" />
+        <span class="map-import-save-btn pl-6">
+            <!--            <export-file-btn class="mr-2" @click="showExportFile = true" />-->
+            <file-button />
         </span>
         <!--      功能实现区-->
         <div>
@@ -82,7 +83,8 @@ import NodeEditorBtn from './components/NodeEditor/NodeEditorBtn.vue';
 import BackForward from './components/BackForward/index.vue';
 // import ReloadData from './components/ReloadData/index.vue';
 import Generalization from './components/Generalization/index.vue';
-import ExportFileBtn from './components/ExportFile/ExportFileBtn.vue';
+// import ExportFileBtn from './components/ExportFile/ExportFileBtn.vue';
+import FileButton from './components/FileButton/index.vue';
 import Connector from './components/Connector/index.vue';
 import { usePublicStore } from '/@/store/modules/public';
 import { message } from 'ant-design-vue';
@@ -126,12 +128,12 @@ const handleSave = async () => {
     padding: 10px;
 
     .node-editor-btn {
-        @apply pr-6;
+        //@apply pr-6;
         border-right: rgba(0, 0, 0, 0.06) solid 1px;
     }
 
     .map-import-save-btn {
-        @apply pl-6;
+        //@apply pl-6;
     }
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
     <div
-        class="side-bar-trigger-container animate-animated animate-slideInLeft"
+        class="side-bar-trigger-container animate-animated animate-slideInLeft fixed left-5 top-20"
         :class="{ show: activeSidebar }"
     >
-        <div class="trigger">
+        <div class="trigger flex flex-col">
             <div
                 v-for="item in sideBarTriggerList"
                 :key="item.value"
-                class="trigger-item"
+                class="trigger-item flex items-center justify-center"
                 :class="{ active: activeSidebar === item.value }"
                 @click="
                     activeSidebar === item.value
@@ -39,7 +39,7 @@ const { activeSidebar } = toRefs(publicStore);
 
 <style scoped lang="less">
 .side-bar-trigger-container {
-    @apply fixed left-5 top-20;
+    //@apply fixed left-5 top-20;
     transition: all 0.3s;
 
     &.show {
@@ -47,7 +47,7 @@ const { activeSidebar } = toRefs(publicStore);
     }
 
     .trigger {
-        @apply flex flex-col;
+        //@apply flex flex-col;
         width: 60px;
         border-color: #eee;
         background-color: #fff;
@@ -56,7 +56,7 @@ const { activeSidebar } = toRefs(publicStore);
         overflow: hidden;
 
         .trigger-item {
-            @apply flex items-center justify-center;
+            //@apply flex items-center justify-center;
             flex-direction: column;
             height: 60px;
             border-radius: 4px;
