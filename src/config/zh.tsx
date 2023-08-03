@@ -73,7 +73,12 @@ export const shortcutKeyList = [
             },
             {
                 icon: 'icongaikuozonglan',
-                name: '插入概要 & 保存导图',
+                name: '插入概要',
+                value: 'Ctrl + G',
+            },
+            {
+                icon: 'icongaikuozonglan',
+                name: '保存导图',
                 value: 'Ctrl + S',
             },
             {

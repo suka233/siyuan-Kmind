@@ -79,7 +79,7 @@
                     /></a-col>
                     <a-col :span="24" v-show="fileType === 'png'"
                         ><a-alert
-                            message="如果节点较多，导出png可能需要较长时间，请耐心等待"
+                            message="如果节点较多，导出png可能需要较长时间，请耐心等待。并且请注意，由于底层库html2cavas的bug，导出为图片的时候节点文字的样式会丢失，暂无更好的解决方案"
                             type="info"
                             show-icon
                     /></a-col>
