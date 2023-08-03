@@ -91,6 +91,10 @@ export default defineConfig({
                     src: './widget.json',
                     dest: './',
                 },
+                {
+                    src: './img/**',
+                    dest: './img/',
+                },
             ],
         }),
         // UnoCSS(),
