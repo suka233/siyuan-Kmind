@@ -9,6 +9,9 @@ import 'virtual:windi.css';
 // import 'uno.css';
 import Antd from 'ant-design-vue';
 // import 'virtual:uno.css';
+import katex from 'katex';
+import 'katex/dist/katex.css';
+window.katex = katex;
 const init = async () => {
     const app = createApp(App);
     app.use(Antd);

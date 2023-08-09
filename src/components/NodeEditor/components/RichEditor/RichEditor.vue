@@ -10,11 +10,33 @@
                 ref="editor"
                 v-model:content="editorContent"
                 theme="snow"
-                toolbar="full"
+                :toolbar="[
+                    ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+                    ['blockquote', 'code-block'],
+
+                    [{ header: 1 }, { header: 2 }], // custom button values
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+                    [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+                    [{ direction: 'rtl' }], // text direction
+
+                    [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+                    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+                    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+                    [{ font: [] }],
+                    [{ align: [] }],
+
+                    ['clean'],
+
+                    ['formula'],
+                    ['image'],
+                    ['video'],
+                    ['link'],
+                ]"
                 content-type="html"
-                style="height: 300px; overflow-y: auto; cursor: text"
-                class="p-2"
                 placeholder="请输入内容"
+                :modules="modules"
                 @click="handleClick"
                 @ready="handleReady"
             />
@@ -33,6 +55,8 @@ import { computed, ref, watch } from 'vue';
 import { QuillEditor, Quill } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { kmind } from '/@/hooks/useKmind';
+import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
+import MarkdownShortcuts from 'quill-markdown-shortcuts';
 // import { uploadAsset } from '/@/api/public';
 // import { message } from 'ant-design-vue';
 const props = defineProps<{
@@ -58,7 +82,23 @@ const visible = computed({
 });
 
 const editorContent = ref('');
-
+const modules = ref([
+    {
+        name: 'blotFormatter',
+        module: BlotFormatter,
+        options: {
+            /* options */
+        },
+    },
+    {
+        name: 'markdownShortcuts',
+        module: MarkdownShortcuts,
+        options: {
+            /* options */
+        },
+    },
+]);
+Quill.register('modules/blotFormatter', BlotFormatter);
 const handleOk = () => {
     console.log(editorContent.value);
     if (props.type === 'node') {
@@ -85,6 +125,17 @@ const handleReady = (e) => {
     isQuillReady.value = true;
     quill.value = e;
 
+    quill.value.root.style.height = '300px';
+
+    quill.value.root.classList.add(
+        'bg-gray-300/20',
+        '!overflow-y-auto',
+        '!p-2',
+    );
+    setTimeout(() => {
+        // quill会在初始化时自动插入一个p标签，所以length需要-1
+        quill.value.setSelection(quill.value.getLength() - 1, 0);
+    });
     // 拦截粘贴图片事件，避免转为base64
     // quill.value.root.addEventListener(
     //     'paste',
@@ -136,13 +187,10 @@ const init = () => {
     }
 
     if (isQuillReady.value) {
-        // TODO 优化：聚焦到内容末尾
-        // quill.value.focus();
-        // const endObj = new KeyboardEvent('end', { key: 'End' });
-        // console.log(quill.value.getLength());
-        // console.log(quill.value.getLength());
-        // quill.value.setSelection(quill.value.getSelection().index, 0);
-        // console.log(quill.value.root);
+        setTimeout(() => {
+            // quill会在初始化时自动插入一个p标签，所以length需要-1
+            quill.value.setSelection(quill.value.getLength() - 1, 0);
+        });
     }
 };
 
