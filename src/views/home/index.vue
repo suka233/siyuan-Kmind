@@ -88,7 +88,6 @@ const {
 
 const kmindRef = ref();
 const nodeEditorRef = ref();
-
 onMounted(() => {
     // console.log('homeView参数', props.type);
     useKmind(document.getElementById('mindMapContainer'));
@@ -284,6 +283,15 @@ onMounted(() => {
     // kmind.value.on('node_mouseleave', (node, e) => {
     //     // console.log('node_mouseleave', node, e);
     // });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                kmind.resize();
+            }
+        });
+    });
+    observer.observe(kmindRef.value);
 });
 
 await init();
