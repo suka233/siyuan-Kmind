@@ -32,9 +32,12 @@ import {
 import ImportModal from './components/ImportModal/index.vue';
 import ExportModal from './components/ExportModal/index.vue';
 import type { MenuProps } from 'ant-design-vue';
-import { ref } from 'vue';
+import { ref, toRefs } from 'vue';
 // import { useKmind } from '@/components/kmindTab/src/hooks/useKmind';
 import { useKmind } from '/@/hooks/useKmind';
+import { usePublicStore } from '/@/store/modules/public';
+const publicStore = usePublicStore();
+const { fileName } = toRefs(publicStore);
 // const handleButtonClick = (e: Event) => {
 //     console.log('click left button');
 // };
@@ -51,7 +54,7 @@ const handleMenuClick: MenuProps['onClick'] = (e: any) => {
             showExportModal.value = true;
             break;
         case 'saveAs':
-            downloadKmind('test', true);
+            downloadKmind(fileName.value, true);
             break;
     }
 };

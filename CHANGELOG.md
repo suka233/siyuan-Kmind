@@ -1,3 +1,56 @@
+#### v1.1.0
+
+说明：
+
+-   此次更新主要针对 节点和备注的弹出编辑框进行了一些优化，新增了一些功能，优化性能
+
+新增：
+
+-   节点&备注 弹出编辑框，新增了数学公式的输入支持（katex）
+-   节点&备注 弹出编辑框，新增有限的支持 markdown 语法，具体支持哪些请查看下方的附录列表
+
+优化：
+
+-   节点&备注 弹出编辑框，插入的图片和网页可以快捷拖动调整大小
+-   进入弹出的编辑框的时候，默认自动获取焦点，并聚焦到最后一行，单击编辑框的其他位置，也会自动聚焦到行尾
+
+其它：
+
+-   更新 smm 库：0.6.11-fix.1 -> 0.6.12
+    附录：
+-   新增的 markdown 语法列表如下，也可以[点我查看](https://patricklee.nyc/quill-markdown-shortcuts/)，注意，仅在弹出编辑框有效：
+
+````
+# Headers
+
+**Bold text**
+
+*Italic*
+
+***Bold italic***
+
+~~Strikethrough~~
+
+- Bullet points
+
+1. Numbered lists
+
+[] Checkboxes
+
+[]() Links
+
+> Blockquote
+
+`Inline code block`
+
+```
+Fenced Code block
+```
+
+--- Horizontal Rule
+
+````
+
 #### v1.0.0
 
 说明：

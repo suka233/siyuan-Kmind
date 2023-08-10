@@ -78,7 +78,7 @@
             <a-menu-item key="pasteNode"
                 >粘贴节点<span class="desc ml-10">Ctrl + V</span></a-menu-item
             >
-            <a-menu-item key="customNode">插入自定义节点</a-menu-item>
+            <!--            <a-menu-item key="customNode">插入自定义节点</a-menu-item>-->
         </a-menu>
     </div>
 </template>
