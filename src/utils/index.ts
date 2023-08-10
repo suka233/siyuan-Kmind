@@ -41,6 +41,15 @@ export async function 向思源请求数据(
 
 // 获取挂件所在块信息
 export const getWidgetBlockInfo = (): IWidgetBlockAttr => {
+    let env: 'widget' | 'plugin';
+    let fileName: string | null;
+    if (window.frameElement?.getAttribute('data-name')) {
+        env = 'plugin';
+        fileName = window.frameElement?.getAttribute('data-name');
+    } else {
+        env = 'widget';
+    }
+
     const blockNode = window.frameElement?.parentElement?.parentElement;
     const iframeNode = window.frameElement as HTMLIFrameElement;
     const id =
@@ -67,6 +76,8 @@ export const getWidgetBlockInfo = (): IWidgetBlockAttr => {
         dataAssets,
         blockNode,
         iframeNode,
+        env,
+        fileName,
     };
 };
 export function is(val: unknown, type: string) {

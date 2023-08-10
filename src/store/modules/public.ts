@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { getWidgetBlockInfo } from '/@/utils';
-import { setBlockAttrs, getFile, uploadAsset } from '/@/api/public';
+import { setBlockAttrs, getFile, uploadAsset, putFile } from '/@/api/public';
 import { message } from 'ant-design-vue';
 import store from '/@/store';
 import dayjs from 'dayjs';
@@ -14,6 +14,7 @@ export const usePublicStore = defineStore('app-public', () => {
         // return process?.env?.NODE_ENV === 'development' || debuggerMode.value;
         return debuggerMode.value;
     });
+    const env = ref<'widget' | 'plugin'>();
     // endregion
 
     // region map相关
@@ -123,110 +124,175 @@ export const usePublicStore = defineStore('app-public', () => {
     const filePath = ref<string>('');
     const dataAssets = ref<string>('');
     const fileName = ref<string>('kmind');
+    const saveLoading = ref<boolean>(false);
     const lastSaveTime = ref<string>('');
     // 保存mindMap数据到挂件所在块
     // TODO 多Tab页导图
     const saveMindMapData = async ({ data }: { data: MapFullDataType }) => {
-        mindMapData.value = data;
-        dataAssets.value = `assets/${fileName.value}-${blockID.value}.kmind`;
-        filePath.value = `/data/${dataAssets.value}`;
+        if (env.value === 'widget') {
+            mindMapData.value = data;
+            dataAssets.value = `assets/${fileName.value}-${blockID.value}.kmind`;
+            filePath.value = `/data/${dataAssets.value}`;
 
-        // 保存文件路径到挂件所在块
-        await setBlockAttrs({
-            id: blockID.value,
-            attrs: {
-                // 'custom-mind-map-data': JSON.stringify(data),
-                // 'custom-file-path': filePath.value,
-                // 将老数据源置空
-                'custom-mind-map-data': '',
-                'custom-file-path': '',
-                'custom-data-assets': dataAssets.value,
-            },
-        })
-            .then(() => {
-                // console.log('保存成功');
-                // console.log(res);
+            // 保存文件路径到挂件所在块
+            await setBlockAttrs({
+                id: blockID.value,
+                attrs: {
+                    // 'custom-mind-map-data': JSON.stringify(data),
+                    // 'custom-file-path': filePath.value,
+                    // 将老数据源置空
+                    'custom-mind-map-data': '',
+                    'custom-file-path': '',
+                    'custom-data-assets': dataAssets.value,
+                },
             })
-            .catch((e) => {
-                message.error('导图数据保存失败，请手动导出备份数据！');
-                console.log(e);
+                .then(() => {
+                    // console.log('保存成功');
+                    // console.log(res);
+                })
+                .catch((e) => {
+                    message.error('导图数据保存失败，请手动导出备份数据！');
+                    console.log(e);
+                });
+
+            // 保存到本地文件
+            const kmindData: KmindFullDataType = {
+                kmind: {
+                    saveType: 'file',
+                    filePath: filePath.value,
+                    localeConfig: localConfig.value,
+                },
+                ...data,
+            };
+            const json = JSON.stringify(kmindData);
+            const blob = new Blob([json], { type: 'application/json' });
+            // 文件名必须拼接上blockID.value，否则思源会自动随机一个id来覆盖
+            const file = new File([blob], `kmind-${blockID.value}.kmind`, {
+                type: 'application/json',
+                lastModified: Date.now(),
             });
 
-        // 保存到本地文件
-        const kmindData: KmindFullDataType = {
-            kmind: {
-                saveType: 'file',
-                filePath: filePath.value,
-                localeConfig: localConfig.value,
-            },
-            ...data,
-        };
-        const json = JSON.stringify(kmindData);
-        const blob = new Blob([json], { type: 'application/json' });
-        // 文件名必须拼接上blockID.value，否则思源会自动随机一个id来覆盖
-        const file = new File([blob], `kmind-${blockID.value}.kmind`, {
-            type: 'application/json',
-            lastModified: Date.now(),
-        });
+            await uploadAsset({ file: file })
+                .then(() => {
+                    lastSaveTime.value = dayjs().format('YYYY-MM-DD HH:mm:ss');
+                })
+                .catch((e) => {
+                    message.error('导图数据保存失败，请手动导出备份数据！');
+                    console.log(e);
+                });
+        } else {
+            mindMapData.value = data;
 
-        await uploadAsset({ file: file })
-            .then(() => {
-                lastSaveTime.value = dayjs().format('YYYY-MM-DD HH:mm:ss');
-            })
-            .catch((e) => {
-                message.error('导图数据保存失败，请手动导出备份数据！');
-                console.log(e);
+            // 保存到本地文件
+            const kmindData: KmindFullDataType = {
+                kmind: {
+                    saveType: 'file',
+                    filePath: filePath.value,
+                    localeConfig: localConfig.value,
+                },
+                ...data,
+            };
+            const json = JSON.stringify(kmindData);
+            const blob = new Blob([json], { type: 'application/json' });
+            const file = new File([blob], `${fileName.value}.kmind`, {
+                type: 'application/json',
+                lastModified: Date.now(),
             });
+
+            saveLoading.value = true;
+            await putFile({
+                file,
+                path: `/data/storage/petal/kmind/${fileName.value}.kmind`,
+            })
+                .then(() => {
+                    saveLoading.value = false;
+                    lastSaveTime.value = dayjs().format('YYYY-MM-DD HH:mm:ss');
+                })
+                .catch((e) => {
+                    message.error('导图数据保存失败，请手动导出备份数据！');
+                    console.log(e);
+                });
+        }
     };
 
     const init = async () => {
-        const {
-            id,
-            mindMapData: data,
-            debuggerMode: _debuggerMode,
-            filePath: _filePath,
-            dataAssets: _dataAssets,
-        } = getWidgetBlockInfo();
-        blockID.value = id;
-        const getFileFromSiyuan = async ({ path, tip }) => {
-            await getFile({ path })
-                .then((res) => {
-                    mindMapData.value = res;
-                    // 老版本数据没有kmind字段，需要兼容
-                    // TODO：初始化localConfig为用户已经存储在挂件文件夹下的默认值
-                    localConfig.value = res?.kmind?.localeConfig ?? {
-                        isZenMode: false,
-                        isFullScreen: false,
-                    };
-                })
-                .catch((e) => {
-                    message.error(
-                        `从本地读取导图数据失败，请检查此挂件的自定义属性的${tip}是否正确!`,
-                    );
-                    console.log(e);
-                });
-        };
+        if (env.value === 'widget') {
+            const {
+                id,
+                mindMapData: data,
+                debuggerMode: _debuggerMode,
+                filePath: _filePath,
+                dataAssets: _dataAssets,
+            } = getWidgetBlockInfo();
+            blockID.value = id;
+            const getFileFromSiyuan = async ({ path, tip }) => {
+                await getFile({ path })
+                    .then((res) => {
+                        mindMapData.value = res;
+                        // 老版本数据没有kmind字段，需要兼容
+                        // TODO：初始化localConfig为用户已经存储在挂件文件夹下的默认值
+                        localConfig.value = res?.kmind?.localeConfig ?? {
+                            isZenMode: false,
+                            isFullScreen: false,
+                        };
+                    })
+                    .catch((e) => {
+                        message.error(
+                            `从本地读取导图数据失败，请检查此挂件的自定义属性的${tip}是否正确!`,
+                        );
+                        console.log(e);
+                    });
+            };
 
-        // 如果存在最新的数据源，则从最新的数据源读取数据，同时兼容老的数据源
-        if (_dataAssets) {
-            dataAssets.value = _dataAssets;
-            filePath.value = `/data/${_dataAssets}`;
+            // 如果存在最新的数据源，则从最新的数据源读取数据，同时兼容老的数据源
+            if (_dataAssets) {
+                dataAssets.value = _dataAssets;
+                filePath.value = `/data/${_dataAssets}`;
+                await getFileFromSiyuan({
+                    path: filePath.value,
+                    tip: 'data-assets',
+                });
+            } else if (_filePath) {
+                // 如果存在老的数据源，则从老的数据源读取数据 v0.1.3
+                filePath.value = _filePath;
+                await getFileFromSiyuan({
+                    path: filePath.value,
+                    tip: 'file-path',
+                });
+            } else if (data) {
+                // 兼容老版本插件，直接从挂件上获取数据
+                mindMapData.value = JSON.parse(data);
+            }
+
+            // 如果存在值，则为debugger模式
+            if (_debuggerMode) {
+                debuggerMode.value = true;
+            }
+        } else {
+            // 挂件获取数据
+            const getFileFromSiyuan = async ({ path, tip }) => {
+                await getFile({ path })
+                    .then((res) => {
+                        mindMapData.value = res || {};
+                        // 老版本数据没有kmind字段，需要兼容
+                        // TODO：初始化localConfig为用户已经存储在挂件文件夹下的默认值
+                        localConfig.value = res?.kmind?.localeConfig ?? {
+                            isZenMode: false,
+                            isFullScreen: false,
+                        };
+                    })
+                    .catch((e) => {
+                        message.error(
+                            `从本地读取导图数据失败，请检查此挂件的自定义属性的${tip}是否正确!`,
+                        );
+                        console.log(e);
+                    });
+            };
+            // filePath.value = path
             await getFileFromSiyuan({
-                path: filePath.value,
+                path: `/data/storage/petal/kmind/${fileName.value}.kmind`,
                 tip: 'data-assets',
             });
-        } else if (_filePath) {
-            // 如果存在老的数据源，则从老的数据源读取数据 v0.1.3
-            filePath.value = _filePath;
-            await getFileFromSiyuan({ path: filePath.value, tip: 'file-path' });
-        } else if (data) {
-            // 兼容老版本插件，直接从挂件上获取数据
-            mindMapData.value = JSON.parse(data);
-        }
-
-        // 如果存在值，则为debugger模式
-        if (_debuggerMode) {
-            debuggerMode.value = true;
         }
     };
 
@@ -282,6 +348,7 @@ export const usePublicStore = defineStore('app-public', () => {
         ctxMenuType,
         init,
         lastSaveTime,
+        env,
     };
 });
 

@@ -30,4 +30,12 @@ export interface IWidgetBlockAttr {
      * 挂件所在块的iframe节点
      */
     iframeNode: HTMLIFrameElement | null;
+    /**
+     * 挂件所在环境
+     */
+    env: 'plugin' | 'widget';
+    /**
+     * 当为plugin的时候，文件名
+     */
+    fileName: string | null;
 }
