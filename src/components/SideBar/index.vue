@@ -1,5 +1,5 @@
 <template>
-    <div class="side-bar-container fixed top-20">
+    <div class="side-bar-container absolute top-20">
         <close-outlined
             class="close-button top-3"
             @click="setActiveSidebar('')"

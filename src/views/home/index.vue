@@ -1,21 +1,13 @@
 <template>
-    <div class="fixed" style="left: 0; right: 0; top: 0; bottom: 0">
+    <div class="absolute w-full h-full">
         <div
             id="mindMapContainer"
             ref="kmindRef"
-            class="absolute"
-            style="
-                width: auto;
-                height: auto;
-                left: 0;
-                right: 0;
-                top: 0;
-                bottom: 0;
-            "
+            class="absolute w-full h-full"
         ></div>
 
         <div v-show="!localConfig.isZenMode">
-            <node-editor ref="nodeEditorRef" class="fixed top-5 left-5" />
+            <node-editor ref="nodeEditorRef" class="absolute top-5 left-5" />
             <side-bar-trigger />
 
             <theme />
@@ -26,7 +18,7 @@
             <!--            <setting />-->
         </div>
 
-        <div v-if="isDev" class="fixed bottom-20 left-5">
+        <div v-if="isDev" class="absolute bottom-20 left-5">
             <p>节点数据：</p>
             <p>{{ node?.nodeData?.data }}</p>
         </div>

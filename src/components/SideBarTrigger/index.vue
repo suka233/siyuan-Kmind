@@ -1,6 +1,6 @@
 <template>
     <div
-        class="side-bar-trigger-container animate-animated animate-slideInLeft fixed left-5 top-20"
+        class="side-bar-trigger-container absolute left-5 top-20"
         :class="{ show: activeSidebar }"
     >
         <div class="trigger flex flex-col">

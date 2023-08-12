@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
-import WindiCSS from 'vite-plugin-windicss';
-// import UnoCSS from 'unocss/vite';
+// import WindiCSS from 'vite-plugin-windicss';
+import UnoCSS from 'unocss/vite';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 
 import minimist from 'minimist';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import cleanPlugin from 'vite-plugin-clean';
+// import cleanPlugin from 'vite-plugin-clean';
 
 import livereload from 'rollup-plugin-livereload';
 import zipPack from 'vite-plugin-zip-pack';
@@ -71,7 +71,7 @@ export default defineConfig({
     },
     plugins: [
         vue(),
-        WindiCSS(),
+        // WindiCSS(),
         vueJsx(),
         viteStaticCopy({
             targets: [
@@ -97,11 +97,11 @@ export default defineConfig({
                 },
             ],
         }),
-        // UnoCSS(),
+        UnoCSS(),
         // @ts-ignore
-        cleanPlugin({
-            targetFiles: [distDir],
-        }),
+        // cleanPlugin({
+        //     targetFiles: [distDir],
+        // }),
     ],
     server: {
         proxy: {
