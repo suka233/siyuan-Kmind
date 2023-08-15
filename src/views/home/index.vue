@@ -289,4 +289,9 @@ onMounted(() => {
 await init();
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less">
+#mindMapContainer * {
+    margin: 0;
+    padding: 0;
+}
+</style>

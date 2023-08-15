@@ -1,6 +1,4 @@
 import { createApp } from 'vue';
-// import './style.css';
-
 import { setupStore } from './store';
 
 // import 'virtual:windi.css';
@@ -13,7 +11,9 @@ import katex from 'katex';
 import 'katex/dist/katex.css';
 window.katex = katex;
 import App from './App.vue';
-import '@unocss/reset/tailwind-compat.css';
+import './style.css';
+// 引入了上面魔改过的style.css重置样式，就无需引入下面的了
+// import '@unocss/reset/tailwind-compat.css';
 const init = async () => {
     const app = createApp(App);
     app.use(Antd);

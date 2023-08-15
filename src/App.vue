@@ -22,4 +22,4 @@ env.value = currentEnv;
 // 当获取不到的时候，使用默认值kmind
 fileName.value = pluginFileName ?? 'kmind';
 </script>
-<style scoped></style>
+<style></style>
