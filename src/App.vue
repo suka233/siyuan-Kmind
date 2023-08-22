@@ -1,5 +1,16 @@
 <template>
-    <suspense> <home-view /></suspense>
+    <suspense>
+        <template #fallback>
+            <div>
+                <a-skeleton active />
+                <br />
+                <a-skeleton active />
+                <br />
+                <a-skeleton active />
+            </div>
+        </template>
+        <home-view />
+    </suspense>
 </template>
 <script lang="ts">
 export default {
