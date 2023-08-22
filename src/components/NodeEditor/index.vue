@@ -119,10 +119,18 @@ defineExpose({ handleShowRichEditor });
     box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.06);
     border-radius: 4px;
     padding: 10px;
+    overflow-x: auto;
+    width: max-content;
+    max-width: 100%;
+    display: flex;
 
     .node-editor-btn {
         //@apply pr-6;
         border-right: rgba(0, 0, 0, 0.06) solid 1px;
+        overflow-x: auto;
+        width: max-content;
+        max-width: 100%;
+        display: flex;
     }
 
     .map-import-save-btn {
