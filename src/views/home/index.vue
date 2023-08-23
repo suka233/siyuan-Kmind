@@ -24,6 +24,7 @@
         </div>
         <show-note />
         <context-menu />
+        <info-box />
     </div>
 </template>
 
@@ -51,6 +52,7 @@ import ContextMenu from '/@/components/ContextMenu/index.vue';
 import { isClickRemarkIcon, isClickLinkIcon } from '/@/utils';
 import { useKmind, kmind, buildTreeData } from '/@/hooks/useKmind';
 import { cloneDeep } from 'lodash-es';
+import InfoBox from '/@/components/InfoBox/index.vue';
 
 // const props = defineProps<{
 //     type?: 'widget' | 'plugin';
@@ -76,6 +78,7 @@ const {
     localConfig,
     nodeNormalStyle,
     nodeActiveStyle,
+    // saveTimeAgo,
 } = toRefs(publicStore);
 
 const kmindRef = ref();

@@ -5,6 +5,7 @@ import { setBlockAttrs, getFile, uploadAsset, putFile } from '/@/api/public';
 import { message } from 'ant-design-vue';
 import store from '/@/store';
 import dayjs from 'dayjs';
+// import { formatTimeAgo } from '@vueuse/core';
 // import * as process from 'process';
 export const usePublicStore = defineStore('app-public', () => {
     // region 环境相关
@@ -126,6 +127,7 @@ export const usePublicStore = defineStore('app-public', () => {
     const fileName = ref<string>('kmind');
     const saveLoading = ref<boolean>(false);
     const lastSaveTime = ref<string>('');
+    // const saveTimeAgo = ref('');
     // 保存mindMap数据到挂件所在块
     // TODO 多Tab页导图
     const saveMindMapData = async ({ data }: { data: MapFullDataType }) => {
@@ -174,7 +176,11 @@ export const usePublicStore = defineStore('app-public', () => {
 
             await uploadAsset({ file: file })
                 .then(() => {
-                    lastSaveTime.value = dayjs().format('YYYY-MM-DD HH:mm:ss');
+                    const date = new Date();
+                    lastSaveTime.value = dayjs(date).format(
+                        'YYYY-MM-DD HH:mm:ss',
+                    );
+                    // saveTimeAgo.value = formatTimeAgo(date);
                 })
                 .catch((e) => {
                     message.error('导图数据保存失败，请手动导出备份数据！');
@@ -206,7 +212,11 @@ export const usePublicStore = defineStore('app-public', () => {
             })
                 .then(() => {
                     saveLoading.value = false;
-                    lastSaveTime.value = dayjs().format('YYYY-MM-DD HH:mm:ss');
+                    const date = new Date();
+                    lastSaveTime.value = dayjs(date).format(
+                        'YYYY-MM-DD HH:mm:ss',
+                    );
+                    // saveTimeAgo.value = formatTimeAgo(date);
                 })
                 .catch((e) => {
                     message.error('导图数据保存失败，请手动导出备份数据！');
@@ -349,6 +359,8 @@ export const usePublicStore = defineStore('app-public', () => {
         init,
         lastSaveTime,
         env,
+        saveLoading,
+        // saveTimeAgo,
     };
 });
 
