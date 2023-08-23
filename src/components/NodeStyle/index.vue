@@ -74,7 +74,9 @@
                                 <a-col :span="12">
                                     <a-form-item label="行高">
                                         <a-select
-                                            :value="getNodeStyle.lineHeight"
+                                            v-model:value="
+                                                getNodeStyle.lineHeight
+                                            "
                                             @change="
                                                 (e) => update('lineHeight', e)
                                             "
@@ -200,7 +202,9 @@
                                 <a-col :span="12">
                                     <a-form-item label="颜色">
                                         <color-popover
-                                            :color="getNodeStyle.borderColor"
+                                            v-model:color="
+                                                getNodeStyle.borderColor
+                                            "
                                             @update:color="
                                                 update('borderColor', $event)
                                             "
@@ -227,7 +231,7 @@
                                 <a-col :span="12">
                                     <a-form-item label="样式">
                                         <a-select
-                                            :value="
+                                            v-model:value="
                                                 getNodeStyle.borderDasharray
                                             "
                                             @change="
@@ -249,7 +253,9 @@
                                 <a-col :span="12">
                                     <a-form-item label="宽度">
                                         <a-select
-                                            :value="getNodeStyle.borderWidth"
+                                            v-model:value="
+                                                getNodeStyle.borderWidth
+                                            "
                                             @change="
                                                 (e) => update('borderWidth', e)
                                             "
@@ -266,7 +272,9 @@
                                 <a-col :span="12">
                                     <a-form-item label="圆角">
                                         <a-select
-                                            :value="getNodeStyle.borderRadius"
+                                            v-model:value="
+                                                getNodeStyle.borderRadius
+                                            "
                                             @change="
                                                 (e) => update('borderRadius', e)
                                             "
@@ -289,7 +297,9 @@
                                         :label-col="{ span: 3 }"
                                     >
                                         <color-popover
-                                            :color="getNodeStyle.fillColor"
+                                            v-model:color="
+                                                getNodeStyle.fillColor
+                                            "
                                             @update:color="
                                                 update('fillColor', $event)
                                             "
@@ -320,7 +330,7 @@
                                         :label-col="{ span: 3 }"
                                     >
                                         <a-select
-                                            :value="getNodeStyle.shape"
+                                            v-model:value="getNodeStyle.shape"
                                             @change="(e) => update('shape', e)"
                                         >
                                             <a-select-option
@@ -340,7 +350,9 @@
                                 <a-col :span="12">
                                     <a-form-item label="颜色">
                                         <color-popover
-                                            :color="getNodeStyle.lineColor"
+                                            v-model:color="
+                                                getNodeStyle.lineColor
+                                            "
                                             @update:color="
                                                 update('lineColor', $event)
                                             "
@@ -367,7 +379,9 @@
                                 <a-col :span="12">
                                     <a-form-item label="样式">
                                         <a-select
-                                            :value="getNodeStyle.lineDasharray"
+                                            v-model:value="
+                                                getNodeStyle.lineDasharray
+                                            "
                                             @change="
                                                 (e) =>
                                                     update('lineDasharray', e)
@@ -387,7 +401,9 @@
                                 <a-col :span="12">
                                     <a-form-item label="宽度">
                                         <a-select
-                                            :value="getNodeStyle.lineWidth"
+                                            v-model:value="
+                                                getNodeStyle.lineWidth
+                                            "
                                             @change="
                                                 (e) => update('lineWidth', e)
                                             "
@@ -407,7 +423,9 @@
                                 <a-col :span="24">
                                     <a-form-item label="水平">
                                         <a-slider
-                                            :value="getNodeStyle.paddingX"
+                                            v-model:value="
+                                                getNodeStyle.paddingX
+                                            "
                                             @change="
                                                 (e) => update('paddingX', e)
                                             "
@@ -417,7 +435,9 @@
                                 <a-col :span="24">
                                     <a-form-item label="垂直">
                                         <a-slider
-                                            :value="getNodeStyle.paddingY"
+                                            v-model:value="
+                                                getNodeStyle.paddingY
+                                            "
                                             @change="
                                                 (e) => update('paddingY', e)
                                             "
@@ -433,113 +453,12 @@
                         :label-col="{ span: 6 }"
                         :wrapper-col="{ span: 18 }"
                     >
-                        <!--                        <p class="text-xl mb-2 ml-1">文字</p>-->
-                        <!--                        <a-row :gutter="24">-->
-                        <!--                            <a-col :span="6">-->
-                        <!--                                <color-popover-->
-                        <!--                                    :color="getNodeStyle.color"-->
-                        <!--                                    @update:color="update('color', $event)"-->
-                        <!--                                    ><div-->
-                        <!--                                        class="styleBtn"-->
-                        <!--                                        :style="{ color: getNodeStyle.color }"-->
-                        <!--                                    >-->
-                        <!--                                        A-->
-                        <!--                                        <span-->
-                        <!--                                            class="colorShow"-->
-                        <!--                                            :style="{-->
-                        <!--                                                backgroundColor:-->
-                        <!--                                                    getNodeStyle.color ||-->
-                        <!--                                                    '#000',-->
-                        <!--                                            }"-->
-                        <!--                                        ></span></div-->
-                        <!--                                ></color-popover>-->
-                        <!--                            </a-col>-->
-                        <!--                            <a-col :span="6">-->
-                        <!--                                <div-->
-                        <!--                                    class="styleBtn"-->
-                        <!--                                    :class="{-->
-                        <!--                                        active:-->
-                        <!--                                            getNodeStyle.fontWeight === 'bold',-->
-                        <!--                                    }"-->
-                        <!--                                    @click="-->
-                        <!--                                        update(-->
-                        <!--                                            'fontWeight',-->
-                        <!--                                            getNodeStyle.fontWeight === 'bold'-->
-                        <!--                                                ? 'normal'-->
-                        <!--                                                : 'bold',-->
-                        <!--                                        )-->
-                        <!--                                    "-->
-                        <!--                                >-->
-                        <!--                                    B-->
-                        <!--                                </div></a-col-->
-                        <!--                            >-->
-                        <!--                            <a-col :span="6">-->
-                        <!--                                <div-->
-                        <!--                                    class="styleBtn i"-->
-                        <!--                                    :class="{-->
-                        <!--                                        active:-->
-                        <!--                                            getNodeStyle.fontStyle === 'italic',-->
-                        <!--                                    }"-->
-                        <!--                                    @click="-->
-                        <!--                                        update(-->
-                        <!--                                            'fontStyle',-->
-                        <!--                                            getNodeStyle.fontStyle === 'italic'-->
-                        <!--                                                ? 'normal'-->
-                        <!--                                                : 'italic',-->
-                        <!--                                        )-->
-                        <!--                                    "-->
-                        <!--                                >-->
-                        <!--                                    I-->
-                        <!--                                </div></a-col-->
-                        <!--                            >-->
-                        <!--                            <a-col :span="6">-->
-                        <!--                                <a-popover>-->
-                        <!--                                    <template #content>-->
-                        <!--                                        <a-radio-group-->
-                        <!--                                            v-model:value="-->
-                        <!--                                                getNodeStyle.textDecoration-->
-                        <!--                                            "-->
-                        <!--                                            @change="-->
-                        <!--                                                update(-->
-                        <!--                                                    'textDecoration',-->
-                        <!--                                                    getNodeStyle.textDecoration,-->
-                        <!--                                                )-->
-                        <!--                                            "-->
-                        <!--                                            button-style="solid"-->
-                        <!--                                        >-->
-                        <!--                                            <a-radio-button value="underline"-->
-                        <!--                                                >下划线</a-radio-button-->
-                        <!--                                            >-->
-                        <!--                                            <a-radio-button value="line-through"-->
-                        <!--                                                >中划线</a-radio-button-->
-                        <!--                                            >-->
-                        <!--                                            <a-radio-button value="overline"-->
-                        <!--                                                >上划线</a-radio-button-->
-                        <!--                                            >-->
-                        <!--                                            <a-radio-button value="none"-->
-                        <!--                                                >取消</a-radio-button-->
-                        <!--                                            >-->
-                        <!--                                        </a-radio-group>-->
-                        <!--                                    </template>-->
-                        <!--                                    <div-->
-                        <!--                                        class="styleBtn u"-->
-                        <!--                                        :style="{-->
-                        <!--                                            textDecoration:-->
-                        <!--                                                getNodeStyle.textDecoration ||-->
-                        <!--                                                'none',-->
-                        <!--                                        }"-->
-                        <!--                                    >-->
-                        <!--                                        U-->
-                        <!--                                    </div>-->
-                        <!--                                </a-popover>-->
-                        <!--                            </a-col>-->
-                        <!--                        </a-row>-->
                         <p class="text-xl mb-2 mt-1 ml-1">边框</p>
                         <a-row :gutter="24">
                             <a-col :span="12">
                                 <a-form-item label="颜色">
                                     <color-popover
-                                        :color="getNodeStyle.borderColor"
+                                        v-model:color="getNodeStyle.borderColor"
                                         @update:color="
                                             update('borderColor', $event)
                                         "
@@ -566,7 +485,9 @@
                             <a-col :span="12">
                                 <a-form-item label="样式">
                                     <a-select
-                                        :value="getNodeStyle.borderDasharray"
+                                        v-model:value="
+                                            getNodeStyle.borderDasharray
+                                        "
                                         @change="
                                             (e) => update('borderDasharray', e)
                                         "
@@ -583,7 +504,7 @@
                             <a-col :span="12">
                                 <a-form-item label="宽度">
                                     <a-select
-                                        :value="getNodeStyle.borderWidth"
+                                        v-model:value="getNodeStyle.borderWidth"
                                         @change="
                                             (e) => update('borderWidth', e)
                                         "
@@ -600,7 +521,9 @@
                             <a-col :span="12">
                                 <a-form-item label="圆角">
                                     <a-select
-                                        :value="getNodeStyle.borderRadius"
+                                        v-model:value="
+                                            getNodeStyle.borderRadius
+                                        "
                                         @change="
                                             (e) => update('borderRadius', e)
                                         "
@@ -623,7 +546,7 @@
                                     :label-col="{ span: 3 }"
                                 >
                                     <color-popover
-                                        :color="getNodeStyle.fillColor"
+                                        v-model:color="getNodeStyle.fillColor"
                                         @update:color="
                                             update('fillColor', $event)
                                         "
@@ -702,7 +625,7 @@ const getNodeStyle = computed(() => {
 // 更新节点的样式
 const update = (prop: string, e: any) => {
     activeNodeList.value.forEach((node) => {
-        console.log(isActive.value);
+        // console.log(isActive.value);
         node.setStyle(prop, e, isActive.value);
     });
 };
