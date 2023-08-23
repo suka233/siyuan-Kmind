@@ -33,14 +33,16 @@
 
 ## 最新更新记录：
 
-#### v1.1.1
+### v1.1.2
 
-说明：
+修复：
 
--   挂件版 kmind 从本版本（v1.1.1）开始，将为 kmind 插件版(v1.1.0+)提供代码复用支持，请更新 kmind 插件和挂件至最新版本以保证最佳体验~
+-   思源笔记不是最大化的时候，按钮会挤在一起（现在会显示一个横向滚动条）[#issue11](https://github.com/suka233/siyuan-kmind-plugin/issues/11)
+-   设置节点样式，样式没有回显的 bug
 
-优化：
+新增：
 
--   尝试修复偶先的导图渲染页面空白的 bug
+-   左下角自动保存提示
+-   初次加载的 loading 动画
 
 ## 历史更新记录[点我查看](https://github.com/suka233/siyuan-Kmind/blob/dev/CHANGELOG.md)
