@@ -254,13 +254,29 @@ onMounted(() => {
         (e) => {
             // console.log(e);
             const { isLink, linkUrl } = isClickLinkIcon(e);
-            // 如果按住alt键点击到了siyuan开头的超链接
+            // 如果按住alt键点击到了siyuan开头的超链接icon
             if (isLink && e.altKey && linkUrl?.startsWith('siyuan://')) {
                 e.preventDefault();
                 // @ts-ignore kmind插件把api挂载到了window上
                 window.parent.kmindApi.plugin.addFloatLayer({
                     // 获取最后一个斜杠后的id
                     ids: [linkUrl?.substr(linkUrl.lastIndexOf('/') + 1)],
+                    x: e.screenX,
+                    y: e.screenY,
+                });
+            }
+
+            // 如果按住alt键点击到了siyuan开头的超链接
+            if (
+                e.altKey &&
+                (e?.target as HTMLAnchorElement)?.href.startsWith('siyuan://')
+            ) {
+                const href = (e?.target as HTMLAnchorElement)?.href;
+                e.preventDefault();
+                // @ts-ignore kmind插件把api挂载到了window上
+                window.parent.kmindApi.plugin.addFloatLayer({
+                    // 获取最后一个斜杠后的id
+                    ids: [href.substr(href.lastIndexOf('/') + 1)],
                     x: e.screenX,
                     y: e.screenY,
                 });

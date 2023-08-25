@@ -99,6 +99,50 @@ const modules = ref([
     },
 ]);
 Quill.register('modules/blotFormatter', BlotFormatter);
+
+/**
+ * 重写quill的link模块，支持自定义协议
+ * @see https://github.com/quilljs/quill/issues/262#issuecomment-948890432
+ * @see https://github.com/quilljs/quill/issues/1268#issuecomment-390462861
+ */
+const Link = Quill.import('formats/link');
+// Override the existing property on the Quill global object and add custom protocols
+Link.PROTOCOL_WHITELIST = [
+    'http',
+    'https',
+    'mailto',
+    'tel',
+    'radar',
+    'rdar',
+    'smb',
+    'sms',
+    'siyuan',
+];
+
+class CustomLinkSanitizer extends Link {
+    static sanitize(url) {
+        // Run default sanitize method from Quill
+        const sanitizedUrl = super.sanitize(url);
+
+        // Not whitelisted URL based on protocol so, let's return `blank`
+        if (!sanitizedUrl || sanitizedUrl === 'about:blank')
+            return sanitizedUrl;
+
+        // Verify if the URL already have a whitelisted protocol
+        const hasWhitelistedProtocol = this.PROTOCOL_WHITELIST.some(function (
+            protocol,
+        ) {
+            return sanitizedUrl.startsWith(protocol);
+        });
+
+        if (hasWhitelistedProtocol) return sanitizedUrl;
+
+        // if not, then append only 'http' to not to be a relative URL
+        return `http://${sanitizedUrl}`;
+    }
+}
+
+Quill.register(CustomLinkSanitizer, true);
 const handleOk = () => {
     console.log(editorContent.value);
     if (props.type === 'node') {

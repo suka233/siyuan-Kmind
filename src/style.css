@@ -19,7 +19,10 @@ html {
     -webkit-text-size-adjust: 100%; /* 2 */
     -moz-tab-size: 4; /* 3 */
     tab-size: 4; /* 3 */
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji'; /* 4 */
 }
 
 /*
@@ -93,7 +96,8 @@ code,
 kbd,
 samp,
 pre {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        'Liberation Mono', 'Courier New', monospace; /* 1 */
     font-size: 1em; /* 2 */
 }
 
@@ -312,7 +316,7 @@ Set the default cursor for buttons.
 */
 
 button,
-[role="button"] {
+[role='button'] {
     cursor: pointer;
 }
 
@@ -356,7 +360,6 @@ video {
     display: none;
 }
 
-
 /*以下三个关于border的设置会影响到dom-to-image-more的导出图片功能，暂时注释掉*/
 *,
 ::before,
@@ -366,7 +369,6 @@ video {
     /*border-style: solid; !* 2 *!*/
     /*border-color: #e5e7eb; !* 2 *!*/
 }
-
 
 *::-webkit-scrollbar {
     width: 5px;
@@ -381,4 +383,13 @@ video {
 *::-webkit-scrollbar-thumb {
     background: #dddddd;
     border-radius: 5px;
+}
+
+a[href^='siyuan']::after {
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    background-image: url('data:image/png;base64,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');
+    background-size: contain;
 }
