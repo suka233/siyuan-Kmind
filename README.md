@@ -36,11 +36,10 @@
 
 ## 最新更新记录：
 
-### v1.1.3
+### v1.1.4
 
 新增：
 
--   节点内的所有不同文本对应的超链接都支持 alt+悬浮预览了，意味着同一个节点可以悬浮预览或者直接跳转多个思源的文档块了，并且思源超链接会展示思源的 icon
-    ![siyuanURL.gif](img%2FsiyuanURL.gif)
+-   支持空格键进入节点编辑状态，并默认全选（F2 键进入编辑状态，默认不全选）。[按住空格键进入编辑状态并全选：#15](https://github.com/suka233/siyuan-Kmind/issues/15)
 
 ## 历史更新记录[点我查看](https://github.com/suka233/siyuan-Kmind/blob/dev/CHANGELOG.md)
