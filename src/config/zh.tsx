@@ -109,7 +109,7 @@ export const shortcutKeyList = [
             {
                 icon: 'iconbianji',
                 name: '编辑节点',
-                value: 'F2',
+                value: 'F2 | Space空格键',
             },
             {
                 icon: 'iconhuanhang',

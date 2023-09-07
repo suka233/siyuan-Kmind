@@ -200,6 +200,15 @@ onMounted(() => {
         }
     });
 
+    /**
+     * [按住空格键进入编辑状态并全选：#15](https://github.com/suka233/siyuan-Kmind/issues/15)
+     */
+    kmind.keyCommand.addShortcut('Spacebar', () => {
+        // kmind.keyCommand.getShortcutFn('F2') 返回的是方法数组
+        kmind.keyCommand.getShortcutFn('F2')[0]();
+        kmind.richText.selectAll();
+    });
+
     // 自动加载缓存数据
     if (mindMapData.value) {
         kmind.setFullData(cloneDeep(mindMapData.value));

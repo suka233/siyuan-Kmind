@@ -144,7 +144,7 @@ class CustomLinkSanitizer extends Link {
 
 Quill.register(CustomLinkSanitizer, true);
 const handleOk = () => {
-    console.log(editorContent.value);
+    // console.log(editorContent.value);
     if (props.type === 'node') {
         props.node.setText(editorContent.value, true);
         // TODO 使用 html-to-text 转换为纯文本 构建纯文本文档树，用来支撑搜索，大纲，插入导图内超链接等功能
