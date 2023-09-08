@@ -12,6 +12,7 @@ import AssociativeLine from 'simple-mind-map/src/plugins/AssociativeLine';
 import NodeImgAdjust from 'simple-mind-map/src/plugins/NodeImgAdjust';
 import TouchEvent from 'simple-mind-map/src/plugins/TouchEvent';
 import ExportXMind from 'simple-mind-map/src/plugins/ExportXMind';
+import Painter from 'simple-mind-map/src/plugins/Painter.js';
 const publicStoreWithOut = usePublicStoreWithOut();
 const { setNoteInfo } = publicStoreWithOut;
 const { noteVisible, treeData, filePath, localConfig } =
@@ -30,7 +31,8 @@ export const useKmind = (el) => {
             .usePlugin(NodeImgAdjust)
             .usePlugin(TouchEvent)
             .usePlugin(ExportXMind)
-            .usePlugin(ExportPDF);
+            .usePlugin(ExportPDF)
+            .usePlugin(Painter);
         kmind = new MindMap({
             el,
             data: {

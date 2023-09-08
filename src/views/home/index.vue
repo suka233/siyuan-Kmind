@@ -79,6 +79,7 @@ const {
     nodeNormalStyle,
     nodeActiveStyle,
     // saveTimeAgo,
+    isPainting,
 } = toRefs(publicStore);
 
 const kmindRef = ref();
@@ -161,6 +162,13 @@ onMounted(() => {
         ctxMenuTop.value = e.y;
         ctxMenuVisible.value = true;
         ctxMenuType.value = 'node';
+    });
+
+    kmind.on('painter_start', () => {
+        isPainting.value = true;
+    });
+    kmind.on('painter_end', () => {
+        isPainting.value = false;
     });
 
     // 绑定自定义快捷键

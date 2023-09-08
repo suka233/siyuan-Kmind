@@ -31,6 +31,7 @@
             <icon-editor-btn :disabled="!activeNodeList.length" />
             <generalization class="mr-2" :disabled="!node" />
             <connector class="mr-2" :disabled="!node" />
+            <node-painter class="mr-2" :disabled="!node" />
             <!--            <reload-data class="mr-2" />-->
 
             <!--            <a-button class="mr-2" @click="handleSave">保存</a-button>-->
@@ -84,6 +85,7 @@ import NodeEditorBtn from './components/NodeEditor/NodeEditorBtn.vue';
 import BackForward from './components/BackForward/index.vue';
 // import ReloadData from './components/ReloadData/index.vue';
 import Generalization from './components/Generalization/index.vue';
+import NodePainter from './components/NodePainter/index.vue';
 // import ExportFileBtn from './components/ExportFile/ExportFileBtn.vue';
 import FileButton from './components/FileButton/index.vue';
 import Connector from './components/Connector/index.vue';

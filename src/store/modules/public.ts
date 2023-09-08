@@ -83,6 +83,8 @@ export const usePublicStore = defineStore('app-public', () => {
     });
     // 当前节点active态的style
     const nodeActiveStyle = ref<Record<string, any>>({});
+    // 是否正在格式刷
+    const isPainting = ref(false);
 
     // 保存备注相关信息
     const setNoteInfo = ({
@@ -361,6 +363,7 @@ export const usePublicStore = defineStore('app-public', () => {
         env,
         saveLoading,
         // saveTimeAgo,
+        isPainting,
     };
 });
 
