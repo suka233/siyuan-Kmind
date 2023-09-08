@@ -448,129 +448,129 @@
                         </a-form>
                     </div>
                 </a-tab-pane>
-                <a-tab-pane key="active" tab="选中状态">
-                    <a-form
-                        :label-col="{ span: 6 }"
-                        :wrapper-col="{ span: 18 }"
-                    >
-                        <p class="text-xl mb-2 mt-1 ml-1">边框</p>
-                        <a-row :gutter="24">
-                            <a-col :span="12">
-                                <a-form-item label="颜色">
-                                    <color-popover
-                                        v-model:color="getNodeStyle.borderColor"
-                                        @update:color="
-                                            update('borderColor', $event)
-                                        "
-                                        ><div
-                                            class="styleBtn"
-                                            :style="{
-                                                borderColor:
-                                                    getNodeStyle.borderColor ??
-                                                    '#000',
-                                            }"
-                                        >
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span
-                                                class="colorShow"
-                                                :style="{
-                                                    backgroundColor:
-                                                        getNodeStyle.borderColor ??
-                                                        '#000',
-                                                }"
-                                            ></span></div
-                                    ></color-popover>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="12">
-                                <a-form-item label="样式">
-                                    <a-select
-                                        v-model:value="
-                                            getNodeStyle.borderDasharray
-                                        "
-                                        @change="
-                                            (e) => update('borderDasharray', e)
-                                        "
-                                    >
-                                        <a-select-option
-                                            v-for="item in borderDasharrayList"
-                                            :key="item.value"
-                                            :value="item.value"
-                                            >{{ item.name }}</a-select-option
-                                        >
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="12">
-                                <a-form-item label="宽度">
-                                    <a-select
-                                        v-model:value="getNodeStyle.borderWidth"
-                                        @change="
-                                            (e) => update('borderWidth', e)
-                                        "
-                                    >
-                                        <a-select-option
-                                            v-for="item in borderWidthList"
-                                            :key="item"
-                                            :value="item"
-                                            :label="item"
-                                        />
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="12">
-                                <a-form-item label="圆角">
-                                    <a-select
-                                        v-model:value="
-                                            getNodeStyle.borderRadius
-                                        "
-                                        @change="
-                                            (e) => update('borderRadius', e)
-                                        "
-                                    >
-                                        <a-select-option
-                                            v-for="item in borderRadiusList"
-                                            :key="item"
-                                            :value="item"
-                                            :label="item"
-                                        />
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                        </a-row>
-                        <p class="text-xl mb-2 mt-2 ml-1">背景</p>
-                        <a-row :gutter="24">
-                            <a-col :span="24">
-                                <a-form-item
-                                    label="颜色"
-                                    :label-col="{ span: 3 }"
-                                >
-                                    <color-popover
-                                        v-model:color="getNodeStyle.fillColor"
-                                        @update:color="
-                                            update('fillColor', $event)
-                                        "
-                                        ><div
-                                            class="styleBtn"
-                                            :style="{
-                                                backgroundColor:
-                                                    getNodeStyle.fillColor,
-                                            }"
-                                        >
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span
-                                                class="colorShow"
-                                                :style="{
-                                                    backgroundColor:
-                                                        getNodeStyle.fillColor,
-                                                }"
-                                            ></span></div
-                                    ></color-popover>
-                                </a-form-item>
-                            </a-col>
-                        </a-row>
-                    </a-form>
-                </a-tab-pane>
+                <!--                <a-tab-pane key="active" tab="选中状态">-->
+                <!--                    <a-form-->
+                <!--                        :label-col="{ span: 6 }"-->
+                <!--                        :wrapper-col="{ span: 18 }"-->
+                <!--                    >-->
+                <!--                        <p class="text-xl mb-2 mt-1 ml-1">边框</p>-->
+                <!--                        <a-row :gutter="24">-->
+                <!--                            <a-col :span="12">-->
+                <!--                                <a-form-item label="颜色">-->
+                <!--                                    <color-popover-->
+                <!--                                        v-model:color="getNodeStyle.borderColor"-->
+                <!--                                        @update:color="-->
+                <!--                                            update('borderColor', $event)-->
+                <!--                                        "-->
+                <!--                                        ><div-->
+                <!--                                            class="styleBtn"-->
+                <!--                                            :style="{-->
+                <!--                                                borderColor:-->
+                <!--                                                    getNodeStyle.borderColor ??-->
+                <!--                                                    '#000',-->
+                <!--                                            }"-->
+                <!--                                        >-->
+                <!--                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <!--                                            <span-->
+                <!--                                                class="colorShow"-->
+                <!--                                                :style="{-->
+                <!--                                                    backgroundColor:-->
+                <!--                                                        getNodeStyle.borderColor ??-->
+                <!--                                                        '#000',-->
+                <!--                                                }"-->
+                <!--                                            ></span></div-->
+                <!--                                    ></color-popover>-->
+                <!--                                </a-form-item>-->
+                <!--                            </a-col>-->
+                <!--                            <a-col :span="12">-->
+                <!--                                <a-form-item label="样式">-->
+                <!--                                    <a-select-->
+                <!--                                        v-model:value="-->
+                <!--                                            getNodeStyle.borderDasharray-->
+                <!--                                        "-->
+                <!--                                        @change="-->
+                <!--                                            (e) => update('borderDasharray', e)-->
+                <!--                                        "-->
+                <!--                                    >-->
+                <!--                                        <a-select-option-->
+                <!--                                            v-for="item in borderDasharrayList"-->
+                <!--                                            :key="item.value"-->
+                <!--                                            :value="item.value"-->
+                <!--                                            >{{ item.name }}</a-select-option-->
+                <!--                                        >-->
+                <!--                                    </a-select>-->
+                <!--                                </a-form-item>-->
+                <!--                            </a-col>-->
+                <!--                            <a-col :span="12">-->
+                <!--                                <a-form-item label="宽度">-->
+                <!--                                    <a-select-->
+                <!--                                        v-model:value="getNodeStyle.borderWidth"-->
+                <!--                                        @change="-->
+                <!--                                            (e) => update('borderWidth', e)-->
+                <!--                                        "-->
+                <!--                                    >-->
+                <!--                                        <a-select-option-->
+                <!--                                            v-for="item in borderWidthList"-->
+                <!--                                            :key="item"-->
+                <!--                                            :value="item"-->
+                <!--                                            :label="item"-->
+                <!--                                        />-->
+                <!--                                    </a-select>-->
+                <!--                                </a-form-item>-->
+                <!--                            </a-col>-->
+                <!--                            <a-col :span="12">-->
+                <!--                                <a-form-item label="圆角">-->
+                <!--                                    <a-select-->
+                <!--                                        v-model:value="-->
+                <!--                                            getNodeStyle.borderRadius-->
+                <!--                                        "-->
+                <!--                                        @change="-->
+                <!--                                            (e) => update('borderRadius', e)-->
+                <!--                                        "-->
+                <!--                                    >-->
+                <!--                                        <a-select-option-->
+                <!--                                            v-for="item in borderRadiusList"-->
+                <!--                                            :key="item"-->
+                <!--                                            :value="item"-->
+                <!--                                            :label="item"-->
+                <!--                                        />-->
+                <!--                                    </a-select>-->
+                <!--                                </a-form-item>-->
+                <!--                            </a-col>-->
+                <!--                        </a-row>-->
+                <!--                        <p class="text-xl mb-2 mt-2 ml-1">背景</p>-->
+                <!--                        <a-row :gutter="24">-->
+                <!--                            <a-col :span="24">-->
+                <!--                                <a-form-item-->
+                <!--                                    label="颜色"-->
+                <!--                                    :label-col="{ span: 3 }"-->
+                <!--                                >-->
+                <!--                                    <color-popover-->
+                <!--                                        v-model:color="getNodeStyle.fillColor"-->
+                <!--                                        @update:color="-->
+                <!--                                            update('fillColor', $event)-->
+                <!--                                        "-->
+                <!--                                        ><div-->
+                <!--                                            class="styleBtn"-->
+                <!--                                            :style="{-->
+                <!--                                                backgroundColor:-->
+                <!--                                                    getNodeStyle.fillColor,-->
+                <!--                                            }"-->
+                <!--                                        >-->
+                <!--                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <!--                                            <span-->
+                <!--                                                class="colorShow"-->
+                <!--                                                :style="{-->
+                <!--                                                    backgroundColor:-->
+                <!--                                                        getNodeStyle.fillColor,-->
+                <!--                                                }"-->
+                <!--                                            ></span></div-->
+                <!--                                    ></color-popover>-->
+                <!--                                </a-form-item>-->
+                <!--                            </a-col>-->
+                <!--                        </a-row>-->
+                <!--                    </a-form>-->
+                <!--                </a-tab-pane>-->
                 <a-tab-pane key="icon" tab="图标"><icon-editor /></a-tab-pane>
             </a-tabs>
             <div class="sidebarContent">
