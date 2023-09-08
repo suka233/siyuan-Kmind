@@ -36,12 +36,14 @@
         "quill-blot-formatter": "^1.0.5",
         "quill-markdown-shortcuts": "^0.0.10",
         "semver": "^7.5.4",
-        "simple-mind-map": "^0.6.15-fix.2",
+        "simple-mind-map": "^0.7.0",
         "stream-browserify": "^3.0.0",
         "vditor": "^3.9.0",
         "vue": "^3.3.4",
         "vue-router": "^4.1.6",
-        "xlsx": "^0.18.5"
+        "xlsx": "^0.18.5",
+        "dom-to-image-more": "^3.1.6",
+        "@svgdotjs/svg.js": "^3.0.16"
     },
     "devDependencies": {
         "@commitlint/cli": "^16.2.3",

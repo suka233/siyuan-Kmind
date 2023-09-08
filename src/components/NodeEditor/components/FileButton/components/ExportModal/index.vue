@@ -57,7 +57,7 @@
                     /></a-col>
                     <a-col :span="24" v-show="fileType === 'kmind'"
                         ><a-alert
-                            message="推荐kmind格式，兼容了json格式的全部优点，并拓展了更多功能，例如禅模式的状态保存等等，并且支持挂件的无损导入"
+                            message="推荐kmind格式，兼容了json格式的全部优点，并拓展了更多功能，例如禅模式的状态保存等等，并且支持挂件/插件之间的无损导入"
                             type="info"
                             show-icon
                         >
@@ -79,7 +79,7 @@
                     /></a-col>
                     <a-col :span="24" v-show="fileType === 'png'"
                         ><a-alert
-                            message="如果节点较多，导出png可能需要较长时间，请耐心等待。并且请注意，由于底层库html2cavas的bug，导出为图片的时候节点文字的样式会丢失，暂无更好的解决方案"
+                            message="如果节点较多，导出png可能需要较长时间，请耐心等待。"
                             type="info"
                             show-icon
                     /></a-col>
@@ -158,6 +158,16 @@ const handleOk = async () => {
             await kmind.doExport.png('', isTransparent.value).then((_data) => {
                 data = _data;
             });
+            // await kmind.doExport.png('', false, false).then((_data) => {
+            //     data = _data;
+            // });
+            // await kmind
+            //     .export('export', 'png', true, 'fileName', false)
+            //     .then((_data) => {
+            //         console.log(_data);
+            //         data = _data;
+            //     });
+            // kmind.doExport.png();
             break;
         case 'svg':
             await kmind.doExport
