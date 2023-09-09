@@ -74,7 +74,6 @@ const {
     ctxMenuTop,
     ctxMenuType,
     ctxMenuVisible,
-    copyNode,
     localConfig,
     nodeNormalStyle,
     nodeActiveStyle,
@@ -169,34 +168,6 @@ onMounted(() => {
     });
     kmind.on('painter_end', () => {
         isPainting.value = false;
-    });
-
-    // 绑定自定义快捷键
-    kmind.keyCommand.addShortcut('Control+c', () => {
-        // kmind.value.renderer.copyNode() 在没有选中节点的时候会返回undefined
-        kmind.renderer.copyNode() &&
-            (copyNode.value = kmind.renderer.copyNode());
-    });
-    kmind.keyCommand.addShortcut('Control+v', () => {
-        kmind.execCommand('PASTE_NODE', copyNode.value);
-        // kmind.value.execCommand('PASTE_NODE', {
-        //     data: {
-        //         text: 'ddd',
-        //         expand: true,
-        //         isActive: false,
-        //         fontFamily: '微软雅黑, Microsoft YaHei',
-        //         color: '#6a6d6c',
-        //         fontStyle: 'normal',
-        //         fontWeight: 'normal',
-        //         fontSize: 14,
-        //         textDecoration: 'none',
-        //         richText: true,
-        //     },
-        //     // children: [],
-        // });
-    });
-    kmind.keyCommand.addShortcut('Control+x', () => {
-        kmind.execCommand('CUT_NODE', (e) => (copyNode.value = e));
     });
     kmind.keyCommand.addShortcut('Control+s', async () => {
         await saveMindMapData({ data: kmind.getData(true) });

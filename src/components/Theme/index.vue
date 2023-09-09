@@ -36,7 +36,6 @@ const { activeSidebar } = toRefs(publicStore);
 const theme = ref('');
 const useTheme = (item: string) => {
     theme.value = item;
-    console.log(kmind);
     kmind.setTheme(item);
 };
 </script>

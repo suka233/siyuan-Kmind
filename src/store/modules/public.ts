@@ -47,10 +47,6 @@ export const usePublicStore = defineStore('app-public', () => {
     const activeNodeList = ref<any[]>([]);
     // const node = ref<any>({});
     const node = computed(() => activeNodeList.value[0]);
-    // 复制的节点
-    const copyNode = ref<any>({});
-    // 复制的节点的json数据,用于跨导图复制节点信息
-    const copyNodeJson = computed(() => JSON.stringify(copyNode.value));
 
     // 当前节点备注content
     const noteContent = ref<string>();
@@ -327,8 +323,6 @@ export const usePublicStore = defineStore('app-public', () => {
     // endregion
 
     return {
-        copyNode,
-        copyNodeJson,
         noteLeft,
         noteTop,
         noteContent,

@@ -102,7 +102,6 @@ const {
     ctxMenuTop,
     ctxMenuVisible,
     ctxMenuType,
-    copyNode,
     node,
     localConfig,
 } = toRefs(publicStore);
@@ -157,14 +156,13 @@ const handleClick = ({ key }) => {
             kmind.execCommand('REMOVE_NODE');
             break;
         case 'copyNode':
-            kmind.renderer.copyNode() &&
-                (copyNode.value = kmind.renderer.copyNode());
+            kmind.renderer.copy();
             break;
         case 'cutNode':
-            kmind.execCommand('CUT_NODE', (e) => (copyNode.value = e));
+            kmind.renderer.cut();
             break;
         case 'pasteNode':
-            kmind.execCommand('PASTE_NODE', copyNode.value);
+            kmind.renderer.paste();
             break;
         case 'customNode':
             kmind.execCommand('SET_NODE_DATA', node.value, {
