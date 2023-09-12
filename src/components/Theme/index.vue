@@ -33,10 +33,13 @@ import { themeMap } from '/@/config/constant';
 import { kmind } from '/@/hooks/useKmind';
 const publicStore = usePublicStore();
 const { activeSidebar } = toRefs(publicStore);
+const { saveMindMapData } = publicStore;
 const theme = ref('');
 const useTheme = (item: string) => {
     theme.value = item;
     kmind.setTheme(item);
+    // 并非导图数据变化，不会触发自动保存操作，所以手动保存一下
+    saveMindMapData({ data: kmind.getData(true) });
 };
 </script>
 
