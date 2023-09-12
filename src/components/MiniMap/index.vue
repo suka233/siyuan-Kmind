@@ -1,7 +1,7 @@
 <template>
     <div
         v-show="localConfig.miniMapVisible"
-        class="navigatorBox"
+        class="navigatorBox bottom-18 right-18 w-60 h-50"
         ref="navigatorBox"
         @mousedown="onMousedown"
         @mousemove="onMousemove"
@@ -109,12 +109,8 @@ watch(
 <style scoped>
 .navigatorBox {
     position: absolute;
-    width: 350px;
-    height: 220px;
-    background-color: #fff;
-    bottom: 80px;
-    right: 70px;
-    box-shadow: 0 0 16px #989898;
+    background-color: #f6f6f6;
+    box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.06);
     border-radius: 4px;
     border: 1px solid #eee;
     cursor: pointer;
