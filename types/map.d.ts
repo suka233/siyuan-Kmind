@@ -77,4 +77,8 @@ declare interface KmindLocaleConfigType {
      * 是否是全屏
      */
     isFullScreen?: boolean;
+    /**
+     * 是否打开小地图
+     */
+    miniMapVisible?: boolean;
 }

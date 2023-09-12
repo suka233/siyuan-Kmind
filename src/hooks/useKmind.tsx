@@ -13,6 +13,7 @@ import NodeImgAdjust from 'simple-mind-map/src/plugins/NodeImgAdjust';
 import TouchEvent from 'simple-mind-map/src/plugins/TouchEvent';
 import ExportXMind from 'simple-mind-map/src/plugins/ExportXMind';
 import Painter from 'simple-mind-map/src/plugins/Painter.js';
+import MiniMap from 'simple-mind-map/src/plugins/MiniMap.js';
 const publicStoreWithOut = usePublicStoreWithOut();
 const { setNoteInfo } = publicStoreWithOut;
 const { noteVisible, treeData, filePath, localConfig } =
@@ -22,6 +23,7 @@ export let kmind;
 
 export const useKmind = (el) => {
     if (el && !kmind) {
+        // @ts-ignore
         MindMap.usePlugin(KeyboardNavigation)
             .usePlugin(Drag)
             .usePlugin(Select)
@@ -32,7 +34,8 @@ export const useKmind = (el) => {
             .usePlugin(TouchEvent)
             .usePlugin(ExportXMind)
             .usePlugin(ExportPDF)
-            .usePlugin(Painter);
+            .usePlugin(Painter)
+            .usePlugin(MiniMap);
         kmind = new MindMap({
             el,
             data: {

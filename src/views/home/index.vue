@@ -15,7 +15,9 @@
             <main-point />
             <node-style />
             <shortcut-key />
+            <navigator-toolbar class="absolute bottom-5 right-5" />
             <!--            <setting />-->
+            <mini-map />
         </div>
 
         <div v-if="isDev" class="absolute bottom-20 left-5">
@@ -53,6 +55,8 @@ import { isClickRemarkIcon, isClickLinkIcon } from '/@/utils';
 import { useKmind, kmind, buildTreeData } from '/@/hooks/useKmind';
 import { cloneDeep } from 'lodash-es';
 import InfoBox from '/@/components/InfoBox/index.vue';
+import NavigatorToolbar from '/@/components/NavigatorToolbar/index.vue';
+import MiniMap from '/@/components/MiniMap/index.vue';
 
 // const props = defineProps<{
 //     type?: 'widget' | 'plugin';

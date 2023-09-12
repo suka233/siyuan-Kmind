@@ -27,6 +27,8 @@ export const usePublicStore = defineStore('app-public', () => {
         isZenMode: false,
         // 是否全屏，此项不需要同步存储
         isFullScreen: false,
+        // 是否开启小地图
+        miniMapVisible: false,
     });
 
     const backEnd = ref<boolean>(true);
