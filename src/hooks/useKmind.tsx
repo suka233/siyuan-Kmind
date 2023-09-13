@@ -125,7 +125,11 @@ export const useKmind = (el) => {
         // 加载额外的配置
         // 避免不存在kmind节点导致默认的localConfig被覆盖
         if (data?.kmind?.localeConfig) {
-            localConfig.value = data.kmind.localeConfig;
+            localConfig.value = Object.assign(
+                {},
+                localConfig.value,
+                data.kmind.localeConfig,
+            );
         }
     };
 
