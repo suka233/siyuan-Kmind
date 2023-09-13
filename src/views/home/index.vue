@@ -9,7 +9,7 @@
         <div v-show="!localConfig.isZenMode">
             <node-editor ref="nodeEditorRef" class="absolute top-5 left-5" />
             <side-bar-trigger />
-
+            <!--            <mind-map-style />/-->
             <theme />
             <map-structure />
             <main-point />
@@ -17,6 +17,7 @@
             <shortcut-key />
             <navigator-toolbar class="absolute bottom-5 right-15" />
             <!--            <setting />-->
+
             <mini-map />
         </div>
 
@@ -57,6 +58,7 @@ import { cloneDeep } from 'lodash-es';
 import InfoBox from '/@/components/InfoBox/index.vue';
 import NavigatorToolbar from '/@/components/NavigatorToolbar/index.vue';
 import MiniMap from '/@/components/MiniMap/index.vue';
+// import MindMapStyle from '/@/components/MindMapStyle/index.vue';
 
 // const props = defineProps<{
 //     type?: 'widget' | 'plugin';

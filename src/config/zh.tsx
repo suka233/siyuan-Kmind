@@ -11,6 +11,7 @@ import {
     FileMarkdownOutlined,
     FileExcelOutlined,
     FilePdfOutlined,
+    // BgColorsOutlined,
 } from '@ant-design/icons-vue';
 // side-bar-trigger
 export const sideBarTriggerList = [
@@ -19,6 +20,11 @@ export const sideBarTriggerList = [
         value: 'nodeStyle',
         icon: HighlightOutlined,
     },
+    // {
+    //     title: '导图样式',
+    //     value: 'mindMapStyle',
+    //     icon: BgColorsOutlined,
+    // },
     {
         title: '主题',
         value: 'theme',
