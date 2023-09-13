@@ -2,6 +2,17 @@
 <template>
     <a-modal v-model:visible="visible" title="导入至Kmind" @ok="handleOk">
         <div>
+            <a-alert class="mb-2" type="info" show-icon>
+                <template #message>
+                    <p>
+                        注意，导入的数据会
+                        <strong class="text-red-500">直接覆盖</strong>
+                        当前导图的数据，并且
+                        <strong class="text-red-500">无法撤销</strong> ！！
+                    </p>
+                    <!--                    <p class="text-center">请确认后再操作！</p>-->
+                </template>
+            </a-alert>
             <a-upload-dragger
                 v-model:file-list="fileList"
                 :max-count="1"
