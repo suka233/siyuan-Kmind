@@ -1,8 +1,9 @@
 <template>
     <div class="navigatorContainer">
         <!--      开关小地图-->
-        <mini-map-switch />
+        <mini-map-switch class="mr-4" />
         <!--      切换只读模式-->
+        <read-only-switch />
         <!--      调整画布缩放-->
         <!--      全屏按钮-->
     </div>
@@ -10,6 +11,7 @@
 
 <script setup lang="ts">
 import MiniMapSwitch from './components/MiniMapSwitch/index.vue';
+import ReadOnlySwitch from './components/ReadOnlySwitch/index.vue';
 </script>
 
 <style scoped>

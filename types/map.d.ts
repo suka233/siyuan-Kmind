@@ -81,4 +81,8 @@ declare interface KmindLocaleConfigType {
      * 是否打开小地图
      */
     miniMapVisible?: boolean;
+    /**
+     * 是否是只读模式
+     */
+    readonlyMode?: boolean;
 }

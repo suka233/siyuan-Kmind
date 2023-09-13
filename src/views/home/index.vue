@@ -15,7 +15,7 @@
             <main-point />
             <node-style />
             <shortcut-key />
-            <navigator-toolbar class="absolute bottom-5 right-5" />
+            <navigator-toolbar class="absolute bottom-5 right-15" />
             <!--            <setting />-->
             <mini-map />
         </div>
@@ -208,6 +208,31 @@ onMounted(() => {
                     <span>
                         禅模式已经开启，
                         <a onClick={handleCloseZenMode} class="text-blue-500">
+                            点我关闭
+                        </a>
+                    </span>
+                );
+            });
+        }
+
+        if (localConfig.value.readonlyMode) {
+            kmind.setMode('readonly');
+            const closeMsg = message.info(() => {
+                const handleCloseReadOnlyMode = () => {
+                    localConfig.value.readonlyMode = false;
+                    closeMsg();
+                    kmind.setMode(
+                        localConfig.value.readonlyMode ? 'readonly' : 'edit',
+                    );
+                    saveMindMapData({ data: kmind.getData(true) });
+                };
+                return (
+                    <span>
+                        只读模式已经开启，
+                        <a
+                            onClick={handleCloseReadOnlyMode}
+                            class="text-blue-500"
+                        >
                             点我关闭
                         </a>
                     </span>

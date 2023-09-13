@@ -29,6 +29,8 @@ export const usePublicStore = defineStore('app-public', () => {
         isFullScreen: false,
         // 是否开启小地图
         miniMapVisible: false,
+        // 只读模式
+        readonlyMode: false,
     });
 
     const backEnd = ref<boolean>(true);
@@ -241,10 +243,19 @@ export const usePublicStore = defineStore('app-public', () => {
                         mindMapData.value = res;
                         // 老版本数据没有kmind字段，需要兼容
                         // TODO：初始化localConfig为用户已经存储在挂件文件夹下的默认值
-                        localConfig.value = res?.kmind?.localeConfig ?? {
-                            isZenMode: false,
-                            isFullScreen: false,
-                        };
+                        // localConfig.value = res?.kmind?.localeConfig ?? {
+                        //     isZenMode: false,
+                        //     isFullScreen: false,
+                        //     readonlyMode: false,
+                        // };
+                        // 如果localeConfig字段存在的话，那么就把res.kmind.localeConfig合并到localConfig里
+                        if (res?.kmind?.localeConfig) {
+                            localConfig.value = Object.assign(
+                                {},
+                                localConfig.value,
+                                res?.kmind?.localeConfig,
+                            );
+                        }
                     })
                     .catch((e) => {
                         message.error(
@@ -286,10 +297,18 @@ export const usePublicStore = defineStore('app-public', () => {
                         mindMapData.value = res || {};
                         // 老版本数据没有kmind字段，需要兼容
                         // TODO：初始化localConfig为用户已经存储在挂件文件夹下的默认值
-                        localConfig.value = res?.kmind?.localeConfig ?? {
-                            isZenMode: false,
-                            isFullScreen: false,
-                        };
+                        // localConfig.value = res?.kmind?.localeConfig ?? {
+                        //     isZenMode: false,
+                        //     isFullScreen: false,
+                        // };
+                        // 如果localeConfig字段存在的话，那么就把res.kmind.localeConfig合并到localConfig里
+                        if (res?.kmind?.localeConfig) {
+                            localConfig.value = Object.assign(
+                                {},
+                                localConfig.value,
+                                res?.kmind?.localeConfig,
+                            );
+                        }
                     })
                     .catch((e) => {
                         message.error(
