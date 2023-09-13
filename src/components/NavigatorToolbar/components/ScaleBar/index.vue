@@ -3,10 +3,10 @@
         <a-tooltip title="缩小"
             ><minus-outlined @click="narrow" class="text-gray-4"
         /></a-tooltip>
-        <a-tooltip title="单击重置缩放"
+        <a-tooltip title="双击重置缩放"
             ><span
-                class="text-gray-4 text-sm w-15 inline-block text-center cursor-pointer"
-                @click="reset"
+                class="text-gray-4 text-sm w-15 inline-block text-center cursor-pointer select-none"
+                @dblclick="reset"
                 >{{ scaleNum }}%</span
             >
         </a-tooltip>
