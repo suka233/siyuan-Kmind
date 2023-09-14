@@ -385,7 +385,7 @@ video {
     border-radius: 5px;
 }
 
-a[href^='siyuan']::after {
+a[href^='siyuan://blocks/']::after {
     content: '';
     display: inline-block;
     width: 1rem;

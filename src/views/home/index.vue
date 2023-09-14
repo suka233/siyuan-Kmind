@@ -219,6 +219,7 @@ onMounted(() => {
 
         if (localConfig.value.readonlyMode) {
             kmind.setMode('readonly');
+            // @ts-ignore
             const closeMsg = message.info(() => {
                 const handleCloseReadOnlyMode = () => {
                     localConfig.value.readonlyMode = false;
@@ -274,7 +275,7 @@ onMounted(() => {
             // console.log(e);
             const { isLink, linkUrl } = isClickLinkIcon(e);
             // 如果按住alt键点击到了siyuan开头的超链接icon
-            if (isLink && e.altKey && linkUrl?.startsWith('siyuan://')) {
+            if (isLink && e.altKey && linkUrl?.startsWith('siyuan://blocks/')) {
                 e.preventDefault();
                 // @ts-ignore kmind插件把api挂载到了window上
                 window.parent.kmindApi.plugin.addFloatLayer({
@@ -285,10 +286,12 @@ onMounted(() => {
                 });
             }
 
-            // 如果按住alt键点击到了siyuan开头的超链接
+            // 如果按住alt键点击到了siyuan开头的超链接，适配处于节点中的思源超链接
             if (
                 e.altKey &&
-                (e?.target as HTMLAnchorElement)?.href.startsWith('siyuan://')
+                (e?.target as HTMLAnchorElement)?.href.startsWith(
+                    'siyuan://blocks/',
+                )
             ) {
                 const href = (e?.target as HTMLAnchorElement)?.href;
                 e.preventDefault();
