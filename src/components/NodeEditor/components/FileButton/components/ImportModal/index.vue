@@ -76,6 +76,7 @@ const handleOk = async () => {
     } else if (/\.xlsx$/.test(mindFile.value.name)) {
         await handleExcel();
     } else if (/\.md$/.test(mindFile.value.name)) {
+        // console.log(mindFile.value.name);
         await handleMd();
     }
 
@@ -165,7 +166,8 @@ const handleExcel = async () => {
                 }
             }
         }
-        kmind.setFullData(layers[0][0]);
+        // console.log(layers[0][0]);
+        kmind.setFullData({ root: layers[0][0] });
         message.success('导入成功');
     } catch (error) {
         console.log(error);
@@ -177,8 +179,11 @@ const handleMd = async () => {
     fileReader.readAsText(mindFile.value!);
     fileReader.onload = async (evt) => {
         try {
-            const data = await markdown.parse(evt.target?.result as string);
-            kmind.setFullData(data);
+            const data = await markdown.transformMarkdownTo(
+                evt.target?.result as string,
+            );
+            // console.log(data);
+            kmind.setFullData({ root: data });
             message.success('导入成功');
         } catch (error) {
             message.error('文件格式错误');
