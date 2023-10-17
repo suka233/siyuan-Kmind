@@ -45,6 +45,51 @@ export const usePublicStore = defineStore('app-public', () => {
         forwardEnd.value = activeHistoryIndex >= backForwardLength.value - 1;
     };
 
+    // 样式相关
+    const mindMapStyle = ref({
+        backgroundColor: '',
+        lineColor: '',
+        lineWidth: '',
+        lineStyle: '',
+        rootLineKeepSameInCurve: '',
+        generalizationLineWidth: '',
+        generalizationLineColor: '',
+        associativeLineColor: '',
+        associativeLineWidth: 0,
+        associativeLineActiveWidth: 0,
+        associativeLineActiveColor: '',
+        associativeLineTextFontSize: 0,
+        associativeLineTextColor: '',
+        associativeLineTextFontFamily: '',
+        paddingX: 0,
+        paddingY: 0,
+        imgMaxWidth: 0,
+        imgMaxHeight: 0,
+        iconSize: 0,
+        backgroundImage: '',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: '',
+        backgroundSize: '',
+        // 对应kmind.getThemeConfig().second 二级节点的样式
+        second: { marginX: 0, marginY: 0 },
+        // 对应kmind.getThemeConfig().node 三级及以下节点的样式
+        node: { marginX: 0, marginY: 0 },
+        nodeUseLineStyle: false,
+    });
+
+    const watermarkConfig = ref({
+        show: false,
+        text: '',
+        lineSpacing: 100,
+        textSpacing: 100,
+        angle: 30,
+        textStyle: {
+            color: '',
+            opacity: 0,
+            fontSize: 1,
+        },
+    });
+
     // endregion
 
     // region 节点相关
@@ -379,6 +424,8 @@ export const usePublicStore = defineStore('app-public', () => {
         saveLoading,
         // saveTimeAgo,
         isPainting,
+        mindMapStyle,
+        watermarkConfig,
     };
 });
 

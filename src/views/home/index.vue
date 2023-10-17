@@ -9,7 +9,7 @@
         <div v-show="!localConfig.isZenMode">
             <node-editor ref="nodeEditorRef" class="absolute top-5 left-5" />
             <side-bar-trigger />
-            <!--            <mind-map-style />/-->
+            <!--            <mind-map-style-setting />-->
             <theme />
             <map-structure />
             <main-point />
@@ -58,7 +58,7 @@ import { cloneDeep } from 'lodash-es';
 import InfoBox from '/@/components/InfoBox/index.vue';
 import NavigatorToolbar from '/@/components/NavigatorToolbar/index.vue';
 import MiniMap from '/@/components/MiniMap/index.vue';
-// import MindMapStyle from '/@/components/MindMapStyle/index.vue';
+// import MindMapStyleSetting from '/@/components/MindMapStyle/index.vue';
 
 // const props = defineProps<{
 //     type?: 'widget' | 'plugin';
@@ -85,6 +85,8 @@ const {
     nodeActiveStyle,
     // saveTimeAgo,
     isPainting,
+    mindMapStyle,
+    watermarkConfig,
 } = toRefs(publicStore);
 
 const kmindRef = ref();
@@ -178,7 +180,7 @@ onMounted(() => {
     kmind.keyCommand.addShortcut('Control+s', async () => {
         await saveMindMapData({ data: kmind.getData(true) });
 
-        console.log(activeNodeList.value);
+        // console.log(activeNodeList.value);
         // 当有节点激活的时候，隐藏保存成功的提示
         if (!activeNodeList.value.length) {
             message.success('保存导图数据成功');
@@ -192,6 +194,70 @@ onMounted(() => {
         // kmind.keyCommand.getShortcutFn('F2') 返回的是方法数组
         kmind.keyCommand.getShortcutFn('F2')[0]();
         kmind.richText.selectAll();
+    });
+
+    // 自动保存数据
+    const debounceSaver = useDebounceFn((data) => {
+        saveMindMapData({ data });
+    }, 1000);
+    // 防抖构建tree
+    const debounceBuildTree = useDebounceFn(buildTreeData, 2000);
+    kmind.on('data_change', (data) => {
+        // console.log('data_change', data);
+        console.log(kmind.getData(true));
+        debounceSaver(kmind.getData(true));
+        debounceBuildTree();
+        // 获取导图样式
+        [
+            'backgroundColor',
+            'lineWidth',
+            'lineStyle',
+            'rootLineKeepSameInCurve',
+            'lineColor',
+            'generalizationLineWidth',
+            'generalizationLineColor',
+            'associativeLineColor',
+            'associativeLineWidth',
+            'associativeLineActiveWidth',
+            'associativeLineActiveColor',
+            'associativeLineTextFontSize',
+            'associativeLineTextColor',
+            'associativeLineTextFontFamily',
+            'paddingX',
+            'paddingY',
+            'imgMaxWidth',
+            'imgMaxHeight',
+            'iconSize',
+            'backgroundImage',
+            'backgroundRepeat',
+            'backgroundPosition',
+            'backgroundSize',
+            'nodeUseLineStyle',
+        ].forEach((key) => {
+            mindMapStyle.value[key] = kmind.getThemeConfig(key);
+            if (
+                key === 'backgroundImage' &&
+                mindMapStyle.value[key] === 'none'
+            ) {
+                mindMapStyle.value[key] = '';
+            }
+        });
+
+        ['marginX', 'marginY'].forEach((key) => {
+            // 二级节点
+            mindMapStyle.value.second[key] = kmind.getThemeConfig().second[key];
+            // 三级及以下节点
+            mindMapStyle.value.node[key] = kmind.getThemeConfig().node[key];
+        });
+        // 获取水印样式
+        let config = kmind.getConfig('watermarkConfig');
+        ['text', 'lineSpacing', 'textSpacing', 'angle'].forEach((key) => {
+            watermarkConfig.value[key] = config[key];
+        });
+        watermarkConfig.value.show = !!config.text;
+        watermarkConfig.value.textStyle = { ...config.textStyle };
+
+        // 获取导图配置:配置是否启用富文本编辑，配置鼠标滚轮行为，配置开启自由拖拽，配置鼠标缩放行为，是否显示滚动条
     });
 
     // 自动加载缓存数据
@@ -248,22 +314,10 @@ onMounted(() => {
         );
     }
 
-    // 自动保存数据
-    const debounceSaver = useDebounceFn((data) => {
-        saveMindMapData({ data });
-    }, 1000);
-    // 防抖构建tree
-    const debounceBuildTree = useDebounceFn(buildTreeData, 2000);
-    kmind.on('data_change', () => {
-        // console.log(kmind.value.getData(true));
-        debounceSaver(kmind.getData(true));
-        debounceBuildTree();
-    });
-
     // 自适应
     const debounceResize = useDebounceFn(() => {
         kmind.resize();
-    }, 1000);
+    }, 200);
     addEventListener('resize', () => {
         debounceResize();
     });

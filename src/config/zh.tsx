@@ -12,6 +12,7 @@ import {
     FileExcelOutlined,
     FilePdfOutlined,
     // BgColorsOutlined,
+    // SettingOutlined,
 } from '@ant-design/icons-vue';
 // side-bar-trigger
 export const sideBarTriggerList = [
