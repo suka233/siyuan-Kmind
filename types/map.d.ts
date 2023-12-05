@@ -8,7 +8,11 @@
 declare type NodeTreeType = {
     title?: string;
     key?: string;
+    /**
+     * 仅在非导入的导图情况下才有此数据
+     */
     _node?: any;
+    data?: any;
     children?: NodeTreeType[];
 };
 

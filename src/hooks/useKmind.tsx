@@ -143,8 +143,10 @@ export const useKmind = (el) => {
 const expandTree = (data) => {
     const temp: NodeTreeType = {};
     temp.title = data.data.text;
-    temp.key = data._node.uid;
-    temp._node = data._node;
+    // 外部导入的kmind文件没有_node属性,所以要兼容一下
+    temp.key = data?._node?.uid ?? data.data.uid;
+    temp._node = data?._node ?? data.data;
+    temp.data = data.data;
     if (data.children.length) {
         temp.children = [];
         data.children.forEach((item) => {

@@ -82,7 +82,6 @@ const {
     ctxMenuVisible,
     localConfig,
     nodeNormalStyle,
-    nodeActiveStyle,
     // saveTimeAgo,
     isPainting,
     mindMapStyle,
@@ -108,6 +107,7 @@ onMounted(() => {
     kmind.on('node_active', (_node, _activeNodeList) => {
         // 直接给activeNodeList.value赋值，会丢失响应式,导致store中的node不会及时刷新
         activeNodeList.value = [..._activeNodeList];
+        console.log('node_active', _node, _activeNodeList);
         [
             'shape',
             'paddingX',
@@ -135,12 +135,13 @@ onMounted(() => {
                 false,
             );
             // 激活状态的节点样式
-            nodeActiveStyle.value[item] = _activeNodeList[0]?.getStyle(
-                item,
-                false,
-                true,
-            );
+            // nodeActiveStyle.value[item] = _activeNodeList[0]?.getStyle(
+            //     item,
+            //     false,
+            //     true,
+            // );
         });
+        console.log('激活样式');
     });
 
     // 导图点击

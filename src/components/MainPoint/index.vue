@@ -1,3 +1,4 @@
+大纲
 <template>
     <side-bar title="大纲" :class="{ show: activeSidebar === 'mainPoint' }">
         <div>
@@ -8,8 +9,8 @@
             <!--                >刷新大纲</a-button-->
             <!--            >-->
             <a-tree :tree-data="treeData">
-                <template #title="{ title, _node }">
-                    <a @click="handleClick(_node)" v-html="title"></a>
+                <template #title="{ title, _node, data }">
+                    <a @click="handleClick(_node ?? data)" v-html="title"></a>
                 </template>
             </a-tree>
         </div>

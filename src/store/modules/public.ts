@@ -5,6 +5,8 @@ import { setBlockAttrs, getFile, uploadAsset, putFile } from '/@/api/public';
 import { message } from 'ant-design-vue';
 import store from '/@/store';
 import dayjs from 'dayjs';
+
+// import widgetJson from '/widget.json';
 // import { formatTimeAgo } from '@vueuse/core';
 // import * as process from 'process';
 export const usePublicStore = defineStore('app-public', () => {
@@ -207,6 +209,7 @@ export const usePublicStore = defineStore('app-public', () => {
             // 保存到本地文件
             const kmindData: KmindFullDataType = {
                 kmind: {
+                    // version: widgetJson.version,
                     saveType: 'file',
                     filePath: filePath.value,
                     localeConfig: localConfig.value,
