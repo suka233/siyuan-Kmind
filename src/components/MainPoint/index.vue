@@ -37,8 +37,9 @@ const handleClick = (node: any) => {
     // kmind.value.renderer.clearAllActive();
     // kmind.value.renderer.addActiveNode(node);
     // kmind.value.execCommand('SET_ACTIVE_NODE', node);
-    kmind.execCommand('SET_NODE_EXPAND', node, true);
-    kmind.renderer.moveNodeToCenter(node);
+    // kmind.execCommand('SET_NODE_EXPAND', node, true);
+    // kmind.renderer.moveNodeToCenter(node);
+    kmind.execCommand('GO_TARGET_NODE', node.uid);
     // kmind.value?.execCommand('CLEAR_ACTIVE_NODE');
 };
 </script>
