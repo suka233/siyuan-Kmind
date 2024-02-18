@@ -37,7 +37,7 @@ export const sideBarTriggerList = [
         icon: DeploymentUnitOutlined,
     },
     {
-        title: '大纲',
+        title: '搜索大纲',
         value: 'mainPoint',
         icon: ClusterOutlined,
     },
@@ -147,6 +147,11 @@ export const shortcutKeyList = [
                 icon: 'iconzhengli',
                 name: '一键整理布局',
                 value: 'Ctrl + L',
+            },
+            {
+                icon: 'iconsearch',
+                name: '搜索',
+                value: 'Ctrl + F',
             },
         ],
     },

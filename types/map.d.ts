@@ -6,6 +6,10 @@
  * 节点数据类型
  */
 declare type NodeTreeType = {
+    /**
+     * 去除了html标签的纯文本
+     */
+    pureTitle?: string;
     title?: string;
     key?: string;
     /**

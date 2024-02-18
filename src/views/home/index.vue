@@ -69,6 +69,7 @@ const {
     setBackForwardStatus,
     saveMindMapData,
     init,
+    setActiveSidebar,
 } = usePublicStore();
 const publicStore = usePublicStore();
 const {
@@ -195,6 +196,10 @@ onMounted(() => {
         // kmind.keyCommand.getShortcutFn('F2') 返回的是方法数组
         kmind.keyCommand.getShortcutFn('F2')[0]();
         kmind.richText.selectAll();
+    });
+
+    kmind.keyCommand.addShortcut('Control+f', () => {
+        setActiveSidebar('mainPoint');
     });
 
     // 自动保存数据

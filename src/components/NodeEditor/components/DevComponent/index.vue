@@ -17,6 +17,7 @@
                     >调用插件打开浮窗</a-menu-item
                 >
                 <a-menu-item key="全屏">全屏</a-menu-item>
+                <a-menu-item key="测试">测试</a-menu-item>
             </a-menu>
         </template>
         <a-button>
@@ -41,7 +42,7 @@ import { kmind } from '/@/hooks/useKmind';
 import { getWidgetBlockInfo } from '/@/utils';
 const publicStore = usePublicStore();
 // const { saveMindMapData } = publicStore;
-const { node, mindMapData, activeNodeList } = toRefs(publicStore);
+const { node, mindMapData, activeNodeList, treeData } = toRefs(publicStore);
 const { iframeNode } = getWidgetBlockInfo();
 
 const handleMenuClick = (e: any) => {
@@ -88,6 +89,11 @@ const handleMenuClick = (e: any) => {
                 iframeNode!.requestFullscreen();
             }
 
+            break;
+        case '测试':
+            console.log(kmind);
+            console.log(kmind.getData());
+            console.log(treeData.value);
             break;
         default:
             break;

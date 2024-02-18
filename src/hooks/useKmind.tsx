@@ -14,6 +14,8 @@ import TouchEvent from 'simple-mind-map/src/plugins/TouchEvent';
 import ExportXMind from 'simple-mind-map/src/plugins/ExportXMind';
 import Painter from 'simple-mind-map/src/plugins/Painter.js';
 import MiniMap from 'simple-mind-map/src/plugins/MiniMap.js';
+import { getTextFromHtml } from 'simple-mind-map/src/utils';
+// import { Record } from 'vditor/dist/ts/toolbar/Record';
 const publicStoreWithOut = usePublicStoreWithOut();
 const { setNoteInfo } = publicStoreWithOut;
 const { noteVisible, treeData, filePath, localConfig } =
@@ -141,12 +143,15 @@ export const useKmind = (el) => {
 
 // 递归展开tree
 const expandTree = (data) => {
-    const temp: NodeTreeType = {};
-    temp.title = data.data.text;
+    // 把data.data展开给temp
+    const temp: NodeTreeType = data.data;
+    // temp.title = data.data.text;
+    // 加入去除了html标签的纯净的title，便于搜索
+    temp.pureTitle = getTextFromHtml(data.data.text);
     // 外部导入的kmind文件没有_node属性,所以要兼容一下
-    temp.key = data?._node?.uid ?? data.data.uid;
-    temp._node = data?._node ?? data.data;
-    temp.data = data.data;
+    // temp.key = data?._node?.uid ?? data.data.uid;
+    // temp._node = data?._node ?? data.data;
+    // temp.data = data.data;
     if (data.children.length) {
         temp.children = [];
         data.children.forEach((item) => {
@@ -157,5 +162,19 @@ const expandTree = (data) => {
 };
 
 export const buildTreeData = () => {
-    treeData.value = [expandTree(kmind.renderer.renderTree)];
+    // treeData.value = [expandTree(kmind.getData())];
+    treeData.value = [
+        expandTree(
+            kmind.getData() as {
+                children: any;
+                data: {
+                    text: string;
+                    uid: string;
+                    richText: boolean;
+                    expand: boolean;
+                    isActivate: boolean;
+                };
+            },
+        ),
+    ];
 };
