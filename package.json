@@ -36,7 +36,7 @@
         "quill-blot-formatter": "^1.0.5",
         "quill-markdown-shortcuts": "^0.0.10",
         "semver": "^7.5.4",
-        "simple-mind-map": "^0.7.0",
+        "simple-mind-map": "^0.9.8",
         "stream-browserify": "^3.0.0",
         "vditor": "^3.9.0",
         "vue": "^3.3.4",
