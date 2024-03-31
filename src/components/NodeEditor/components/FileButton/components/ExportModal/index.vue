@@ -195,7 +195,13 @@ const handleOk = async () => {
             });
             break;
         case 'pdf':
-            await kmind.doExport.pdf(fileName.value);
+            // console.log(kmind);
+            await kmind.export('pdf', true, fileName.value, true);
+
+        // await kmind.doExport.pdf(fileName.value);
+        // const res = await kmind.doExport.pdf(fileName.value);
+        // const res = await kmind.doExportPDF(fileName.value);
+        // console.log(res);
     }
 
     loading.value = false;
