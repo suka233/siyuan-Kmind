@@ -4,7 +4,9 @@ import fs from 'fs';
 
 //Please write the "workspace/data/plugins" directory here
 //请在这里填写你的 "workspace/data/plugins" 目录
-const targetDir = 'D:\\document\\project\\siyuan-workplace-test\\data\\widgets';
+// const targetDir = 'D:\\document\\project\\siyuan-workplace-test\\data\\widgets';
+// sukaPC
+const targetDir = 'C:\\D\\Document\\siyuan-test\\data\\plugins'
 //Like this
 // const targetDir = `H:\\SiYuanDevSpace\\data\\plugins`;
 //********************************************************************************************
