@@ -34,7 +34,9 @@
                                         :label-col="{ span: 3 }"
                                     >
                                         <a-select
-                                            :value="getNodeStyle.fontFamily"
+                                            v-model:value="
+                                                nodeNormalStyle.fontFamily
+                                            "
                                             @change="
                                                 (e) => update('fontFamily', e)
                                             "
@@ -54,7 +56,9 @@
                                 <a-col :span="12">
                                     <a-form-item label="字号">
                                         <a-select
-                                            :value="getNodeStyle.fontSize"
+                                            v-model:value="
+                                                nodeNormalStyle.fontSize
+                                            "
                                             @change="
                                                 (e) => update('fontSize', e)
                                             "
@@ -75,7 +79,7 @@
                                     <a-form-item label="行高">
                                         <a-select
                                             v-model:value="
-                                                getNodeStyle.lineHeight
+                                                nodeNormalStyle.lineHeight
                                             "
                                             @change="
                                                 (e) => update('lineHeight', e)
@@ -92,12 +96,12 @@
                                 </a-col>
                                 <a-col :span="6">
                                     <color-popover
-                                        :color="getNodeStyle.color"
+                                        v-model:color="nodeNormalStyle.color"
                                         @update:color="update('color', $event)"
                                         ><div
                                             class="styleBtn"
                                             :style="{
-                                                color: getNodeStyle.color,
+                                                color: nodeNormalStyle.color,
                                             }"
                                         >
                                             A
@@ -105,7 +109,7 @@
                                                 class="colorShow"
                                                 :style="{
                                                     backgroundColor:
-                                                        getNodeStyle.color ||
+                                                        nodeNormalStyle.color ||
                                                         '#000',
                                                 }"
                                             ></span></div
@@ -116,13 +120,13 @@
                                         class="styleBtn"
                                         :class="{
                                             active:
-                                                getNodeStyle.fontWeight ===
+                                                nodeNormalStyle.fontWeight ===
                                                 'bold',
                                         }"
                                         @click="
                                             update(
                                                 'fontWeight',
-                                                getNodeStyle.fontWeight ===
+                                                nodeNormalStyle.fontWeight ===
                                                     'bold'
                                                     ? 'normal'
                                                     : 'bold',
@@ -137,13 +141,13 @@
                                         class="styleBtn i"
                                         :class="{
                                             active:
-                                                getNodeStyle.fontStyle ===
+                                                nodeNormalStyle.fontStyle ===
                                                 'italic',
                                         }"
                                         @click="
                                             update(
                                                 'fontStyle',
-                                                getNodeStyle.fontStyle ===
+                                                nodeNormalStyle.fontStyle ===
                                                     'italic'
                                                     ? 'normal'
                                                     : 'italic',
@@ -625,8 +629,14 @@ const getNodeStyle = computed(() => {
 // 更新节点的样式
 const update = (prop: string, e: any) => {
     activeNodeList.value.forEach((node) => {
-        // console.log(isActive.value);
-        node.setStyle(prop, e, isActive.value);
+        node.setStyle(prop, e);
+        if (prop === 'fontWeight') {
+            // 不知道为什么setStyle后触发不了node_active，导致没法更新nodeNormalStyle的数据，所以这里手动改一下nodeNormalStyle的值
+            nodeNormalStyle.value.fontWeight = e;
+        }
+        if (prop === 'fontStyle') {
+            nodeNormalStyle.value.fontStyle = e;
+        }
     });
 };
 </script>

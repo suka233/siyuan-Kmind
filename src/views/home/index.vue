@@ -9,7 +9,7 @@
         <div v-show="!localConfig.isZenMode">
             <node-editor ref="nodeEditorRef" class="absolute top-5 left-5" />
             <side-bar-trigger />
-            <!--            <mind-map-style-setting />-->
+            <mind-map-style-setting />
             <theme />
             <map-structure />
             <main-point />
@@ -58,7 +58,7 @@ import { cloneDeep } from 'lodash-es';
 import InfoBox from '/@/components/InfoBox/index.vue';
 import NavigatorToolbar from '/@/components/NavigatorToolbar/index.vue';
 import MiniMap from '/@/components/MiniMap/index.vue';
-// import MindMapStyleSetting from '/@/components/MindMapStyle/index.vue';
+import MindMapStyleSetting from '/@/components/MindMapStyle/index.vue';
 
 // const props = defineProps<{
 //     type?: 'widget' | 'plugin';
@@ -108,7 +108,7 @@ onMounted(() => {
     kmind.on('node_active', (_node, _activeNodeList) => {
         // 直接给activeNodeList.value赋值，会丢失响应式,导致store中的node不会及时刷新
         activeNodeList.value = [..._activeNodeList];
-        console.log('node_active', _node, _activeNodeList);
+        // console.log('node_active', _node, _activeNodeList);
         [
             'shape',
             'paddingX',
@@ -133,7 +133,7 @@ onMounted(() => {
             nodeNormalStyle.value[item] = _activeNodeList[0]?.getStyle(
                 item,
                 false,
-                false,
+                // false,
             );
             // 激活状态的节点样式
             // nodeActiveStyle.value[item] = _activeNodeList[0]?.getStyle(
@@ -142,7 +142,7 @@ onMounted(() => {
             //     true,
             // );
         });
-        console.log('激活样式');
+        // console.log('激活样式', nodeNormalStyle.value);
     });
 
     // 导图点击
