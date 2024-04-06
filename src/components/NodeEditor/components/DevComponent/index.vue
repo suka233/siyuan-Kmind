@@ -5,14 +5,13 @@
                 <a-menu-item key="设置导图为测试数据">
                     设置导图为测试数据
                 </a-menu-item>
-                <a-menu-item key="console导图数据">
-                    console导图数据
-                </a-menu-item>
-                <a-menu-item key="RESET_LAYOUT"> RESET_LAYOUT </a-menu-item>
-                <a-menu-item key="重载导图数据"> 重载导图数据 </a-menu-item>
+                <a-menu-item key="console导图数据"> 打印导图数据 </a-menu-item>
                 <a-menu-item key="打印activeNodeList">
                     打印activeNodeList
                 </a-menu-item>
+                <a-menu-item key="RESET_LAYOUT"> RESET_LAYOUT </a-menu-item>
+                <a-menu-item key="重载导图数据"> 重载导图数据 </a-menu-item>
+
                 <a-menu-item key="调用插件打开浮窗"
                     >调用插件打开浮窗</a-menu-item
                 >
@@ -42,7 +41,8 @@ import { kmind } from '/@/hooks/useKmind';
 import { getWidgetBlockInfo } from '/@/utils';
 const publicStore = usePublicStore();
 // const { saveMindMapData } = publicStore;
-const { node, mindMapData, activeNodeList, treeData } = toRefs(publicStore);
+const { node, mindMapData, activeNodeList, treeData, mindMapStyle } =
+    toRefs(publicStore);
 const { iframeNode } = getWidgetBlockInfo();
 
 const handleMenuClick = (e: any) => {
@@ -53,12 +53,11 @@ const handleMenuClick = (e: any) => {
             );
             break;
         case 'console导图数据':
-            console.log('node', node.value);
-            console.log('kmind', kmind);
-            console.log(
-                'allData',
-                JSON.stringify({ suka: kmind.getData(true) }),
-            );
+            console.log('当前节点node', node.value);
+            console.log('当前节点data', node.value?.nodeData);
+            console.log('kmind实例', kmind);
+            console.log('所有数据', kmind.getData(true));
+            console.log('mindMapStyle', mindMapStyle.value);
             break;
         case 'RESET_LAYOUT':
             kmind.execCommand('RESET_LAYOUT');
