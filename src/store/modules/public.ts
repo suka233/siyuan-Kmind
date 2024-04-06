@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 // import * as process from 'process';
 export const usePublicStore = defineStore('app-public', () => {
     // region 环境相关
-    const debuggerMode = ref<boolean>(false);
+    const debuggerMode = ref<boolean>(true);
     const isDev = computed(() => {
         // return false;
         // return process?.env?.NODE_ENV === 'development' || debuggerMode.value;
@@ -77,6 +77,10 @@ export const usePublicStore = defineStore('app-public', () => {
         // 对应kmind.getThemeConfig().node 三级及以下节点的样式
         node: { marginX: 0, marginY: 0 },
         nodeUseLineStyle: false,
+        rootLineStartPositionKeepSameInCurve: '',
+        lineRadius: '',
+        // 显示线段的箭头
+        showLineMarker: '',
     });
 
     const watermarkConfig = ref({
@@ -90,6 +94,12 @@ export const usePublicStore = defineStore('app-public', () => {
             opacity: 0,
             fontSize: 1,
         },
+    });
+
+    // 彩虹线config
+    const rainbowLinesConfig = ref({
+        open: false,
+        colorsList: [],
     });
 
     // endregion
@@ -215,7 +225,12 @@ export const usePublicStore = defineStore('app-public', () => {
                     localeConfig: localConfig.value,
                 },
                 ...data,
+                // 这个config使用kmind.getData()无法自动注入，所以这里手动构建一下
+                config: {
+                    rainbowLinesConfig: rainbowLinesConfig.value,
+                },
             };
+            // console.log('保存到挂件', kmindData);
             const json = JSON.stringify(kmindData);
             const blob = new Blob([json], { type: 'application/json' });
             // 文件名必须拼接上blockID.value，否则思源会自动随机一个id来覆盖
@@ -247,6 +262,10 @@ export const usePublicStore = defineStore('app-public', () => {
                     localeConfig: localConfig.value,
                 },
                 ...data,
+                // 这个config使用kmind.getData()无法自动注入，所以这里手动构建一下
+                config: {
+                    rainbowLinesConfig: rainbowLinesConfig.value,
+                },
             };
             const json = JSON.stringify(kmindData);
             const blob = new Blob([json], { type: 'application/json' });
@@ -304,6 +323,15 @@ export const usePublicStore = defineStore('app-public', () => {
                                 res?.kmind?.localeConfig,
                             );
                         }
+
+                        // 如果config.rainbowLinesConfig字段存在的话，那么就把res.config.rainbowLinesConfig合并到rainbowLinesConfig里
+                        if (res?.config?.rainbowLinesConfig) {
+                            rainbowLinesConfig.value = Object.assign(
+                                {},
+                                rainbowLinesConfig.value,
+                                res?.config?.rainbowLinesConfig,
+                            );
+                        }
                     })
                     .catch((e) => {
                         message.error(
@@ -355,6 +383,15 @@ export const usePublicStore = defineStore('app-public', () => {
                                 {},
                                 localConfig.value,
                                 res?.kmind?.localeConfig,
+                            );
+                        }
+
+                        // 如果config.rainbowLinesConfig字段存在的话，那么就把res.config.rainbowLinesConfig合并到rainbowLinesConfig里
+                        if (res?.config?.rainbowLinesConfig) {
+                            rainbowLinesConfig.value = Object.assign(
+                                {},
+                                rainbowLinesConfig.value,
+                                res?.config?.rainbowLinesConfig,
                             );
                         }
                     })
@@ -429,6 +466,7 @@ export const usePublicStore = defineStore('app-public', () => {
         isPainting,
         mindMapStyle,
         watermarkConfig,
+        rainbowLinesConfig,
     };
 });
 

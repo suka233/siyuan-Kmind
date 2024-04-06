@@ -11,7 +11,7 @@ import {
     FileMarkdownOutlined,
     FileExcelOutlined,
     FilePdfOutlined,
-    // BgColorsOutlined,
+    BgColorsOutlined,
     // SettingOutlined,
 } from '@ant-design/icons-vue';
 // side-bar-trigger
@@ -21,11 +21,11 @@ export const sideBarTriggerList = [
         value: 'nodeStyle',
         icon: HighlightOutlined,
     },
-    // {
-    //     title: '导图样式',
-    //     value: 'mindMapStyle',
-    //     icon: BgColorsOutlined,
-    // },
+    {
+        title: '导图样式',
+        value: 'mindMapStyle',
+        icon: BgColorsOutlined,
+    },
     {
         title: '主题',
         value: 'theme',
@@ -324,14 +324,17 @@ export const lineWidthList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 export const lineStyleList = [
     {
         name: '直线',
+        label: '直线',
         value: 'straight',
     },
     {
         name: '曲线',
+        label: '曲线',
         value: 'curve',
     },
     {
         name: '直连',
+        label: '直连',
         value: 'direct',
     },
 ];
@@ -507,5 +510,105 @@ export const exportTypeList = [
         type: 'xmind',
         title: 'xmind',
         content: '可以用于导入到 xmind 中',
+    },
+];
+
+export const lineStyleMap = {
+    straight: `<svg width="60" height="26"><path d="M18,14L30,14L30,5L42,5" fill="none" stroke="#000" stroke-width="2"></path><path d="M18,14L30,14L30,23L42,23" fill="none" stroke="#000" stroke-width="2"></path></svg>`,
+    curve: `<svg width="60" height="26"><path d="M18,14L30,14A12,-9 0 0 1 42,5" fill="none" stroke="#000" stroke-width="2"></path><path d="M18,14L30,14A12,9 0 0 0 42,23" fill="none" stroke="#000" stroke-width="2"></path></svg>`,
+    direct: `<svg width="60" height="26"><path d="M18,14L30,14L42,5" fill="none" stroke="#000" stroke-width="2"></path><path d="M18,14L30,14L42,23" fill="none" stroke="#000" stroke-width="2"></path></svg>`,
+};
+
+// 曲线风格中，根节点样式是否和其他节点保持一致
+export const rootLineKeepSameInCurveList = [
+    {
+        name: '括号',
+        label: '括号',
+        value: false,
+    },
+    {
+        name: '大括号',
+        label: '大括号',
+        value: true,
+    },
+];
+
+// 圆角大小 0, 2, 5, 7, 10, 12, 15
+export const lineRadiusOptions = [
+    {
+        label: '0',
+        value: 0,
+    },
+    {
+        label: '2',
+        value: 2,
+    },
+    {
+        label: '5',
+        value: 5,
+    },
+    {
+        label: '7',
+        value: 7,
+    },
+    {
+        label: '10',
+        value: 10,
+    },
+    {
+        label: '12',
+        value: 12,
+    },
+    {
+        label: '15',
+        value: 15,
+    },
+];
+
+// lineWidth 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+export const lineWidthOptions = [
+    {
+        label: '0',
+        value: 0,
+    },
+    {
+        label: '1',
+        value: 1,
+    },
+    {
+        label: '2',
+        value: 2,
+    },
+    {
+        label: '3',
+        value: 3,
+    },
+    {
+        label: '4',
+        value: 4,
+    },
+    {
+        label: '5',
+        value: 5,
+    },
+    {
+        label: '6',
+        value: 6,
+    },
+    {
+        label: '7',
+        value: 7,
+    },
+    {
+        label: '8',
+        value: 8,
+    },
+    {
+        label: '9',
+        value: 9,
+    },
+    {
+        label: '10',
+        value: 10,
     },
 ];

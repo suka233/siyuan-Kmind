@@ -8,12 +8,13 @@ import {
     borderDasharrayList,
     borderRadiusList,
     lineWidthList,
-    lineStyleList,
+    lineStyleList as lineStyleListZh,
     backgroundRepeatList,
     backgroundPositionList,
     backgroundSizeList,
     shapeList,
     exportTypeList,
+    lineStyleMap as lineStyleMapZh,
 } from './zh';
 
 // 快捷键
@@ -24,6 +25,10 @@ export const shortcutKeyList = {
 // 字体
 export const fontFamilyList = {
     zh: fontFamilyListZh,
+};
+
+const lineStyleList = {
+    zh: lineStyleListZh,
 };
 
 export {
@@ -40,4 +45,8 @@ export {
     backgroundSizeList,
     shapeList,
     exportTypeList,
+};
+
+export const lineStyleMap = {
+    zh: lineStyleMapZh,
 };

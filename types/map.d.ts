@@ -46,6 +46,12 @@ declare type MapFullDataType = {
         transform: object;
         state: object;
     };
+    /**
+     * 配置
+     */
+    config?: {
+        [key: string]: any;
+    };
 };
 
 /**

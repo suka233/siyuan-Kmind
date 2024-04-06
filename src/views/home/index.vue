@@ -87,6 +87,7 @@ const {
     isPainting,
     mindMapStyle,
     watermarkConfig,
+    rainbowLinesConfig,
 } = toRefs(publicStore);
 
 const kmindRef = ref();
@@ -210,7 +211,7 @@ onMounted(() => {
     const debounceBuildTree = useDebounceFn(buildTreeData, 2000);
     kmind.on('data_change', (data) => {
         // console.log('data_change', data);
-        console.log(kmind.getData(true));
+        // console.log(kmind.getData(true));
         debounceSaver(kmind.getData(true));
         debounceBuildTree();
         // 获取导图样式
@@ -239,6 +240,9 @@ onMounted(() => {
             'backgroundPosition',
             'backgroundSize',
             'nodeUseLineStyle',
+            'rootLineStartPositionKeepSameInCurve',
+            'lineRadius',
+            'showLineMarker',
         ].forEach((key) => {
             mindMapStyle.value[key] = kmind.getThemeConfig(key);
             if (
@@ -264,6 +268,7 @@ onMounted(() => {
         watermarkConfig.value.textStyle = { ...config.textStyle };
 
         // 获取导图配置:配置是否启用富文本编辑，配置鼠标滚轮行为，配置开启自由拖拽，配置鼠标缩放行为，是否显示滚动条
+        rainbowLinesConfig.value = kmind.getConfig('rainbowLinesConfig');
     });
 
     // 自动加载缓存数据
@@ -313,6 +318,10 @@ onMounted(() => {
                     </span>
                 );
             });
+        }
+
+        if (rainbowLinesConfig.value?.open) {
+            kmind.rainbowLines.updateRainLinesConfig(rainbowLinesConfig.value);
         }
     } else {
         message.info(
