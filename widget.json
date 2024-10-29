@@ -2,15 +2,16 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.4.2",
+  "version": "2.4.3",
+  "kmindReleaseMsg": "新增节点思源子文档快捷打开位置浮窗，原地编辑，拖拽调整节点大小等",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图"
   },
-  "description": {
-    "default": "KMind思维导图，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；",
-    "zh-CN": "KMind思维导图，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；"
-  },
+    "description": {
+        "default": "KMind思维导图，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；",
+        "zh-CN": "KMind思维导图，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；"
+    },
   "readme": {
     "default": "README.md",
     "zh-CN": "README.md"
