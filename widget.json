@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.4.3",
-  "kmindReleaseMsg": "新增节点思源子文档快捷打开位置浮窗，原地编辑，拖拽调整节点大小等",
+  "version": "2.5.0",
+  "kmindReleaseMsg": "新增历史记录一键预览回滚功能，异常数据写入拦截功能",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图"
