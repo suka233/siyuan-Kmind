@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.6.0",
-  "kmindReleaseMsg": "新增全局配置功能，需要在插件里设置全局导图行为，新增直接粘贴思源超链接为节点超链接功能",
+  "version": "2.6.1",
+  "kmindReleaseMsg": "新增一键转KMind全局配置功能，可以在全局配置里配置一键转的时候的主题和结构了",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
