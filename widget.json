@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.6.1",
-  "kmindReleaseMsg": "新增一键转KMind全局配置功能，可以在全局配置里配置一键转的时候的主题和结构了",
+  "version": "2.6.2",
+  "kmindReleaseMsg": "新增一键转导图直接插入文档树，节点checkbox，freemind导入导出",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
