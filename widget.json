@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.8.0",
-  "kmindReleaseMsg": "新增直觉按钮，新增直接跳转PDF标注，移动端开放文档树导图编辑",
+  "version": "2.8.1",
+  "kmindReleaseMsg": "优化悬浮工具栏，新增全局配置，新增PDF超链接移除",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
