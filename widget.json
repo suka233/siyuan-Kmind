@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.9.0",
-  "kmindReleaseMsg": "重构底层逻辑，新增全局超链接，新增自定义主题(可以下载KMind插件设计分享主题)",
+  "version": "2.9.1",
+  "kmindReleaseMsg": "重构底层逻辑，新增全局超链接，新增自定义主题(可以下载KMind插件设计分享主题), 修复空格快捷键问题",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
