@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.9.2",
-  "kmindReleaseMsg": "修复文档树导图的搜索会呼出思源搜索框的Bug,新增搜索框自动聚焦的功能",
+  "version": "2.10.0",
+  "kmindReleaseMsg": "新增MOC模式，节点图片复制，全局导图只读功能",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
