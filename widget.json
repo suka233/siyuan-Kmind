@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.10.1",
-  "kmindReleaseMsg": "修复 moc 模式引发的偶发性快捷键失效 Bug, 修复 i18n warn, 优化性能",
+  "version": "2.10.2",
+  "kmindReleaseMsg": "修复节点编辑无法输入斜杠 / 的问题，修复 DOM 模式下弹框编辑无法使用 Ctrl+A 等快捷键的问题",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
