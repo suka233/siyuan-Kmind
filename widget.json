@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.10.2",
-  "kmindReleaseMsg": "修复节点编辑无法输入斜杠 / 的问题，修复 DOM 模式下弹框编辑无法使用 Ctrl+A 等快捷键的问题",
+  "version": "2.11.0",
+  "kmindReleaseMsg": "新增括号连线风格，导入框支持粘贴 Markdown 文本",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
