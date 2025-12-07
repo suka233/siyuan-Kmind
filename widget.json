@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.11.0",
-  "kmindReleaseMsg": "新增括号连线风格，导入框支持粘贴 Markdown 文本",
+  "version": "2.12.0",
+  "kmindReleaseMsg": "节点支持直接渲染思源块，支持(( 快速引用思源文档",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
