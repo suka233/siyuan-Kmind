@@ -2,15 +2,15 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.13.0",
-  "kmindReleaseMsg": "支持多根节点模式，双击画布即可创建额外的根节点",
+  "version": "2.13.1",
+  "kmindReleaseMsg": "多根支持不同布局 & 主题，优化子节点拖拽成为新根节点的交互",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
     "en_US": "KMind Mind Map"
   },
     "description": {
-        "default": "KMind思维导图，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；",
+        "default": "KMind思维导图，多根节点，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；",
         "zh-CN": "KMind思维导图，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；",
         "en_US": "KMind Mind Map, preview Siyuan block on node hover, auto hide UI and auto dark mode"
     },
