@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.13.2",
-  "kmindReleaseMsg": "多根支持不同布局 & 主题，优化子节点拖拽成为新根节点的交互，修复配置问题",
+  "version": "2.13.3",
+  "kmindReleaseMsg": "支持直接拖拽思源块到导图中，新增全局快捷键配置",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
