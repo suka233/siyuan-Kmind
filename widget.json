@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.13.3",
-  "kmindReleaseMsg": "支持直接拖拽思源块到导图中，新增全局快捷键配置",
+  "version": "2.13.4",
+  "kmindReleaseMsg": "优化打开同一张导图的时候，保存失败的提示",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
