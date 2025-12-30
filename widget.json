@@ -2,8 +2,8 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.13.4",
-  "kmindReleaseMsg": "优化打开同一张导图的时候，保存失败的提示",
+  "version": "2.13.5",
+  "kmindReleaseMsg": "新增 PRO 试用功能 & 多根节点外框",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
