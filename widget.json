@@ -2,18 +2,18 @@
   "name": "Kmind",
   "author": "suka",
   "url": "https://github.com/suka233/siyuan-Kmind",
-  "version": "2.13.5",
-  "kmindReleaseMsg": "新增 PRO 试用功能 & 多根节点外框",
+  "version": "2.14.0",
+  "kmindReleaseMsg": "KMind2 进入维护阶段，建议逐步迁移到 KMind Zen",
   "displayName": {
     "default": "KMind",
     "zh-CN": "KMind思维导图",
     "en_US": "KMind Mind Map"
   },
-    "description": {
-        "default": "KMind思维导图，多根节点，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；",
-        "zh-CN": "KMind思维导图，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；",
-        "en_US": "KMind Mind Map, preview Siyuan block on node hover, auto hide UI and auto dark mode"
-    },
+  "description": {
+    "default": "本插件已经进入维护阶段，强烈推荐使用更新更强的 KMind Zen，思源集市中可以直接搜索下载！KMind思维导图，多根节点，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；",
+    "zh-CN": "本插件已经进入维护阶段，强烈推荐使用更新更强的 KMind Zen，思源集市中可以直接搜索下载！KMind思维导图，节点悬浮预览思源块，自动隐藏UI与自动黑暗模式；",
+    "en_US": "This plugin has entered maintenance mode. We strongly recommend using the newer and more powerful KMind Zen. You can search and install it directly from the SiYuan marketplace. KMind Mind Map, preview Siyuan block on node hover, auto hide UI and auto dark mode"
+  },
   "readme": {
     "default": "README.md",
     "zh-CN": "README.md",
